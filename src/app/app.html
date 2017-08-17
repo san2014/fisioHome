@@ -1,0 +1,22 @@
+<ion-menu side="right" [content]="rootIonNav">
+    <ion-content>
+        <ion-row>
+            <ion-col text-center>
+                    <img  height="100" width="100" style="border-radius: 50%;" src="assets/imgs/noimg.png">
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-list>
+                <ion-list-header>
+                    <button menuClose ion-item *ngFor="let menuSection of menuSections" (click)="navToComponent(menuSection.component)">
+                        {{ menuSection.title }}
+                        <ion-icon name="arrow-foward" item-right></ion-icon>
+                    </button>
+                </ion-list-header>
+            </ion-list>
+        </ion-row>
+    </ion-content>
+
+</ion-menu>
+
+<ion-nav #rootIonNav [root]="rootPage"></ion-nav>
