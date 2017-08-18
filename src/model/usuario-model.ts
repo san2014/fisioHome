@@ -2,6 +2,10 @@ export class UsuarioModel{
     
     id: number;
 
+    login: string;
+
+    senha: string;
+
     cpf: number;
 
     rg: string;

@@ -22,11 +22,13 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      statusBar.backgroundColorByHexString('#ffffff');
 
       this.menuSections = [
         {title: 'Dados Cadastrais', component: 'IniciarPage'},
         {title: 'Meu Histórico', component: 'IniciarPage'},
         {title: 'Avalie-nos', component: 'IniciarPage'},
+        {title: 'Sair', component: 'IniciarPage'},
       ]
     });
   }

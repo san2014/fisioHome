@@ -1,0 +1,130 @@
+{
+    "usuarios":[
+        {
+            "id": "1",
+            "login": "admin",
+            "senha": "admin",
+            "cpf": "11111111122",
+            "rg": "101010110",
+            "nome": "Administrador do Sistema",
+            "dtNasc": "17/08/2017",
+            "cep": "40450150",
+            "logradouro": "Rua Elias Kalile",
+            "bairro": "Uruguai",
+            "email" : "mail@gmail.com",
+            "ativo" : true
+        },
+        {
+            "id": "2",
+            "login": "san",
+            "senha": "12345",            
+            "cpf": "01692866575",
+            "rg": "11627873",
+            "nome": "Alesandro Carvalho",
+            "dtNasc": "27/12/1984",
+            "cep": "40430200",
+            "logradouro": "Rua Almirante Tamandaré",
+            "bairro": "Vila Ruy Barbosa",
+            "email" : "carvalho.alesandro@gmail.com",
+            "ativo" : true
+        },
+        {
+            "id": "3",
+            "login": "lua",
+            "senha": "12345",            
+            "cpf": "0987878612",
+            "rg": "232345456",
+            "nome": "Luana Costa",
+            "dtNasc": "11/08/1986",
+            "cep": "40480500",
+            "logradouro": "2 Travessa",
+            "bairro": "Liberdade",
+            "email" : "costa.luana@gmail.com",
+            "ativo" : true
+        },
+        {
+            "id": "4",
+            "login": "lorem",
+            "senha": "54321",            
+            "cpf": "212344543",
+            "rg": "665424",
+            "nome": "Lorem Fake",
+            "dtNasc": "23/05/1982",
+            "cep": "40230600",
+            "logradouro": "Av. ACM",
+            "bairro": "Pituba",
+            "email" : "loremfakehotmail.com",
+            "ativo" : true
+        }                          
+    ],
+
+    "clientes": [
+        {
+            "usuario": {
+                "id": 4
+            }
+
+        }        
+    ],
+    
+    "profissionais": [
+        {
+            "usuario": {
+                "id": 3
+            },
+            "credenciamento": "11234-CFTO",
+            "vencimento": "18/08/2018",
+            "conta": "3456678",
+            "agencia": "3467",
+            "banco": "Caixa Economica Federal"
+        }
+    ],
+
+    "tiposAtendimentos":[
+        {
+            "id": 1,
+            "descricao": "Ortopedia",
+            "valor": 55
+        },
+        {
+            "id": 2,
+            "descricao": "Pediatria",
+            "valor": 55
+        },
+        {
+            "id": 3,
+            "descricao": "Neurologia",
+            "valor": 65
+        },
+        {
+            "id": 4,
+            "descricao": "Geriataria",
+            "valor": 55
+        }                                 
+    ],
+
+    "notas": [
+        {
+            "id": 1,
+            "descricao": "Péssimo"
+        },
+        {
+            "id": 2,
+            "descricao": "Ruim"
+        },   
+        {
+            "id": 3,
+            "descricao": "Regular"
+        },
+        {
+            "id": 4,
+            "descricao": "Bom"
+        },
+        {
+            "id": 5,
+            "descricao": "Excelente"
+        }         
+
+    ]
+
+}

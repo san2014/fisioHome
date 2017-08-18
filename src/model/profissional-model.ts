@@ -15,6 +15,4 @@ export class ProfissionalModel {
 
     banco: string;
 
-    flagAtivo: boolean;
-
 }

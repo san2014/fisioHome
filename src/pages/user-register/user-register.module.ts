@@ -1,4 +1,3 @@
-import { UserModule } from './../../modules/user.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { UserRegister } from './user-register';
