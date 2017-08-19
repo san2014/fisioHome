@@ -29,44 +29,81 @@
     </ion-row>
     <ion-row>
       <ion-col>
-          <ion-input placeholder="Nome" outline class="box-register" name="nome" formControlName="nome" [ngModel]="usuario?.nome"></ion-input>
-      </ion-col>
-    </ion-row>  
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Data Nasc" outline class="box-register" name="dtNasc" formControlName="dtNasc" [ngModel]="usuario?.dtNasc"></ion-input>
+          <ion-input placeholder="Nome" outline class="box-register" name="nome" formControlName="nome" 
+            [ngModel]="usuario?.nome"
+            [ngClass]="aplicaCssErro('nome')">
+          </ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-          <ion-input placeholder="E-mail" outline class="box-register" name="email" formControlName="email" [ngModel]="usuario?.email"></ion-input>
-      </ion-col>
-    </ion-row>    
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" [ngModel]="usuario?.cep"></ion-input>
-      </ion-col>
-    </ion-row> 
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" [ngModel]="usuario?.logradouro"></ion-input>
+          <ion-input placeholder="Login" outline class="box-register" name="login" formControlName="login" 
+            [ngModel]="usuario?.login"
+            [ngClass]="aplicaCssErro('login')">
+          </ion-input>
       </ion-col>
     </ion-row>  
     <ion-row>
       <ion-col>
-          <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" [ngModel]="usuario?.bairro"></ion-input>
+          <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
+          [ngModel]="usuario?.senha"
+          [ngClass]="aplicaCssErro('senha')">
+        </ion-input>
+      </ion-col>
+    </ion-row>              
+    <ion-row>
+      <ion-col>
+          <ion-input placeholder="Data Nasc" outline class="box-register" name="dtNasc" formControlName="dtNasc" 
+            [ngModel]="usuario?.dtNasc"
+            [ngClass]="aplicaCssErro('dtNasc')">
+          </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+          <ion-input placeholder="E-mail" outline class="box-register" name="email" formControlName="email" 
+            [ngModel]="usuario?.email"
+            [ngClass]="aplicaCssErro('email')">
+          </ion-input>
+      </ion-col>
+    </ion-row>    
+    <ion-row>
+      <ion-col>
+          <ion-input placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
+            [ngModel]="usuario?.cep"
+            [ngClass]="aplicaCssErro('cep')">
+          </ion-input>
+      </ion-col>
+    </ion-row> 
+    <ion-row>
+      <ion-col>
+          <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" 
+            [ngModel]="usuario?.logradouro"
+            [ngClass]="aplicaCssErro('logradouro')">
+          </ion-input>
+      </ion-col>
+    </ion-row>  
+    <ion-row>
+      <ion-col>
+          <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" 
+            [ngModel]="usuario?.bairro"
+            [ngClass]="aplicaCssErro('bairro')">
+          </ion-input>
       </ion-col>
     </ion-row>   
     <ion-row>
       <ion-col>
-          <ion-input placeholder="Número" outline class="box-register" name="numero" formControlName="numero" [ngModel]="usuario?.numero"></ion-input>
+          <ion-input placeholder="Número" outline class="box-register" name="numero" formControlName="numero" 
+            [ngModel]="usuario?.numero"
+            [ngClass]="aplicaCssErro('numero')">
+          </ion-input>
       </ion-col>
     </ion-row> 
     
   </ion-grid>
 
   
-  <button ion-button block round color="secondary" [disabled]="formUser.invalid">
+  <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
     Enviar
   </button>
 
