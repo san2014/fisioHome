@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Usuário</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-label text-center>
+    Diga-nos, o que você vai ser?
+  </ion-label>
+
+  <form [formGroup]="formChoice">
+
+    <ion-list radio-group  formControlName="tipoUsuario" [(ngModel)]="tipoUsuario">
+      <ion-item>
+        <ion-label>Cliente</ion-label>
+        <ion-radio value="cliente" checked></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Profissional</ion-label>
+        <ion-radio value="profissional"></ion-radio>
+      </ion-item>
+    </ion-list>  
+
+  </form>
+
+  <button ion-button (click)="continuar()" full round [disabled]="formChoice.invalid">Continuar</button>
+
+ 
+</ion-content>

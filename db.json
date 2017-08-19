@@ -66,6 +66,19 @@
       "bairro": "Pau da Lima",
       "numero": "25",
       "id": "rJBd1e8_Z"
+    },
+    {
+      "cpf": "23456675656",
+      "nome": "monstro 2",
+      "login": "monstro",
+      "senha": "123454",
+      "email": "teste@gmail.com",
+      "dtNasc": "10/10/2000",
+      "cep": "40450150",
+      "logradouro": "rua teste",
+      "bairro": "sem bairro",
+      "numero": "29",
+      "id": "BJpNqMUOZ"
     }
   ],
   "clientes": [

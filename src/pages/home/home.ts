@@ -23,7 +23,7 @@ export class HomePage {
   }
 
   cadastreSe(){
-    this.navCtrl.push('UserRegister');
+    this.navCtrl.push('UserChoicePage');
   }
 
 }

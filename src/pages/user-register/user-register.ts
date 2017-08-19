@@ -1,7 +1,7 @@
 import { UserProvider } from './../../providers/user/user.provider';
 import { UsuarioModel } from './../../model/usuario-model';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
-import { Component, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 
@@ -12,8 +12,9 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 })
 export class UserRegister {
 
-  @Input()
   usuario: UsuarioModel;
+
+  tipoUsuario: string;
 
   formUser: FormGroup;
 
@@ -27,6 +28,10 @@ export class UserRegister {
   }
 
   initialize() {
+    
+    this.tipoUsuario = this.navParams.get('tipoUsuario');
+
+    console.log(this.tipoUsuario);
 
     this.formUser = this.fb.group({
       'cpf': ['', Validators.required],
