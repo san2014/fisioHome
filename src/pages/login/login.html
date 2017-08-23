@@ -15,12 +15,15 @@
       <ion-icon name="contact"></ion-icon>
     </ion-card-header>
     <ion-card-content>
+      <form [formGroup]="formLogin">
       <ion-grid>
         <ion-row>
           <ion-col>
             <ion-item>
               <ion-label floating>Usuário</ion-label>
-              <ion-input type="text" name="user"></ion-input>
+              <ion-input type="text" name="usuario" formControlName="usuario"
+                 [ngModel]="login?.usuario">
+              </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -28,8 +31,8 @@
           <ion-col>
             <ion-item>
               <ion-label floating>Senha</ion-label>
-              <ion-input type="password" name="user">
-                <ion-icon name="logo-facebook"></ion-icon>
+              <ion-input type="password" name="senha" formControlName="senha" 
+                [ngModel]="login?.senha">
               </ion-input>
             </ion-item>
           </ion-col>
@@ -43,7 +46,10 @@
 
         <ion-row>
           <ion-col>
-              <button ion-button color="secondary" block (click)="login()">Login</button>
+              <button ion-button color="secondary" block (click)="logar()" 
+                [disabled]="formLogin.invalid">
+                Login
+              </button>
           </ion-col>
         </ion-row>
         <ion-row>
@@ -63,6 +69,7 @@
             
         </ion-row>      
       </ion-grid>
+    </form>
     </ion-card-content>
   </ion-card>
 

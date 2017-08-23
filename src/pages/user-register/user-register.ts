@@ -31,8 +31,6 @@ export class UserRegister {
     
     this.tipoUsuario = this.navParams.get('tipoUsuario');
 
-    console.log(this.tipoUsuario);
-
     this.formUser = this.fb.group({
       'cpf': ['', Validators.required],
       'nome': ['',Validators.required],

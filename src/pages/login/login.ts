@@ -1,5 +1,9 @@
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from "ionic-angular";
+
+import { LoginModel } from './../../model/login.model';
+import { LoginProvider } from "../../providers/login/login.provider";
 
 @IonicPage()
 @Component({
@@ -8,14 +12,28 @@ import { NavController, NavParams, IonicPage } from "ionic-angular";
 })
 export class Login {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  login: LoginModel = {'usuario': '', 'senha' : ''};
+
+  formLogin: FormGroup;
+
+  constructor(
+    public navCtrl: NavController,
+    private fb: FormBuilder,
+    private loginProvider: LoginProvider,
+    public navParams: NavParams) {
+
+      this.initialize();
   }
 
-  ionViewDidLoad() {
+  initialize() {
+
+    this.formLogin = this.fb.group({
+      'usuario': ['', Validators.required],
+      'senha': ['',Validators.required]});    
 
   }
 
-  login(){
+  logar(){
     this.navCtrl.push('HometabPage');
   }
 
