@@ -17,12 +17,19 @@
     <ion-card-content>
       <form [formGroup]="formLogin">
       <ion-grid>
+        <ion-row *ngFor="let msg of msgError">
+          <ion-item>
+            <ion-col class="errorMsg">
+              {{msg}}
+            </ion-col>
+          </ion-item>
+        </ion-row>
         <ion-row>
           <ion-col>
             <ion-item>
               <ion-label floating>Usuário</ion-label>
               <ion-input type="text" name="usuario" formControlName="usuario"
-                 [ngModel]="login?.usuario">
+                 [(ngModel)]="loginModel.usuario">
               </ion-input>
             </ion-item>
           </ion-col>
@@ -32,7 +39,7 @@
             <ion-item>
               <ion-label floating>Senha</ion-label>
               <ion-input type="password" name="senha" formControlName="senha" 
-                [ngModel]="login?.senha">
+                [(ngModel)]="loginModel.senha">
               </ion-input>
             </ion-item>
           </ion-col>

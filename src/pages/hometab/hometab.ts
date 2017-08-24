@@ -1,7 +1,8 @@
+import { NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-
+import { UsuarioModel } from './../../model/usuario-model';
 
 @IonicPage()
 @Component({
@@ -10,10 +11,19 @@ import { IonicPage, NavController } from 'ionic-angular';
 })
 export class HometabPage {
 
-  iniciarRoot = 'IniciarPage'
-  sobreRoot = 'SobrePage'
+  iniciarRoot = 'IniciarPage';
+  
+  sobreRoot = 'SobrePage';
 
+  usuarioModel: UsuarioModel;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
+    
+    this.usuarioModel = this.navParams.get('usuarioModel');
+    
+  }
 
 }

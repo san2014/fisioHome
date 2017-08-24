@@ -12,30 +12,30 @@ export class LoginProvider {
   constructor(public http: Http) {}
 
   
-    login(login: LoginModel): Promise<UsuarioModel>{
-      
-      return new Promise(resolve => {
-  
-        this.http.get(`${ENDPOINT_API}/usuarios`, {params: {q: login.usuario}})
-          .map(res => res.json())
-          .subscribe(data => {
+  login(login: LoginModel): Promise<UsuarioModel>{
+    
+    return new Promise(resolve => {
 
-            if (data !== 'undefined'){
+      this.http.get(`${ENDPOINT_API}/usuarios`, {params: {login: login.usuario}})
+        .map(res => res.json())
+        .subscribe(data => {
 
-              if (data.senha === login.senha){
+          data.forEach(element => {
 
-                resolve(data);
+            if (element.senha == login.senha){
+              
+              resolve(data);
 
-              }
-
-            }
-  
-            resolve(null);
+            }              
             
-          }, err => resolve(null));
-  
-      })
-          
-    }
+          });
+
+          resolve(null)
+
+        }, err => resolve(null));
+
+    });
+        
+  }
 
 }
