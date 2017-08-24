@@ -15,14 +15,14 @@ export class HometabPage {
   
   sobreRoot = 'SobrePage';
 
-  usuarioModel: UsuarioModel;
+  usuarioLogado: UsuarioModel;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams
   ) {
     
-    this.usuarioModel = this.navParams.get('usuarioModel');
+    this.usuarioLogado = this.navParams.get('usuarioLogado');
     
   }
 

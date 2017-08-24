@@ -68,8 +68,6 @@ export class Login {
 
           erro = false;
 
-          console.log('storage');
-
           this.storage.set('usuarioLogado', this.usuarioModel)
           .then(
             () => this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}),

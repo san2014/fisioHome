@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 
 import { UsuarioModel } from "../../model/usuario-model";
 import { ENDPOINT_API } from "../../app/app-constantes";
 import { LoginModel } from './../../model/login.model';
+import { ResponseModel } from "../../model/response-model";
 
 @Injectable()
 export class LoginProvider {
 
-  constructor(public http: Http) {}
+  constructor(
+    public http: Http,
+    private storage: Storage,
+  ){}
 
   
   login(login: LoginModel): Promise<UsuarioModel>{
@@ -36,6 +41,37 @@ export class LoginProvider {
 
     });
         
+  }
+
+  getUsuarioLogado() : Promise<UsuarioModel>{
+
+    return new Promise(resolve => {
+
+      this.storage.get('usuarioLogado')
+        .then(data => {resolve(data[0])})
+        .catch(() => {resolve(null)})
+    })
+
+  }  
+
+  logout(): Promise<ResponseModel>{
+    
+    let response: ResponseModel;
+
+    return new Promise(resolve => {
+      this.storage.clear()
+        .then(() => {
+            response = {msg: 'Desconectado com sucesso', type: 1}
+            resolve(response);
+          }
+        )
+        .catch(() => {
+          response = {msg: 'Desculpe, ocorreu um erro ao desconectar. Tente nvamente.', type: 0}
+          resolve(response);
+          }
+        )
+    });
+
   }
 
 }
