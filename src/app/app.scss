@@ -14,3 +14,13 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face {
+
+    font-family: Comfortaa-Bold;
+    src: url('../assets/fonts/Comfortaa-Bold.ttf');    
+}
+
+body, span, ion-navbar, ion-content, ion-button, ion-title, h1, h2, h3, h4, h5, h6, ion-card, ion-header{
+    font-family: Comfortaa-Bold !important;
+}
