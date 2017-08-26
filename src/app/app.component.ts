@@ -14,7 +14,7 @@ import { HomePage } from "../pages/home/home";
 })
 export class MyApp {
 
-  rootPage:string = "HomePage";
+  rootPage:string = "PropostaInitPage";
 
   @ViewChild(Nav) nav: Nav;
 

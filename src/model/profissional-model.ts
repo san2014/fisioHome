@@ -1,3 +1,4 @@
+import { TipoAtendimentoModel } from './tipoatendimento-model';
 
 import { UsuarioModel } from "./usuario-model";
 
@@ -14,5 +15,9 @@ export class ProfissionalModel {
     agencia: string;
 
     banco: string;
+
+    especialidades: TipoAtendimentoModel[];
+
+    flagDisponivel: number;
 
 }

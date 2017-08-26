@@ -1,0 +1,35 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Proposta</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="formProposta">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          {{tipoAtendimento?.descricao}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-input outline
+              type="number" 
+              placeholder="Quantidade"  
+              name="qtd" formControlName="qtd" 
+              [(ngModel)]="proposta.qtd"
+              [ngClass]="aplicaCssErro('qtd')">
+            </ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button block round color="secondary"(click)="request()" [disabled]="formProposta.invalid">
+        Requisitar Profissional
+    </button>    
+  </form>
+</ion-content>

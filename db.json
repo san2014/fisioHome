@@ -91,13 +91,19 @@
   "profissionais": [
     {
       "usuario": {
-        "id": 3
+        "id": "3",
+        "nome": "Luana Costa"
       },
       "credenciamento": "11234-CFTO",
       "vencimento": "18/08/2018",
       "conta": "3456678",
       "agencia": "3467",
-      "banco": "Caixa Economica Federal"
+      "banco": "Caixa Economica Federal",
+      "flagDisponivel": "1",  
+      "especialidades" : [
+        {"id": "2", "descricao" :"Pediatria"},
+        {"id": "3", "descricao" :"Neurologia"}
+      ]
     }
   ],
   "tiposAtendimentos": [
