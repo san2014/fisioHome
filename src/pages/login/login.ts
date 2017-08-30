@@ -43,7 +43,7 @@ export class Login {
       
     this.msgError = [];
 
-    this.loginModel = {'usuario': '', 'senha' : ''};
+    this.loginModel = new LoginModel();
 
   }
 
@@ -69,8 +69,7 @@ export class Login {
           erro = false;
 
           this.storage.set('usuarioLogado', this.usuarioModel)
-          .then(
-            () => this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}),
+          .then(() => this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}),
             error => (console.error(error))
           )
 
@@ -88,7 +87,6 @@ export class Login {
         this.pushErroLogin();
 
       })
-
   }
 
 }

@@ -26,6 +26,8 @@ export class UsuarioModel{
 
     imgPerfil: string;
 
+    tipo: number;
+
     ativo: boolean;
 
 }

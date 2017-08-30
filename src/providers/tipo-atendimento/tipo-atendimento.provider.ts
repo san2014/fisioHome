@@ -11,7 +11,7 @@ export class TipoAtendimentoProvider {
 
   constructor(public http: Http) {}
 
-  usuarios(): Promise<TipoAtendimentoModel>{
+  tiposAtendimentos(): Promise<TipoAtendimentoModel>{
     
       return new Promise(resolve => {
   

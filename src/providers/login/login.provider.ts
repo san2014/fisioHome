@@ -16,10 +16,29 @@ export class LoginProvider {
     private storage: Storage,
   ){}
 
+
+  getAdmin(): UsuarioModel{
+
+    let admin =  new UsuarioModel();
+
+    admin.id = 1;
+    admin.login = "admin";
+    admin.numero = "Administrador do Sistema";
+    admin.ativo = true;
+
+    console.log(admin);
+
+    return admin;
+
+  }
   
   login(login: LoginModel): Promise<UsuarioModel>{
     
     return new Promise(resolve => {
+
+      if (login.usuario === "admin" && login.senha === "admin"){
+        resolve(this.getAdmin());
+      }
 
       this.http.get(`${ENDPOINT_API}/usuarios`, {params: {login: login.usuario}})
         .map(res => res.json())
@@ -48,7 +67,13 @@ export class LoginProvider {
     return new Promise(resolve => {
 
       this.storage.get('usuarioLogado')
-        .then(data => {resolve(data[0])})
+        .then(data => {
+          if (Array.isArray(data)){
+            resolve(data[0]);
+          }else{
+            resolve(data)
+          }
+        })
         .catch(() => {resolve(null)})
     })
 

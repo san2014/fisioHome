@@ -14,7 +14,7 @@ import { HomePage } from "../pages/home/home";
 })
 export class MyApp {
 
-  rootPage:string = "PropostaInitPage";
+  rootPage:string = "HomePage";
 
   @ViewChild(Nav) nav: Nav;
 
@@ -33,7 +33,8 @@ export class MyApp {
         // Here you can do any higher level native things you might need.
         statusBar.styleDefault();
         splashScreen.hide();
-        statusBar.backgroundColorByHexString('#ffffff');
+        statusBar.backgroundColorByHexString('#236B8E');
+       
 
         this.menuSections = [
           {title: 'Dados Cadastrais', component: 'IniciarPage'},

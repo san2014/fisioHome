@@ -35,7 +35,7 @@ export class PropostaInitPage {
 
   initialize(){
     this.tipoAtendimento = this.navParams.get('tipoAtendimento');
-
+    console.log(this.tipoAtendimento);
     this.formProposta = this.fb.group({
       'qtd': ['', Validators.compose
         (
@@ -48,7 +48,6 @@ export class PropostaInitPage {
     });
 
     this.proposta = new PropostaModel();
-    this.tipoAtendimento = new TipoAtendimentoModel();
   }
 
   presentToast(msg: string) {

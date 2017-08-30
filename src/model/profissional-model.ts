@@ -2,9 +2,7 @@ import { TipoAtendimentoModel } from './tipoatendimento-model';
 
 import { UsuarioModel } from "./usuario-model";
 
-export class ProfissionalModel {
-
-    usuario: UsuarioModel;
+export class ProfissionalModel extends UsuarioModel {
     
     credenciamento: string;
 

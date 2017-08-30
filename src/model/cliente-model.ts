@@ -1,8 +1,5 @@
 import { UsuarioModel } from './usuario-model';
 
-export class ClienteModel{
-
-    usuario: UsuarioModel
-
+export class ClienteModel extends UsuarioModel{
 
 }

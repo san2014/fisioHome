@@ -20,15 +20,17 @@
         <ion-label>Cliente</ion-label>
         <ion-radio value="cliente" checked></ion-radio>
       </ion-item>
-      <ion-item>
-        <ion-label>Profissional</ion-label>
-        <ion-radio value="profissional"></ion-radio>
-      </ion-item>
     </ion-list>  
 
   </form>
 
   <button ion-button (click)="continuar()" full round [disabled]="formChoice.invalid">Continuar</button>
+
+  <ion-footer>
+    <ion-toolbar text-center>
+      <ion-label><a href="#">Sou Profissional! Quero Prestar Serviço</a></ion-label>
+    </ion-toolbar>
+  </ion-footer>  
 
  
 </ion-content>

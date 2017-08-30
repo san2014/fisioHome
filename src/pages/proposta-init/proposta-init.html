@@ -12,14 +12,14 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          {{tipoAtendimento?.descricao}}
+          {{tipoAtendimento.descricao}}
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
             <ion-input outline
               type="number" 
-              placeholder="Quantidade"  
+              placeholder="Quantidade de Atendimentos"  
               name="qtd" formControlName="qtd" 
               [(ngModel)]="proposta.qtd"
               [ngClass]="aplicaCssErro('qtd')">
@@ -28,7 +28,7 @@
       </ion-row>
     </ion-grid>
 
-    <button ion-button block round color="secondary"(click)="request()" [disabled]="formProposta.invalid">
+    <button ion-button round block round color="secondary"(click)="request()" [disabled]="formProposta.invalid">
         Requisitar Profissional
     </button>    
   </form>

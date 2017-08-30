@@ -40,7 +40,6 @@
       "logradouro": "2 Travessa",
       "bairro": "Liberdade",
       "email": "costa.luana@gmail.com",
-      "tipo": "2",
       "ativo": true
     },
     {
@@ -100,10 +99,16 @@
       "conta": "3456678",
       "agencia": "3467",
       "banco": "Caixa Economica Federal",
-      "flagDisponivel": "1",  
-      "especialidades" : [
-        {"id": "2", "descricao" :"Pediatria"},
-        {"id": "3", "descricao" :"Neurologia"}
+      "flagDisponivel": "1",
+      "especialidades": [
+        {
+          "id": "2",
+          "descricao": "Pediatria"
+        },
+        {
+          "id": "3",
+          "descricao": "Neurologia"
+        }
       ]
     }
   ],

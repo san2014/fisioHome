@@ -23,7 +23,7 @@ export class HomePage {
 
     this.loginProvider.getUsuarioLogado()
       .then((usuarioLogado) => {
-        //console.log(usuarioLogado);
+        console.log(usuarioLogado);
         if (usuarioLogado !== null){
           this.navCtrl.push('HometabPage', {'usuarioLogado': usuarioLogado});
         }  

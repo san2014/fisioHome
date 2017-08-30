@@ -2,6 +2,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { UsuarioModel } from './../../model/usuario-model';
+import { LoginProvider } from './../../providers/login/login.provider';
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { TipoAtendimentoProvider } from "../../providers/tipo-atendimento/tipo-atendimento.provider";
 
@@ -14,25 +16,34 @@ import { TipoAtendimentoProvider } from "../../providers/tipo-atendimento/tipo-a
 export class IniciarPage {
 
   tpsAtds: TipoAtendimentoModel;
+  usuarioLogado: UsuarioModel;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public tpAtdProvider: TipoAtendimentoProvider
+    public tpAtdProvider: TipoAtendimentoProvider,
+    private loginProvider: LoginProvider
   ) {
+    this.initialize();
   }
 
-  ionViewDidLoad() {
+  initialize() {
+    this.usuarioLogado = new UsuarioModel();
 
-    this.tpAtdProvider.usuarios()
-      .then(data =>{
-
-        this.tpsAtds = data;
-
+    this.loginProvider.getUsuarioLogado()
+      .then((user) => {
+        this.usuarioLogado = user;
+        
+        this.tpAtdProvider.tiposAtendimentos()
+          .then(data =>{
+            this.tpsAtds = data;
+          })
       })
-
+      .catch((error) => "Ocorreu um erro inesperado");
   }
 
-
+  initProposta(tipoAtendimento: TipoAtendimentoModel){
+    this.navCtrl.push('PropostaInitPage', {'tipoAtendimento': tipoAtendimento});
+  }
 
 }
