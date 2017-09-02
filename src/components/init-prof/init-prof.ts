@@ -1,3 +1,4 @@
+import { TipoAtendimentoProvider } from './../../providers/tipo-atendimento/tipo-atendimento.provider';
 import { Component } from '@angular/core';
 
 import { ProfissionalModel } from './../../model/profissional-model';
@@ -10,7 +11,13 @@ export class InitProfComponent {
 
   profissional: ProfissionalModel
 
-  constructor() {
+  constructor(
+    private tipoAtendimentoProvider: TipoAtendimentoProvider
+  ) {
+  }
+
+  check(){
+    this.tipoAtendimentoProvider.tiposAtendimentos().then(() => console.log('ok'));
   }
 
 }
