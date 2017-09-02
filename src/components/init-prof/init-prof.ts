@@ -15,9 +15,4 @@ export class InitProfComponent {
     private tipoAtendimentoProvider: TipoAtendimentoProvider
   ) {
   }
-
-  check(){
-    this.tipoAtendimentoProvider.tiposAtendimentos().then(() => console.log('ok'));
-  }
-
 }

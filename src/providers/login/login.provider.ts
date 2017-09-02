@@ -20,18 +20,15 @@ export class LoginProvider {
 
 
   getAdmin(): UsuarioModel{
-
     let admin =  new UsuarioModel();
 
     admin.id = 1;
     admin.login = "admin";
     admin.numero = "Administrador do Sistema";
     admin.ativo = true;
-
-    console.log(admin);
+    admin.tipo = 1;
 
     return admin;
-
   }
   
   login(login: LoginModel): Promise<UsuarioModel>{
@@ -39,26 +36,21 @@ export class LoginProvider {
     return new Promise(resolve => {
 
       if (login.usuario === "admin" && login.senha === "admin"){
-        resolve(this.getAdmin());
+        return resolve(this.getAdmin());
       }
 
-      this.http.get(`${ENDPOINT_API}/usuarios`, {params: {login: login.usuario}})
+      console.log('ainda assim continuo...');
+
+      this.safeHttp.get(`${ENDPOINT_API}/usuarios`, {params: {login: login.usuario}})
         .map(res => res.json())
         .subscribe(data => {
-
           data.forEach(element => {
-
             if (element.senha == login.senha){
-              
-              resolve(data);
-
-            }              
-            
+              return resolve(data);
+            } 
           });
-
-          resolve(null)
-
-        }, err => resolve(null));
+          return resolve(null)
+        }, err => this.safeHttp.notResponse());
 
     });
         

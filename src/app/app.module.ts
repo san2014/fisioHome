@@ -5,10 +5,9 @@ import { HttpModule } from '@angular/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
-import { Network } from '@ionic-native/network';
 import { SafeHttp } from './app.safe-http';
 import { NetworkService } from './app.network-service';
-import { Diagnostic } from '@ionic-native/diagnostic';
+import { Network } from '@ionic-native/network';
 
 import { MyApp } from './app.component';
 import { LoginProvider } from "../providers/login/login.provider";
@@ -34,8 +33,7 @@ import { LoginProvider } from "../providers/login/login.provider";
     LoginProvider,
     Network,
     NetworkService,
-    SafeHttp,
-    Diagnostic
+    SafeHttp
   ]
 })
 export class AppModule {}

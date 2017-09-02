@@ -4,24 +4,28 @@ import 'rxjs/add/operator/map';
 
 import { UsuarioModel } from './../../model/usuario-model';
 import { ENDPOINT_API } from "../../app/app-constantes";
-
+import { SafeHttp } from './../../app/app.safe-http';
 
 @Injectable()
 export class UserProvider {
 
-  constructor(public http: Http) {}
+  constructor(
+    public http: Http,
+    private safeHttp: SafeHttp
+  ) {}
 
 
-  usuarios(documento: any): Promise<UsuarioModel>{
+  usuarios(): Promise<UsuarioModel>{
   
     return new Promise(resolve => {
 
-      this.http.get(`${ENDPOINT_API}/usuarios`).map(res => res.json())
+      this.safeHttp.get(`${ENDPOINT_API}/usuarios`).map(res => res.json())
         .subscribe(data => {
-
           resolve(data);
-          
-        }, err => resolve(null));
+        }, err => {
+          resolve(null);
+          this.safeHttp.notResponse();
+        });
 
     })
        

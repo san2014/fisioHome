@@ -51,10 +51,6 @@ export class MyApp {
       position: 'top'
     });
   
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-  
     toast.present();
   } 
   

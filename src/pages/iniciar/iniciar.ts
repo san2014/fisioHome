@@ -1,3 +1,4 @@
+import { NetworkService } from './../../app/app.network-service';
 
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -22,7 +23,8 @@ export class IniciarPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public tpAtdProvider: TipoAtendimentoProvider,
-    private loginProvider: LoginProvider
+    private loginProvider: LoginProvider,
+    private networkService: NetworkService
   ) {
     this.initialize();
   }
@@ -44,6 +46,14 @@ export class IniciarPage {
 
   initProposta(tipoAtendimento: TipoAtendimentoModel){
     this.navCtrl.push('PropostaInitPage', {'tipoAtendimento': tipoAtendimento});
+  }
+  
+  checkConnection(){
+    if (this.networkService.noConnection()){
+      this.networkService.showNetworkAlert();
+    }else{
+      this.networkService.showNetworkInfo();
+    }
   }
 
 }

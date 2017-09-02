@@ -1,7 +1,6 @@
 import { Network } from '@ionic-native/network';
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-import { Diagnostic } from '@ionic-native/diagnostic';
 import { Subscription } from "rxjs/Subscription";
 
 
@@ -14,7 +13,6 @@ export class NetworkService {
 
   constructor(
       private network: Network,
-      private diagnostic: Diagnostic,
       private alert: AlertController
     ) {
 
@@ -32,19 +30,22 @@ export class NetworkService {
     return !this.conected;
   }
 
-  private showSettings() {
-      
-    if (this.diagnostic.switchToWifiSettings) {
-      
-        this.diagnostic.switchToWifiSettings();
-
-    } else {
-
-        this.diagnostic.switchToSettings();
-
-    }
-
-  }  
+  showNetworkInfo() {
+    
+        let networkAlert = this.alert.create({
+          title: 'Conectado a Internet',
+          message: this.network.type,
+          buttons: [
+            {
+              text: 'Ok',
+              handler: () => {}
+            }
+          ]
+        });
+        
+        networkAlert.present();
+    
+      }    
 
   showNetworkAlert() {
 
@@ -53,16 +54,8 @@ export class NetworkService {
       message: 'Por favor verifique sua conexão',
       buttons: [
         {
-          text: 'Cancelar',
+          text: 'Ok',
           handler: () => {}
-        },
-        {
-          text: 'Configurações',
-          handler: () => {
-            networkAlert.dismiss().then(() => {
-              this.showSettings();
-            })
-          }
         }
       ]
     });

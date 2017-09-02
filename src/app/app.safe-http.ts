@@ -11,12 +11,10 @@ export class SafeHttp {
   }
 
   get(url: string, options?: RequestOptionsArgs) {
-    console.log(this.networkService.noConnection());
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else { return this.http.get(url, options) }
   }
-
 
   post(url: string, body: string, options?: RequestOptionsArgs) {
     if (this.networkService.noConnection()) {
