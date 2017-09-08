@@ -23,7 +23,6 @@ export class HomePage {
 
     this.loginProvider.getUsuarioLogado()
       .then((usuarioLogado) => {
-        console.log(usuarioLogado);
         if (usuarioLogado !== null){
           this.navCtrl.push('HometabPage', {'usuarioLogado': usuarioLogado});
         }  
@@ -35,7 +34,7 @@ export class HomePage {
   }
 
   cadastreSe(){
-    this.navCtrl.push('UserChoicePage');
+    this.navCtrl.push('UserRegister');
   }
 
 }

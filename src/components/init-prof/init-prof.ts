@@ -1,7 +1,7 @@
 import { TipoAtendimentoProvider } from './../../providers/tipo-atendimento/tipo-atendimento.provider';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { ProfissionalModel } from './../../model/profissional-model';
+import { UsuarioModel } from "../../model/usuario-model";
 
 @Component({
   selector: 'init-prof',
@@ -9,7 +9,8 @@ import { ProfissionalModel } from './../../model/profissional-model';
 })
 export class InitProfComponent {
 
-  profissional: ProfissionalModel
+  @Input()
+  usuario: UsuarioModel
 
   constructor(
     private tipoAtendimentoProvider: TipoAtendimentoProvider

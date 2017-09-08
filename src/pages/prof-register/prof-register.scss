@@ -1,0 +1,21 @@
+page-prof-register {
+
+    .text-list{
+        font-size: 10px;
+    }    
+
+    .box-register{
+        border-left: 6px solid springgreen;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        border-bottom: 0px solid !important;
+    }
+
+    .box-register-error{
+        border-left: 6px solid red;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        border-bottom: 0px solid !important;        
+    }    
+
+}

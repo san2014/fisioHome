@@ -31,21 +31,23 @@ export class NetworkService {
   }
 
   showNetworkInfo() {
+
+    const speed = this.network.downlinkMax;
     
-        let networkAlert = this.alert.create({
-          title: 'Conectado a Internet',
-          message: this.network.type,
-          buttons: [
-            {
-              text: 'Ok',
-              handler: () => {}
-            }
-          ]
-        });
-        
-        networkAlert.present();
+    let networkAlert = this.alert.create({
+      title: 'Conectado a Internet',
+      message: this.network.type + ' - ' + speed,
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {}
+        }
+      ]
+    });
     
-      }    
+    networkAlert.present();
+
+  }    
 
   showNetworkAlert() {
 

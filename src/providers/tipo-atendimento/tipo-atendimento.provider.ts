@@ -14,18 +14,44 @@ export class TipoAtendimentoProvider {
     private safeHttp: SafeHttp
   ) {}
 
-  tiposAtendimentos(): Promise<TipoAtendimentoModel>{
+  tiposAtendimentos(): Promise<TipoAtendimentoModel[]>{
+
+    let list = [
+      {
+        "id": 1,
+        "descricao": "Ortopedia",
+        "valor": 55
+      },
+      {
+        "id": 2,
+        "descricao": "Pediatria",
+        "valor": 55
+      },
+      {
+        "id": 3,
+        "descricao": "Neurologia",
+        "valor": 65
+      },
+      {
+        "id": 4,
+        "descricao": "Geriataria",
+        "valor": 55
+      }
+    ];
     
-      return new Promise(resolve => {
+    return new Promise((resolve, reject) => {resolve(list)});
+    
+/*       return new Promise((resolve, reject) => {
  
        this.safeHttp.get(`${ENDPOINT_API}/tiposAtendimentos`).map(res => res.json())
           .subscribe(data => {
-  
             resolve(data);
-            
-          }, err => this.safeHttp.notResponse());
+          }, err => {
+            this.safeHttp.notResponse();
+            reject();
+          });
   
-      })
+      }) */
          
   }  
   

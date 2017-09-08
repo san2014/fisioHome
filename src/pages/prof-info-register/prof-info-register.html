@@ -1,0 +1,54 @@
+
+<ion-header>
+  
+  <ion-navbar>
+    <ion-title>Profissional</ion-title>
+  </ion-navbar>
+
+</ion-header>
+  
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label color="primary">Olá! {{usuario.nome}}</ion-label>
+        <p>Para se cadastrar como Fisioterapeuta é necessário está com o cadastro regularizado no Crefito.</p>
+        <p>Além disso vamos precisar avaliar os seguintes documentos:</p>
+      </ion-col>
+    </ion-row>
+    <ion-row  align-items-start>
+      <ion-col>
+        <ion-list>
+          <ion-item class="text-list">
+            <ion-icon name='file' item-start></ion-icon>
+            Rg ou CNH
+            <ion-note item-end>
+            Anexo
+            </ion-note>
+          </ion-item>
+
+          <ion-item class="text-list">
+            <ion-icon name='file' item-start></ion-icon>
+            Carteira Crefito
+            <ion-note item-end>
+            Anexo
+            </ion-note>
+          </ion-item>        
+      
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-item no-lines>
+          <button ion-button round block color="secondary" (click)="continuar()">Continuar</button>
+        </ion-item>      
+    </ion-row>
+    <ion-row>
+      <ion-item no-lines>
+        <button ion-button round block color="danger" (click)="cancelar()">Cancelar</button>
+      </ion-item>      
+  </ion-row>    
+  </ion-grid>
+
+</ion-content>

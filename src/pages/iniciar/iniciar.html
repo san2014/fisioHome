@@ -18,12 +18,7 @@
   </ion-grid>
 
   <ion-grid *ngIf="usuarioLogado.tipo == 2">
-    <init-prof></init-prof>
+    <init-prof [usuario]="usuarioLogado"></init-prof>
   </ion-grid>  
-
-  <div text-center>
-    <button ion-button (click)="checkConnection()">Check Connection</button>
-  </div>
-  
 
 </ion-content>

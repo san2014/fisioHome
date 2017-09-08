@@ -1,0 +1,82 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Profissional</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="formProf">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Crefito" outline class="box-register" name="credenciamento" formControlName="credenciamento" 
+            [ngModel]="profissional?.credenciamento"
+            [ngClass]="aplicaCssErro('credenciamento')">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row [hidden]="removeNote">
+          <ion-col>
+            <ion-item text-wrap color="dark">
+                <div>Os dados Bancários são imprescindíveis para realização dos pagamentos.</div>
+                <ion-note item-end (click)="clearNote()">X</ion-note>
+            </ion-item>          
+          </ion-col>
+        </ion-row>      
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Conta" outline class="box-register" name="conta" formControlName="conta" 
+            [ngModel]="profissional?.conta"
+            [ngClass]="aplicaCssErro('conta')">
+          </ion-input>
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Agencia" outline class="box-register" name="agencia" formControlName="agencia" 
+            [ngModel]="profissional?.agencia"
+            [ngClass]="aplicaCssErro('agencia')">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Instituição Financeira" outline class="box-register" name="banco" formControlName="banco" 
+            [ngModel]="profissional?.banco"
+            [ngClass]="aplicaCssErro('banco')">
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>Especialidades</ion-label>
+            <ion-select (ionChange)="addEsp()" [compareWith]="compareFn" name="especialidade" formControlName="especialidade" [(ngModel)]="especialidade">
+              <ion-option *ngFor="let option of tpsAtds" [value]="option">{{option.descricao}}</ion-option>
+            </ion-select>
+          </ion-item>        
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-list>
+            <ion-item *ngFor="let row of listEspecialidades">
+              {{row.descricao}}
+              <ion-icon name="remove-circle" (click)="removeEsp(row)" item-end></ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-item no-lines>
+          <button ion-button round block color="secondary" (click)="enviar()">Enviar</button>
+        </ion-item>      
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

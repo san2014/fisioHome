@@ -7,6 +7,7 @@ import { AlertController } from 'ionic-angular';
 
 import { LoginProvider } from './../providers/login/login.provider';
 import { HomePage } from "../pages/home/home";
+import { UsuarioModel } from "../model/usuario-model";
 //import { HomePage } from './../pages/home/home';
 
 @Component({
@@ -20,6 +21,8 @@ export class MyApp {
 
   menuSections: Array<{title: string, component: any}>
 
+  usuario: UsuarioModel;
+
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -28,13 +31,14 @@ export class MyApp {
     private alertCtrl: AlertController,
     splashScreen: SplashScreen) {
 
+      this.initialize();
+
       platform.ready().then(() => {
         // Okay, so the platform is ready and our plugins are available.
         // Here you can do any higher level native things you might need.
         statusBar.styleDefault();
         splashScreen.hide();
         statusBar.backgroundColorByHexString('#236B8E');
-       
 
         this.menuSections = [
           {title: 'Dados Cadastrais', component: 'IniciarPage'},
@@ -42,6 +46,15 @@ export class MyApp {
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ]
       });
+  }
+
+  initialize(){
+    this.usuario = new UsuarioModel();
+
+    this.loginProvider.getUsuarioLogado()
+    .then((usuarioLogado) => {
+      this.usuario = usuarioLogado;
+    });        
   }
 
   presentToast(msg: string) {
@@ -86,6 +99,9 @@ export class MyApp {
       });
   }
 
+  pushRegister(){
+    this.navToComponent("ProfInfoRegisterPage");
+  }
 
 
 }

@@ -15,6 +15,8 @@ export class HometabPage {
   
   sobreRoot = 'SobrePage';
 
+  contatoRoot = 'SobrePage';
+
   usuarioLogado: UsuarioModel;
 
   constructor(
