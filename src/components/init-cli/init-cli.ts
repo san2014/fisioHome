@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 import { TipoAtendimentoModel } from "../../model/tipoatendimento-model";
 
@@ -9,8 +9,16 @@ import { TipoAtendimentoModel } from "../../model/tipoatendimento-model";
 export class InitCliComponent {
 
   @Input()
-  tpsAtds: TipoAtendimentoModel;
+  tpsAtds: TipoAtendimentoModel[];
+
+  @Output()
+  tpAtdSelect = new EventEmitter<TipoAtendimentoModel>()
 
   constructor() {}
+
+  initProposta(tipoAtendimento: TipoAtendimentoModel){
+    //console.log(tipoAtendimento);
+    this.tpAtdSelect.emit(tipoAtendimento);
+  }  
 
 }

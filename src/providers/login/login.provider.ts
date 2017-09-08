@@ -24,7 +24,7 @@ export class LoginProvider {
 
     admin.id = 1;
     admin.login = "admin";
-    admin.numero = "Administrador do Sistema";
+    admin.nome = "Administrador do Sistema";
     admin.ativo = true;
     admin.tipo = 1;
 

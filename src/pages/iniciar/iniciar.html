@@ -14,7 +14,7 @@
 
 <ion-content class="card-background-page">
   <ion-grid  *ngIf="usuarioLogado.tipo == 1">
-    <init-cli [tpsAtds]="tpsAtds"></init-cli>
+    <init-cli [tpsAtds]="tpsAtds" (tpAtdSelect)="initProposta($event)"></init-cli>
   </ion-grid>
 
   <ion-grid *ngIf="usuarioLogado.tipo == 2">
