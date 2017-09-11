@@ -48,6 +48,7 @@ export class PropostaInitPage {
     });
 
     this.proposta = new PropostaModel();
+    this.proposta.tipoAtendimento = this.tipoAtendimento;
   }
 
   presentToast(msg: string) {
@@ -114,7 +115,7 @@ export class PropostaInitPage {
 
   showProfModal() {
     let profileModal = this.modalCtrl
-      .create('PropostaSendPage', {'profissional': this.proposta.profissional});
+      .create('PropostaSendPage', {'proposta': this.proposta});
     
     profileModal.present();
   }  

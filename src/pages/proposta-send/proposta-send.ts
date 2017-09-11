@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
-import { ProfissionalModel } from './../../model/profissional-model';
+import { PropostaModel } from './../../model/proposta-model';
 
 @IonicPage()
 @Component({
@@ -10,17 +10,30 @@ import { ProfissionalModel } from './../../model/profissional-model';
 })
 export class PropostaSendPage {
 
-  profissional: ProfissionalModel;
+  proposta: PropostaModel;
 
   constructor( 
     public navCtrl: NavController, 
-    public navParams: NavParams
+    public navParams: NavParams,
+    private view: ViewController,
   ){
       this.initialize();
   }
 
   initialize(){
-    this.profissional = this.navParams.get('profissional');
+    this.proposta = this.navParams.get('proposta');
+  }
+
+  aceitar(){
+    this.view.dismiss();
+  }
+
+  recusar(){
+    this.view.dismiss();
+  }
+
+  getValorPacote(){
+    return this.proposta.qtd * this.proposta.tipoAtendimento.valor;
   }
 
 }

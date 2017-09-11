@@ -17,7 +17,7 @@
               <img src="assets/img/noimg.png">
             </ion-thumbnail>
             <br/>
-            <h2>{{profissional.usuario.nome}}</h2>
+            <h2>{{proposta.profissional.nome}}</h2>
             <p>4.7</p>
           </ion-item>
         </ion-list> 
@@ -25,17 +25,17 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h6>Valor do Pacote: {{250.00}}</h6>
+        <h6>Valor do Pacote: {{getValorPacote()}}</h6>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button color="secondary" ion-button round block>Aceitar</button>
+        <button color="secondary" ion-button round block (click)="aceitar()">Aceitar</button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <button color="danger" ion-button round block>Não Aceitar</button>
+        <button color="danger" ion-button round block (click)="recusar()">Não Aceitar</button>
       </ion-col>
     </ion-row>  
   </ion-grid>
