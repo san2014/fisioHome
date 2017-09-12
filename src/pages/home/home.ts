@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   initialize(){
-
+    
     this.loginProvider.getUsuarioLogado()
       .then((usuarioLogado) => {
         if (usuarioLogado !== null){

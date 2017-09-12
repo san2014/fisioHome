@@ -23,6 +23,7 @@ export class MyApp {
 
   usuario: UsuarioModel;
 
+  
   constructor(
     platform: Platform,
     statusBar: StatusBar,
@@ -53,7 +54,9 @@ export class MyApp {
 
     this.loginProvider.getUsuarioLogado()
     .then((usuarioLogado) => {
-      this.usuario = usuarioLogado;
+      if (usuarioLogado !== null){
+        this.usuario = usuarioLogado;
+      }
     });        
   }
 
