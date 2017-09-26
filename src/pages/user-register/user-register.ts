@@ -31,6 +31,8 @@ export class UserRegister {
     
     this.tipoUsuario = this.navParams.get('tipoUsuario');
 
+    this.usuario = new UsuarioModel();
+
     this.formUser = this.fb.group({
       'cpf': ['', Validators.required],
       'nome': ['',Validators.required],
@@ -46,7 +48,14 @@ export class UserRegister {
       ],
       'email': ['',Validators.compose([Validators.required, Validators.email])],
       'dtNasc': ['',Validators.required],
-      'cep': ['',Validators.required],
+      'cep': ['',Validators.compose
+        (
+          [
+            Validators.required,
+            Validators.pattern('[0-9]{8}')
+          ]
+        )
+      ],
       'logradouro': ['',Validators.required],
       'bairro': ['',Validators.required],
       'numero': ['',Validators.required],
@@ -79,15 +88,16 @@ export class UserRegister {
   }
 
   incluir(){
-
-    this.userProvider.postData(this.formUser.value)
+    this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
+    //aguardando api...
+/*     this.userProvider.postData(this.formUser.value)
       .subscribe(
           data=>{
             console.log('Usuário registrado com sucesso');
+            
           },
           err=>console.log(err)
-      );    
-
+      );   */  
   }
 
 }
