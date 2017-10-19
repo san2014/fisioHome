@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
 import { LoginProvider } from "../../providers/login/login.provider";
+import { HometabPage } from '../hometab/hometab';
 
 @IonicPage()
 @Component({
@@ -67,9 +68,10 @@ export class Login {
           this.usuarioModel = data;
 
           erro = false;
-
+          
           this.storage.set('usuarioLogado', this.usuarioModel)
-          .then(() => this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}),
+          .then(() => 
+            this.navCtrl.push(HometabPage,{'usuarioModel': this.usuarioModel}),
             error => (console.error(error))
           )
 

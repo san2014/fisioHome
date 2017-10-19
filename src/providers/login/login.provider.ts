@@ -39,8 +39,6 @@ export class LoginProvider {
         return resolve(this.getAdmin());
       }
 
-      console.log('ainda assim continuo...');
-
       this.safeHttp.get(`${ENDPOINT_API}/usuarios`, {params: {login: login.usuario}})
         .map(res => res.json())
         .subscribe(data => {
