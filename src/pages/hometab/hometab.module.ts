@@ -8,6 +8,9 @@ import { HometabPage } from './hometab';
   ],
   imports: [
     IonicPageModule.forChild(HometabPage),
+  ],
+  exports:[
+    HometabPage
   ]
 })
 export class HometabPageModule {}

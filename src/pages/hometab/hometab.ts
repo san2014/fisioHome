@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import { UsuarioModel } from './../../model/usuario-model';
+import { IniciarPage } from '../iniciar/iniciar';
+import { SobrePage } from '../sobre/sobre';
 
 @IonicPage()
 @Component({
@@ -11,11 +13,11 @@ import { UsuarioModel } from './../../model/usuario-model';
 })
 export class HometabPage {
 
-  iniciarRoot = 'IniciarPage';
+  iniciarRoot = IniciarPage;
   
-  sobreRoot = 'SobrePage';
+  sobreRoot = SobrePage;
 
-  contatoRoot = 'SobrePage';
+  contatoRoot = SobrePage;
 
   usuarioLogado: UsuarioModel;
 

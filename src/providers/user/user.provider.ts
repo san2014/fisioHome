@@ -35,7 +35,7 @@ export class UserProvider {
     
     const headers = new Headers();
 
-    headers.append('Content-type', 'application/json');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     return this.http
       .post(`${ENDPOINT_API}/usuarios`, 

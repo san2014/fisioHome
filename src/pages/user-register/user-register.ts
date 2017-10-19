@@ -1,3 +1,4 @@
+import { LoginProvider } from './../../providers/login/login.provider';
 import { UserProvider } from './../../providers/user/user.provider';
 import { UsuarioModel } from './../../model/usuario-model';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
@@ -22,13 +23,16 @@ export class UserRegister {
     private navCtrl: NavController,
     private fb: FormBuilder,
     private userProvider: UserProvider,
+    private loginProvider: LoginProvider,
     private navParams: NavParams) {
 
       this.initialize();
   }
 
   initialize() {
-    
+
+    this.getUsuarioLogado();
+  
     this.tipoUsuario = this.navParams.get('tipoUsuario');
 
     this.usuario = new UsuarioModel();
@@ -52,7 +56,7 @@ export class UserRegister {
         (
           [
             Validators.required,
-            Validators.pattern('[0-9]{8}')
+            Validators.pattern(/[0-9]{8}/)
           ]
         )
       ],
@@ -61,6 +65,13 @@ export class UserRegister {
       'numero': ['',Validators.required],
     });
 
+  }
+
+  async getUsuarioLogado(){
+    this.usuario = await this.loginProvider.getUsuarioLogado();
+    if (this.usuario == null){
+      this.usuario = new UsuarioModel();
+    }
   }
 
   aplicaCssErro(campo: string) {
@@ -88,16 +99,15 @@ export class UserRegister {
   }
 
   incluir(){
-    this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
+    //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
     //aguardando api...
-/*     this.userProvider.postData(this.formUser.value)
+     this.userProvider.postData(this.formUser.value)
       .subscribe(
           data=>{
             console.log('Usuário registrado com sucesso');
-            
           },
           err=>console.log(err)
-      );   */  
+      );     
   }
 
 }
