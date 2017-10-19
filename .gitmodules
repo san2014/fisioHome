@@ -1,9 +1,3 @@
 [submodule "api"]
 	path = api
 	url = https://git.heroku.com/fisio-home.git
-[submodule "api_nodejs"]
-	path = api_nodejs
-	url = https://git.heroku.com/fisio-home.git
-[submodule "slide_jquery"]
-	path = slide_jquery
-	url = https://github.com/rukaLukas/jquery-slide-apresentation.git
