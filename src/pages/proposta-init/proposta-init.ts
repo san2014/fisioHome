@@ -44,7 +44,9 @@ export class PropostaInitPage {
             Validators.maxLength(3)
           ]
         )
-      ]
+      ],
+      'dtInicio': [''],
+      'dtFim': [''],
     });
 
     this.proposta = new PropostaModel();

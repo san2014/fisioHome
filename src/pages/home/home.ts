@@ -1,8 +1,6 @@
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { HometabPage } from './../hometab/hometab';
 import { LoginProvider } from './../../providers/login/login.provider';
 
 @IonicPage()
@@ -26,7 +24,7 @@ export class HomePage {
     this.loginProvider.getUsuarioLogado()
       .then((usuarioLogado) => {
         if (usuarioLogado !== null){
-          this.navCtrl.push(HometabPage, {'usuarioLogado': usuarioLogado});
+          this.navCtrl.push('HometabPage', {'usuarioLogado': usuarioLogado});
         }  
       });
   }

@@ -8,15 +8,13 @@ import { AlertController, NavController } from 'ionic-angular';
 import { LoginProvider } from './../providers/login/login.provider';
 import { HomePage } from "../pages/home/home";
 import { UsuarioModel } from "../model/usuario-model";
-import { UserRegister } from '../pages/user-register/user-register';
-//import { HomePage } from './../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
 
-  rootPage = HomePage;
+  rootPage: string = 'HomePage';
 
   @ViewChild(Nav) nav: Nav;
 
@@ -43,7 +41,7 @@ export class MyApp {
         statusBar.backgroundColorByHexString('#236B8E');
 
         this.menuSections = [
-          {title: 'Dados Cadastrais', component: UserRegister },
+          {title: 'Dados Cadastrais', component: 'UserRegister' },
           {title: 'Meu Histórico', component: 'IniciarPage'},
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ]
@@ -92,7 +90,7 @@ export class MyApp {
   }  
 
   navToComponent(component: any){
-    this.nav.setRoot(component); 
+    this.nav.push(component); 
   }
 
   logout(){

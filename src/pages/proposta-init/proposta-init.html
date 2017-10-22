@@ -12,9 +12,34 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          {{tipoAtendimento.descricao}}
+          <h1>{{tipoAtendimento.descricao}}</h1>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label color="primary">Período dos atendimentos</ion-label>
+        </ion-col>
+      </ion-row>      
+      <ion-row>
+        <ion-col>
+          <ion-datetime placeholder="Data Fim" outline class="box-register" name="dtInicio" formControlName="dtInicio" 
+            displayFormat="DD/MM/YYYY"
+            cancelText="cancelar"
+            doneText="ok"
+            [(ngModel)]="proposta.dataInicio"
+            [ngClass]="aplicaCssErro('dtInicio')">
+        </ion-datetime>       
+        </ion-col>
+        <ion-col>
+            <ion-datetime placeholder="Data Inicio" outline class="box-register" name="dtFim" formControlName="dtFim" 
+            displayFormat="DD/MM/YYYY"
+            cancelText="cancelar"
+            doneText="ok"
+            [(ngModel)]="proposta.dataFim"
+            [ngClass]="aplicaCssErro('dtFim')">
+          </ion-datetime>          
+        </ion-col>        
+      </ion-row>      
       <ion-row>
         <ion-col>
             <ion-input outline

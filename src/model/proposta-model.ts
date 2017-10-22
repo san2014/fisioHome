@@ -12,6 +12,10 @@ export class PropostaModel{
 
     profissional: ProfissionalModel;
 
+    dataInicio: string;
+
+    dataFim: string;
+
     qtd: number;
 
     avaliacaoCliente: string;
