@@ -1,5 +1,5 @@
 import { PropostaSendPage } from './../proposta-send/proposta-send';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController,
@@ -45,8 +45,7 @@ export class PropostaInitPage {
           ]
         )
       ],
-      'dtInicio': [''],
-      'dtFim': [''],
+      'dtInicio': ['', Validators.required]
     });
 
     this.proposta = new PropostaModel();

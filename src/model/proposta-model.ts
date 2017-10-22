@@ -12,9 +12,7 @@ export class PropostaModel{
 
     profissional: ProfissionalModel;
 
-    dataInicio: string;
-
-    dataFim: string;
+    dataInicio: Date;
 
     qtd: number;
 
