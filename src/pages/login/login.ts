@@ -2,6 +2,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from "ionic-angular";
 import { Storage } from '@ionic/storage';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
@@ -27,7 +28,9 @@ export class Login {
     private fb: FormBuilder,
     private loginProvider: LoginProvider,
     private storage: Storage,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public facebook: Facebook
+  ) {
 
       this.initialize();
 
@@ -44,6 +47,8 @@ export class Login {
     this.msgError = [];
 
     this.loginModel = new LoginModel();
+
+    this.usuarioModel = new UsuarioModel();
 
   }
 
@@ -89,5 +94,28 @@ export class Login {
 
       })
   }
+
+  loginFace(){
+    this.facebook.login(['public_profile', 'user_friends', 'email'])
+    .then((res: FacebookLoginResponse) => {
+      this.getUserDetail(res.authResponse.userID);
+    })
+    .catch(e => console.log('Error logging into Facebook', e));    
+  }
+
+  getUserDetail(userid) {
+    this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
+      .then(profile => {
+        //alert(JSON.stringify(profile));
+        this.usuarioModel.nome = profile.name;
+        this.usuarioModel.email = profile.email;
+        this.usuarioModel.dtNasc = profile.birthday;
+        this.usuarioModel.imgPerfil = profile.picture.data.url;
+        alert(JSON.stringify(this.usuarioModel));
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }  
 
 }

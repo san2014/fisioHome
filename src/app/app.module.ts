@@ -13,6 +13,7 @@ import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 
 import { LoginProvider } from "../providers/login/login.provider";
+import { Facebook } from "@ionic-native/facebook";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { LoginProvider } from "../providers/login/login.provider";
     LoginProvider,
     Network,
     NetworkService,
-    SafeHttp
+    SafeHttp,
+    Facebook
   ]
 })
 export class AppModule {}
