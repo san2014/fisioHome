@@ -111,7 +111,9 @@ export class Login {
         this.usuarioModel.email = profile.email;
         this.usuarioModel.dtNasc = profile.birthday;
         this.usuarioModel.imgPerfil = profile.picture.data.url;
-        alert(JSON.stringify(this.usuarioModel));
+        //alert(JSON.stringify(this.usuarioModel));
+        this.storage.set('usuarioLogado', this.usuarioModel);
+        this.navCtrl.push('UserRegister');      
       })
       .catch(e => {
         console.log(e);
