@@ -28,6 +28,10 @@ export class UsuarioModel{
 
     tipo: number;
 
+    facebookId: number;
+
+    googleId: number;
+
     ativo: boolean;
 
 }

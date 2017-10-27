@@ -32,7 +32,7 @@ export class UserProvider {
   }
   
   postData(params) {
-    
+
     const headers = new Headers();
 
     headers.append('Content-Type', 'application/x-www-form-urlencoded');

@@ -1,3 +1,4 @@
+import { UserProvider } from './../../providers/user/user.provider';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from "ionic-angular";
@@ -27,6 +28,7 @@ export class Login {
     public navCtrl: NavController,
     private fb: FormBuilder,
     private loginProvider: LoginProvider,
+    private userProvider: UserProvider,
     private storage: Storage,
     public navParams: NavParams,
     public facebook: Facebook
@@ -96,11 +98,37 @@ export class Login {
   }
 
   loginFace(){
+
+    this.usuarioModel.cpf = 12345678;
+    this.usuarioModel.nome = "teste model";
+    this.usuarioModel.login = "teste";
+    this.usuarioModel.senha = "teste";
+    this.usuarioModel.email = "mail@mail.com";
+    this.usuarioModel.dtNasc = '27/12/1984';
+    this.usuarioModel.cep = 40430200;
+    this.usuarioModel.logradouro = "teste";
+    this.usuarioModel.bairro = "teste";
+    this.usuarioModel.numero = "10";
+    this.usuarioModel.imgPerfil = 'dsadsdda';
+    //this.usuarioModel.facebookId = 12212222;
+
+    this.userProvider
+    .postData(this.usuarioModel)
+    .subscribe(
+      data =>{
+        alert(data);
+        this.storage.set('usuarioLogado', this.usuarioModel);
+        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+      }
+    )
+    .unsubscribe();    
+
+/* 
     this.facebook.login(['public_profile', 'user_friends', 'email'])
     .then((res: FacebookLoginResponse) => {
       this.getUserDetail(res.authResponse.userID);
     })
-    .catch(e => console.log('Error logging into Facebook', e));    
+    .catch(e => console.log('Error logging into Facebook', e));  */   
   }
 
   getUserDetail(userid) {
@@ -111,9 +139,18 @@ export class Login {
         this.usuarioModel.email = profile.email;
         this.usuarioModel.dtNasc = profile.birthday;
         this.usuarioModel.imgPerfil = profile.picture.data.url;
+        this.usuarioModel.facebookId = userid;
         //alert(JSON.stringify(this.usuarioModel));
-        this.storage.set('usuarioLogado', this.usuarioModel);
-        this.navCtrl.push('UserRegister');      
+        this.userProvider
+          .postData(this.usuarioModel)
+          .subscribe(
+            data =>{
+              alert(data);
+              this.storage.set('usuarioLogado', this.usuarioModel);
+              this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+            }
+          )
+          .unsubscribe();
       })
       .catch(e => {
         console.log(e);
