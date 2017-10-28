@@ -101,7 +101,8 @@ export class UserRegister {
   incluir(){
     //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
     //aguardando api...
-     this.userProvider.postData(this.formUser.value)
+
+      this.userProvider.postData(this.formUser.value)
       .subscribe(
           data=>{
             console.log('Usuário registrado com sucesso');

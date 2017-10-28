@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { UserProvider } from './../../providers/user/user.provider';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
@@ -23,6 +24,8 @@ export class Login {
   formLogin: FormGroup;
 
   msgError: string[];
+
+  postUser: Subscription;
 
   constructor(
     public navCtrl: NavController,
@@ -55,106 +58,110 @@ export class Login {
   }
 
   pushErroLogin(){
-    
+
     this.msgError.push('Usuário ou senha inválidos');
 
   }
 
-  logar(){
+  async logar(){
 
     this.msgError = [];
 
     let erro: boolean = true;
 
-    this.loginProvider.login(this.loginModel)
+    await this.loginProvider.login(this.loginModel)
       .then(data => {
 
         if (data !== null){
-
-          this.usuarioModel = data;
-
-          erro = false;
           
-          this.storage.set('usuarioLogado', this.usuarioModel)
-          .then(() => 
-            this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}),
-            error => (console.error(error))
-          )
+          this.usuarioModel = data;
+          
+          erro = false;
 
         }
-
-        if (erro === true){
-         
-          this.pushErroLogin();
-
-        }
-
+        
       })
-      .catch(error => {
+
+      if (!erro){
+        
+        await this.storage.set('usuarioLogado', this.usuarioModel)
+          .then(() => {
+          
+            this.navCtrl
+              .push('HometabPage',{'usuarioModel': this.usuarioModel}),
+              error => (erro = true)
+          }) 
+
+      }
+
+      if (erro){
 
         this.pushErroLogin();
 
-      })
+      }
+
+  }
+
+  ionViewWillEnter(){
+
+    if (this.usuarioModel.id != undefined){
+
+      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+
+    }
+
+  }
+
+  ionViewDidLeave(){
+    
+    if (this.postUser != undefined){
+    
+      this.postUser.unsubscribe();
+
+    }
+
   }
 
   loginFace(){
-
-    this.usuarioModel.cpf = 12345678;
-    this.usuarioModel.nome = "teste model";
-    this.usuarioModel.login = "teste";
-    this.usuarioModel.senha = "teste";
-    this.usuarioModel.email = "mail@mail.com";
-    this.usuarioModel.dtNasc = '27/12/1984';
-    this.usuarioModel.cep = 40430200;
-    this.usuarioModel.logradouro = "teste";
-    this.usuarioModel.bairro = "teste";
-    this.usuarioModel.numero = "10";
-    this.usuarioModel.imgPerfil = 'dsadsdda';
-    //this.usuarioModel.facebookId = 12212222;
-
-    this.userProvider
-    .postData(this.usuarioModel)
-    .subscribe(
-      data =>{
-        alert(data);
-        this.storage.set('usuarioLogado', this.usuarioModel);
-        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
-      }
-    )
-    .unsubscribe();    
-
-/* 
     this.facebook.login(['public_profile', 'user_friends', 'email'])
-    .then((res: FacebookLoginResponse) => {
-      this.getUserDetail(res.authResponse.userID);
-    })
-    .catch(e => console.log('Error logging into Facebook', e));  */   
+      .then((res: FacebookLoginResponse) => {
+        
+        this.getUserDetail(res.authResponse.userID);
+        
+      })
+      .catch(e => this.msgError.push('Ocorreu um erro na operação'));     
   }
 
   getUserDetail(userid) {
     this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
       .then(profile => {
-        //alert(JSON.stringify(profile));
+
         this.usuarioModel.nome = profile.name;
+        
         this.usuarioModel.email = profile.email;
+        
         this.usuarioModel.dtNasc = profile.birthday;
+        
         this.usuarioModel.imgPerfil = profile.picture.data.url;
+        
         this.usuarioModel.facebookId = userid;
-        //alert(JSON.stringify(this.usuarioModel));
-        this.userProvider
-          .postData(this.usuarioModel)
-          .subscribe(
-            data =>{
-              alert(data);
-              this.storage.set('usuarioLogado', this.usuarioModel);
-              this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
-            }
+
+        this.postUser = this.userProvider
+          .postData(JSON.stringify(this.usuarioModel))
+            .subscribe(
+              data =>{
+
+                this.storage.set('usuarioLogado', this.usuarioModel)
+                  .then(() =>{
+                    this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel}
+                  )}
+                );
+                
+              },
+              error => (this.msgError.push('Ocorreu um erro na operação'))
           )
-          .unsubscribe();
       })
-      .catch(e => {
-        console.log(e);
-      });
+     
   }  
 
 }
