@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage } from "ionic-angular";
 import { Storage } from '@ionic/storage';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
@@ -34,7 +35,8 @@ export class Login {
     private userProvider: UserProvider,
     private storage: Storage,
     public navParams: NavParams,
-    public facebook: Facebook
+    public facebook: Facebook,
+    private googlePlus: GooglePlus
   ) {
 
       this.initialize();
@@ -126,13 +128,13 @@ export class Login {
     this.facebook.login(['public_profile', 'user_friends', 'email'])
       .then((res: FacebookLoginResponse) => {
         
-        this.getUserDetail(res.authResponse.userID);
+        this.setUserFace(res.authResponse.userID);
         
       })
       .catch(e => this.msgError.push('Ocorreu um erro na operação'));     
   }
 
-  getUserDetail(userid) {
+  setUserFace(userid) {
     this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
       .then(profile => {
 
@@ -163,5 +165,29 @@ export class Login {
       })
      
   }  
+
+  loginGoogle(){
+
+    this.googlePlus.login({})
+    .then(res => {
+      
+      alert(JSON.stringify(res));
+
+    })
+    .catch(err => alert(JSON.stringify(err)));
+
+  }
+
+  logoutGoogle() {
+
+    this.googlePlus.logout()
+    .then(res => {
+
+      console.log(res);
+
+    })
+    .catch(err => console.error(err));
+
+  }
 
 }

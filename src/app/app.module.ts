@@ -11,6 +11,7 @@ import { SafeHttp } from './app.safe-http';
 import { NetworkService } from './app.network-service';
 import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 import { LoginProvider } from "../providers/login/login.provider";
 import { Facebook } from "@ionic-native/facebook";
@@ -37,7 +38,8 @@ import { Facebook } from "@ionic-native/facebook";
     Network,
     NetworkService,
     SafeHttp,
-    Facebook
+    Facebook,
+    GooglePlus
   ]
 })
 export class AppModule {}
