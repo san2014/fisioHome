@@ -23,15 +23,10 @@ export class LoginProvider {
   getAdmin(): UsuarioModel{
 
     let admin =  new UsuarioModel();
-
     admin.id = 1;
-    
     admin.login = "admin";
-
     admin.nome = "Administrador do Sistema";
-    
     admin.ativo = true;
-    
     admin.tipo = 1;
 
     return admin;
@@ -56,9 +51,7 @@ export class LoginProvider {
               data.forEach(element => {
                 
                 if (element.senha == login.senha){
-                
                   return resolve(data);
-
                 } 
                 
               });
