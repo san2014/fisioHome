@@ -134,24 +134,33 @@ export class Login {
 
   async importExternalUser(usuario: UsuarioModel){
 
-    this.postUser = await this.userProvider
-      .postData(JSON.stringify(usuario))
-        .subscribe(
-          data =>{
-            this.usuarioModel = data;
-          },
-          error => (this.msgError.push('Ocorreu um erro na operação'))
-      );
+    if (usuario != null){
+
+      this.postUser = await this.userProvider
+        .postData(JSON.stringify(usuario))
+          .subscribe(
+            data =>{
+              this.usuarioModel = data;
+            },
+            error => (this.usuarioModel = null)
+        );
+
+    }
 
   }
 
   async setUserSession(usuario: UsuarioModel){
 
-    this.storage.set('usuarioLogado', usuario)
-      .then(() =>{
-        this.navCtrl.push('HometabPage',{'usuarioModel': usuario}
-      )}
-    );
+    if (usuario != null){
+
+      this.storage.set('usuarioLogado', usuario)
+        .then(() =>{
+          this.navCtrl.push('HometabPage',{'usuarioModel': usuario})}
+        ).catch((erro) => {
+          this.usuarioModel = null;
+        });
+
+    }
 
   }
 
@@ -163,17 +172,104 @@ export class Login {
       .catch(e => this.msgError.push('Ocorreu um erro na operação'));     
   }
 
-  setUserFace(userid) {
+  async setUserFace(userid) {
     this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
       .then(profile => {
 
-        this.usuarioModel = new UsuarioModel();
-        this.usuarioModel.nome = profile.name;
-        this.usuarioModel.email = profile.email;
-        this.usuarioModel.dtNasc = profile.birthday;
-        this.usuarioModel.imgPerfil = profile.picture.data.url;
-        this.usuarioModel.facebookId = userid;
+        this.userProvider.getUserByEmail(profile.email);
 
+        if (this.usuarioModel == null){
+
+          this.usuarioModel = new UsuarioModel();
+          this.usuarioModel.nome = profile.name;
+          this.usuarioModel.email = profile.email;
+          this.usuarioModel.dtNasc = profile.birthday;
+          this.usuarioModel.imgPerfil = profile.picture.data.url;
+          this.usuarioModel.facebookId = userid;
+
+          this.showLoading('aguarde...');
+
+          this.importExternalUser(this.usuarioModel);
+
+          this.setUserSession(this.usuarioModel);
+
+          this.hideLoading();
+
+          if (this.usuarioModel == null){
+            this.msgError.push('Ocorreu um erro na operação');
+          }
+
+        }else{
+          
+          this.setUserSession(this.usuarioModel);
+
+        }
+
+      })
+     
+  }  
+
+  getDataGoogle(){
+    return new Promise((resolve, reject) => { 
+      this.googlePlus.login({})
+        .then(res => {
+   
+          resolve(res);
+        })
+        .catch(() => {
+          resolve(null)
+        });
+    })
+  }
+
+  async loginGoogle(){
+
+    const userGoogle: any = await this.getDataGoogle();
+
+    //alert('get daddos google...');
+
+    const userFind = await this.userProvider.getUserByEmail(this.usuarioModel.email);
+
+    alert(userFind);
+    
+    if (userFind == null){
+
+      this.usuarioModel = new UsuarioModel();
+      this.usuarioModel.nome = userGoogle.displayName;
+      this.usuarioModel.email = userGoogle.email;
+      this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
+      this.usuarioModel.tipo = 1;      
+
+      this.showLoading('aguarde...');
+
+      await this.importExternalUser(this.usuarioModel);
+
+      await this.setUserSession(this.usuarioModel);
+
+      this.hideLoading();
+
+      if (this.usuarioModel == null){
+        this.msgError.push('Ocorreu um erro na operação');
+      }        
+
+    }else{
+      //this.setUserSession(this.usuarioModel);
+      alert(this.usuarioModel);
+
+    }    
+
+/*     this.googlePlus.login({})
+    .then(res => {
+
+      this.getUserByEmail(res.email);
+
+      if (this.usuarioModel == null){
+
+        this.usuarioModel = new UsuarioModel();
+        this.usuarioModel.nome = res.displayName;
+        this.usuarioModel.email = res.email;
+        this.usuarioModel.imgPerfil = res.imageUrl;  
+        
         this.showLoading('aguarde...');
 
         this.importExternalUser(this.usuarioModel);
@@ -182,30 +278,19 @@ export class Login {
 
         this.hideLoading();
 
-      })
-     
-  }  
+        if (this.usuarioModel == null){
+          this.msgError.push('Ocorreu um erro na operação');
+        }        
 
-  loginGoogle(){
+      }else{
+        
+        //this.setUserSession(this.usuarioModel);
+        alert(this.usuarioModel);
 
-    this.googlePlus.login({})
-    .then(res => {
-      
-      this.usuarioModel = new UsuarioModel();
-      this.usuarioModel.nome = res.displayName;
-      this.usuarioModel.email = res.email;
-      this.usuarioModel.imgPerfil = res.imageUrl;  
-      
-      this.showLoading('aguarde...');
-
-      this.importExternalUser(this.usuarioModel);
-
-      this.setUserSession(this.usuarioModel);
-
-      this.hideLoading();
+      }
 
     })
-    .catch(err => this.msgError.push('Ocorreu um erro na operação'));
+    .catch(err => this.msgError.push('Ocorreu um erro na operação')); */
 
   }
 

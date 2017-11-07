@@ -19,7 +19,7 @@ export class UserProvider {
   
     return new Promise(resolve => {
 
-      this.safeHttp.get(`${ENDPOINT_API}/usuarios`).map(res => res.json())
+      this.safeHttp.get(`${ENDPOINT_API}/usuario`).map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, err => {
@@ -30,6 +30,21 @@ export class UserProvider {
     })
        
   }
+
+  getUserByEmail(email: string): Promise<UsuarioModel>{
+
+    return new Promise(resolve => {
+      
+      this.safeHttp.get(`${ENDPOINT_API}/usuario/email`).map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+        }, err => {
+          resolve(null);
+        });
+
+    })    
+
+  }
   
   postData(params) {
 
@@ -38,11 +53,11 @@ export class UserProvider {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     return this.http
-      .post(`${ENDPOINT_API}/usuarios`, 
+      .post(`${ENDPOINT_API}/usuario`, 
         params, 
         new RequestOptions({headers: headers})
       )
       .map(response => response.json());
-}  
+  }  
 
 }
