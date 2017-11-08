@@ -62,7 +62,7 @@ export class UserRegister {
       ],
       'logradouro': ['',Validators.required],
       'bairro': ['',Validators.required],
-      'numero': ['',Validators.required],
+      'numero_local': ['',Validators.required],
     });
 
   }
@@ -100,15 +100,10 @@ export class UserRegister {
 
   incluir(){
     //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
-    //aguardando api...
+    this.userProvider.postData(this.formUser.value)
+      .then(() => console.log('Usuário registrado com sucesso'))
+      .catch((error) => console.log(error))
 
-      this.userProvider.postData(this.formUser.value)
-      .subscribe(
-          data=>{
-            console.log('Usuário registrado com sucesso');
-          },
-          err=>console.log(err)
-      );     
   }
 
 }

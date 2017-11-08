@@ -132,7 +132,7 @@ export class Login {
     this.loading.dismiss();
   }
 
-  async importExternalUser(usuario: UsuarioModel){
+/*   async importExternalUser(usuario: UsuarioModel){
 
     if (usuario != null){
 
@@ -147,7 +147,7 @@ export class Login {
 
     }
 
-  }
+  } */
 
   async setUserSession(usuario: UsuarioModel){
 
@@ -189,7 +189,7 @@ export class Login {
 
           this.showLoading('aguarde...');
 
-          this.importExternalUser(this.usuarioModel);
+          this.userProvider.postData(this.usuarioModel);
 
           this.setUserSession(this.usuarioModel);
 
@@ -242,7 +242,7 @@ export class Login {
 
       this.showLoading('aguarde...');
 
-      await this.importExternalUser(this.usuarioModel);
+      await this.userProvider.postData(this.usuarioModel);
 
       await this.setUserSession(this.usuarioModel);
 

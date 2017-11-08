@@ -46,18 +46,24 @@ export class UserProvider {
 
   }
   
-  postData(params) {
+  postData(params): Promise<UsuarioModel> {
 
     const headers = new Headers();
 
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    return this.http
-      .post(`${ENDPOINT_API}/usuario`, 
-        params, 
-        new RequestOptions({headers: headers})
-      )
-      .map(response => response.json());
+    return new Promise(resolve => {
+      this.http
+        .post(`${ENDPOINT_API}/usuario`, 
+          params, 
+          new RequestOptions({headers: headers})
+        )
+        .map(response => response.json())
+        .subscribe((data) =>{
+          resolve(data);
+        }, 
+        error => (resolve(null)))
+      })
   }  
 
 }

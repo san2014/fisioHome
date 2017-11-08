@@ -20,7 +20,7 @@ export class UsuarioModel{
 
     bairro: string;
 
-    numero: string;
+    numero_local: string;
 
     email: string;
 
@@ -32,6 +32,6 @@ export class UsuarioModel{
 
     googleId: number;
 
-    ativo: boolean;
+    flag_ativo: boolean;
 
 }
