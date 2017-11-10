@@ -1,111 +1,111 @@
 <ion-header>
+  
+    <ion-navbar color="default">
+      <ion-title>Registro</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+  
+    <form [formGroup]="formUser">
+    <ion-grid>  
+      <ion-row>
+        <ion-col>
+            <ion-input type="number" placeholder="Cpf" outline name="cpf" formControlName="cpf" 
+              [(ngModel)]="usuario.cpf"
+              [ngClass]="aplicaCssErro('cpf')">
+            </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-input type="number" placeholder="RG" outline name="rg" formControlName="rg" 
+              [(ngModel)]="usuario.rg"
+              [ngClass]="aplicaCssErro('rg')">
+            </ion-input>
+        </ion-col>
+      </ion-row>      
+       <ion-row>
+        <ion-col>
+            <ion-input placeholder="Nome" outline class="box-register" name="nome" formControlName="nome" 
+              [(ngModel)]="usuario.nome"
+              [ngClass]="aplicaCssErro('nome')">
+            </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
+            [(ngModel)]="usuario.senha"
+            [ngClass]="aplicaCssErro('senha')">
+          </ion-input>
+        </ion-col>
+      </ion-row>              
+      <ion-row>
+        <ion-col>
+            <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
+              displayFormat="DD/MM/YYYY"
+              cancelText="cancelar"
+              doneText="ok"
+              [(ngModel)]="usuario.dtNasc"
+              [ngClass]="aplicaCssErro('dt_nasc')">
+            </ion-datetime>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-input placeholder="E-mail" outline class="box-register" name="email" formControlName="email" 
+              [(ngModel)]="usuario.email"
+              [ngClass]="aplicaCssErro('email')">
+            </ion-input>
+        </ion-col>
+      </ion-row>    
+      <ion-row>
+        <ion-col>
+            <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
+              [(ngModel)]="usuario.cep"
+              [ngClass]="aplicaCssErro('cep')">
+            </ion-input>
+        </ion-col>
+      </ion-row> 
+      <ion-row>
+        <ion-col>
+            <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" 
+              [(ngModel)]="usuario.logradouro"
+              [ngClass]="aplicaCssErro('logradouro')">
+            </ion-input>
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col>
+            <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" 
+              [(ngModel)]="usuario.bairro"
+              [ngClass]="aplicaCssErro('bairro')">
+            </ion-input>
+        </ion-col>
+      </ion-row>   
+      <ion-row>
+        <ion-col>
+            <ion-input placeholder="Número" outline class="box-register" name="numero_local" formControlName="numero_local" 
+              [(ngModel)]="usuario.numero_local"
+              [ngClass]="aplicaCssErro('numero_local')">
+            </ion-input>
+        </ion-col>
+      </ion-row> 
 
-  <ion-navbar color="default">
-    <ion-title>Registro</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-  <form [formGroup]="formUser">
-  <ion-grid>  
-    <ion-row>
-      <ion-col>
-          <ion-input type="number" placeholder="Cpf" outline name="cpf" formControlName="cpf" 
-            [(ngModel)]="usuario.cpf"
-            [ngClass]="aplicaCssErro('cpf')">
-          </ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Nome" outline class="box-register" name="nome" formControlName="nome" 
-            [(ngModel)]="usuario.nome"
-            [ngClass]="aplicaCssErro('nome')">
-          </ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Login" outline class="box-register" name="login" formControlName="login" 
-            [(ngModel)]="usuario.login"
-            [ngClass]="aplicaCssErro('login')">
-          </ion-input>
-      </ion-col>
-    </ion-row>  
-    <ion-row>
-      <ion-col>
-          <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
-          [(ngModel)]="usuario.senha"
-          [ngClass]="aplicaCssErro('senha')">
-        </ion-input>
-      </ion-col>
-    </ion-row>              
-    <ion-row>
-      <ion-col>
-          <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dtNasc" formControlName="dtNasc" 
-            displayFormat="DD/MM/YYYY"
-            cancelText="cancelar"
-            doneText="ok"
-            [(ngModel)]="usuario.dtNasc"
-            [ngClass]="aplicaCssErro('dtNasc')">
-          </ion-datetime>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="E-mail" outline class="box-register" name="email" formControlName="email" 
-            [(ngModel)]="usuario.email"
-            [ngClass]="aplicaCssErro('email')">
-          </ion-input>
-      </ion-col>
-    </ion-row>    
-    <ion-row>
-      <ion-col>
-          <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
-            [(ngModel)]="usuario.cep"
-            [ngClass]="aplicaCssErro('cep')">
-          </ion-input>
-      </ion-col>
-    </ion-row> 
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" 
-            [(ngModel)]="usuario.logradouro"
-            [ngClass]="aplicaCssErro('logradouro')">
-          </ion-input>
-      </ion-col>
-    </ion-row>  
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" 
-            [(ngModel)]="usuario.bairro"
-            [ngClass]="aplicaCssErro('bairro')">
-          </ion-input>
-      </ion-col>
-    </ion-row>   
-    <ion-row>
-      <ion-col>
-          <ion-input placeholder="Número" outline class="box-register" name="numero" formControlName="numero" 
-            [(ngModel)]="usuario.numero_local"
-            [ngClass]="aplicaCssErro('numero')">
-          </ion-input>
-      </ion-col>
-    </ion-row> 
+    </ion-grid>
+  
     
-  </ion-grid>
-
+    <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
+      Enviar
+    </button>
   
-  <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
-    Enviar
-  </button>
-
-  </form>  
+    </form>  
+    
   
-
-</ion-content>
-
-
-
+  </ion-content>
+  
+  
+  

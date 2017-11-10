@@ -1,3 +1,4 @@
+   
 import { LoginProvider } from './../../providers/login/login.provider';
 import { UserProvider } from './../../providers/user/user.provider';
 import { UsuarioModel } from './../../model/usuario-model';
@@ -31,16 +32,12 @@ export class UserRegister {
 
   initialize() {
 
-    this.getUsuarioLogado();
+    
   
-    this.tipoUsuario = this.navParams.get('tipoUsuario');
-
-    this.usuario = new UsuarioModel();
-
     this.formUser = this.fb.group({
       'cpf': ['', Validators.required],
+      'rg': ['', Validators.required],
       'nome': ['',Validators.required],
-      'login': ['',Validators.required],
       'senha': ['',Validators.compose
         (
           [
@@ -51,7 +48,7 @@ export class UserRegister {
         )
       ],
       'email': ['',Validators.compose([Validators.required, Validators.email])],
-      'dtNasc': ['',Validators.required],
+      'dt_nasc': ['',Validators.required],
       'cep': ['',Validators.compose
         (
           [
@@ -63,7 +60,16 @@ export class UserRegister {
       'logradouro': ['',Validators.required],
       'bairro': ['',Validators.required],
       'numero_local': ['',Validators.required],
+      'flag_ativo' : ['']
     });
+
+    this.tipoUsuario = this.navParams.get('tipoUsuario');
+    
+    this.usuario = new UsuarioModel(); 
+    
+    this.usuario.flag_ativo = true;
+
+    this.getUsuarioLogado();
 
   }
 
@@ -72,7 +78,7 @@ export class UserRegister {
     if (this.usuario == null){
       this.usuario = new UsuarioModel();
     }
-  }
+  } 
 
   aplicaCssErro(campo: string) {
     return {
@@ -100,6 +106,10 @@ export class UserRegister {
 
   incluir(){
     //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
+
+    this.formUser.value.flag_ativo = "1";
+    
+    console.log(this.formUser.value);
     this.userProvider.postData(this.formUser.value)
       .then(() => console.log('Usuário registrado com sucesso'))
       .catch((error) => console.log(error))

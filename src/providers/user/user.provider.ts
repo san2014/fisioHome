@@ -52,7 +52,7 @@ export class UserProvider {
 
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    return new Promise(resolve => {
+    return new Promise( (resolve, reject) => {
       this.http
         .post(`${ENDPOINT_API}/usuario`, 
           params, 
@@ -62,7 +62,7 @@ export class UserProvider {
         .subscribe((data) =>{
           resolve(data);
         }, 
-        error => (resolve(null)))
+        error => ( reject('Erro no servidor')) )
       })
   }  
 
