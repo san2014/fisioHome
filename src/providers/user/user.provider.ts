@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
+import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
 import { UsuarioModel } from './../../model/usuario-model';
@@ -9,11 +10,17 @@ import { SafeHttp } from './../../app/app.safe-http';
 @Injectable()
 export class UserProvider {
 
+  basepath: string = "/fsh_api";
+
   constructor(
     public http: Http,
-    private safeHttp: SafeHttp
-  ) {}
-
+    private safeHttp: SafeHttp,
+    private platform: Platform
+  ) {
+    if (this.platform.is('cordova')){
+      this.basepath = ENDPOINT_API;
+    }
+  }
 
   usuarios(): Promise<UsuarioModel>{
   
@@ -46,23 +53,25 @@ export class UserProvider {
 
   }
   
-  postData(params): Promise<UsuarioModel> {
+  postData(params): Promise<string> {
 
     const headers = new Headers();
+    
+    headers.append('Content-Type', 'application/json');
 
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
-    return new Promise( (resolve, reject) => {
+    return new Promise( resolve => {
       this.http
-        .post(`${ENDPOINT_API}/usuario`, 
+        .post(`${this.basepath}/usuario`, 
           params, 
           new RequestOptions({headers: headers})
         )
-        .map(response => response.json())
+        //.map(response => response.json())
         .subscribe((data) =>{
-          resolve(data);
+          //console.log(data);
+          resolve(data.statusText);
         }, 
-        error => ( reject('Erro no servidor')) )
+        error => ( console.log(error))
+        )
       })
   }  
 

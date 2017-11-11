@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { UserRegister } from './user-register';
 import { SharedModule } from './../../modules/shared.module';
 import { UserProvider } from './../../providers/user/user.provider';
+import { FshUtils } from '../../utils/fsh-util';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { UserProvider } from './../../providers/user/user.provider';
     IonicPageModule.forChild(UserRegister),
     SharedModule
   ],
-  providers: [UserProvider]
+  providers: [UserProvider, FshUtils]
 })
 export class UserRegisterModule {}

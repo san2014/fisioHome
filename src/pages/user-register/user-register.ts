@@ -1,10 +1,12 @@
    
-import { LoginProvider } from './../../providers/login/login.provider';
-import { UserProvider } from './../../providers/user/user.provider';
-import { UsuarioModel } from './../../model/usuario-model';
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+
+import { FshUtils } from './../../utils/fsh-util';
+import { LoginProvider } from './../../providers/login/login.provider';
+import { UserProvider } from './../../providers/user/user.provider';
+import { UsuarioModel } from './../../model/usuario-model';
 
 
 @IonicPage()
@@ -25,6 +27,7 @@ export class UserRegister {
     private fb: FormBuilder,
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
+    private fshUtils: FshUtils,
     private navParams: NavParams) {
 
       this.initialize();
@@ -32,8 +35,6 @@ export class UserRegister {
 
   initialize() {
 
-    
-  
     this.formUser = this.fb.group({
       'cpf': ['', Validators.required],
       'rg': ['', Validators.required],
@@ -108,11 +109,32 @@ export class UserRegister {
     //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
 
     this.formUser.value.flag_ativo = "1";
+
+    this.fshUtils.showLoading('aguarde...');
     
-    console.log(this.formUser.value);
     this.userProvider.postData(this.formUser.value)
-      .then(() => console.log('Usuário registrado com sucesso'))
-      .catch((error) => console.log(error))
+      .then((res) => {
+
+        this.fshUtils.hideLoading();
+        
+        const titulo = 'Parabéns';
+        
+        const msg = `Seja bem vindo ${this.usuario.nome}! \n A seguir defina uma imagem para seu perfil...` ;
+        
+        this.fshUtils.showAlert(titulo, msg);
+
+      })
+      .catch((error) => {
+
+        this.fshUtils.hideLoading();
+        
+        const titulo = 'Desculpe';
+        
+        const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
+        
+        this.fshUtils.showAlert(titulo, msg);  
+
+      });
 
   }
 
