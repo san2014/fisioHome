@@ -8,7 +8,7 @@ import { UsuarioModel } from "../../model/usuario-model";
 import { ENDPOINT_API } from "../../app/app-constantes";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
-import { SafeHttp } from './../../app/app.safe-http';
+import { SafeHttp } from "./../../utils/safe-http";
 
 @Injectable()
 export class LoginProvider {

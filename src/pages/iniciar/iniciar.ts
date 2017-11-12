@@ -1,5 +1,3 @@
-import { NetworkService } from './../../app/app.network-service';
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
@@ -25,7 +23,6 @@ export class IniciarPage {
     public navParams: NavParams,
     public tpAtdProvider: TipoAtendimentoProvider,
     private loginProvider: LoginProvider,
-    private networkService: NetworkService,
     private alert: AlertController
   ) {
     this.initialize();

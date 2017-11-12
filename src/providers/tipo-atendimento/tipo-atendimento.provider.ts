@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { ENDPOINT_API } from "../../app/app-constantes";
-import { SafeHttp } from './../../app/app.safe-http';
+import { SafeHttp } from "./../../utils/safe-http";
 
 @Injectable()
 export class TipoAtendimentoProvider {

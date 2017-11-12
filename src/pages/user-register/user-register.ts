@@ -39,6 +39,7 @@ export class UserRegister {
       'cpf': ['', Validators.required],
       'rg': ['', Validators.required],
       'nome': ['',Validators.required],
+      'sexo': ['',Validators.required],
       'senha': ['',Validators.compose
         (
           [

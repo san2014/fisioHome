@@ -37,19 +37,29 @@
       </ion-row>
       <ion-row>
         <ion-col>
-            <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
-            [(ngModel)]="usuario.senha"
-            [ngClass]="aplicaCssErro('senha')">
-          </ion-input>
+          <ion-list [(ngModel)]="usuario.sexo" formControlName="sexo" radio-group>
+            <ion-list-header>
+              Sexo
+            </ion-list-header>
+            <ion-item>
+              <ion-label>M</ion-label>
+              <ion-radio name="sexo" value="1"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>F</ion-label>
+              <ion-radio name="sexo" value="2"></ion-radio>
+            </ion-item>
+          </ion-list>
         </ion-col>
-      </ion-row>              
+      </ion-row>
+            
       <ion-row>
         <ion-col>
             <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
               displayFormat="DD/MM/YYYY"
               cancelText="cancelar"
               doneText="ok"
-              [(ngModel)]="usuario.dtNasc"
+              [(ngModel)]="usuario.dt_nasc"
               [ngClass]="aplicaCssErro('dt_nasc')">
             </ion-datetime>
         </ion-col>
@@ -94,16 +104,29 @@
             </ion-input>
         </ion-col>
       </ion-row> 
+      <ion-row>
+        <ion-col>
+          <ion-item text-wrap color="primary">
+              <div>A senha deve conter de 6 a 8 caracteres.</div>
+          </ion-item>          
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col>
+            <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
+            [(ngModel)]="usuario.senha"
+            [ngClass]="aplicaCssErro('senha')">
+          </ion-input>
+        </ion-col>
+      </ion-row>  
 
     </ion-grid>
   
-    
     <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
       Enviar
     </button>
   
-    </form>  
-    
+  </form>  
   
   </ion-content>
   

@@ -132,88 +132,81 @@ export class Login {
     this.loading.dismiss();
   }
 
-/*   async importExternalUser(usuario: UsuarioModel){
+  async loginFace(){
+    
+    const credentials = await this.authFace();
 
-    if (usuario != null){
+    const userFace: any = await this.getUserFace(credentials.authResponse.userID);
 
-      this.postUser = await this.userProvider
-        .postData(JSON.stringify(usuario))
-          .subscribe(
-            data =>{
-              this.usuarioModel = data;
-            },
-            error => (this.usuarioModel = null)
-        );
+    const userFind = await this.userProvider.getUserByEmail(userFace.email);
+    
+    if (userFind == null){
 
-    }
+      this.usuarioModel = new UsuarioModel();
+      this.usuarioModel.nome = userFace.name;
+      this.usuarioModel.email = userFace.email;
+      this.usuarioModel.dt_nasc = userFace.birthday;
+      this.usuarioModel.imgPerfil = userFace.picture.data.url;
+      this.usuarioModel.tipo = 1;
+      
+      this.showLoading('aguarde...');
 
-  } */
+      this.userProvider.postData(this.usuarioModel);
 
-  async setUserSession(usuario: UsuarioModel){
+      this.setUserSession(this.usuarioModel);
 
-    if (usuario != null){
+      this.hideLoading();
 
-      this.storage.set('usuarioLogado', usuario)
-        .then(() =>{
-          this.navCtrl.push('HometabPage',{'usuarioModel': usuario})}
-        ).catch((erro) => {
-          this.usuarioModel = null;
+      if (this.usuarioModel == null){
+        this.msgError.push('Ocorreu um erro na operação');
+      }else{
+        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+      }   
+      
+    }else{
+    
+      this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+
+      await this.setUserSession(this.usuarioModel);
+
+      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+
+    }  
+
+
+  }
+
+  getUserFace(userid) {
+
+    return new Promise ((resolve) => {
+      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
+        .then(profile => {
+          resolve(profile);
+        })
+        .catch(()=> {
+          resolve(null);
         });
+    });
+
+  } 
+  
+  setUserSession(usuario: UsuarioModel){
+    if (usuario != null){
+
+      return new Promise((resolve, reject) => {
+        this.storage.set('usuarioLogado', usuario)
+          .catch((erro) => {
+            this.usuarioModel = null;
+          });
+      })
 
     }
-
-  }
-
-  loginFace(){
-    this.facebook.login(['public_profile', 'user_friends', 'email'])
-      .then((res: FacebookLoginResponse) => {
-        this.setUserFace(res.authResponse.userID);
-      })
-      .catch(e => this.msgError.push('Ocorreu um erro na operação'));     
-  }
-
-  async setUserFace(userid) {
-    this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
-      .then(profile => {
-
-        this.userProvider.getUserByEmail(profile.email);
-
-        if (this.usuarioModel == null){
-
-          this.usuarioModel = new UsuarioModel();
-          this.usuarioModel.nome = profile.name;
-          this.usuarioModel.email = profile.email;
-          this.usuarioModel.dtNasc = profile.birthday;
-          this.usuarioModel.imgPerfil = profile.picture.data.url;
-          this.usuarioModel.facebookId = userid;
-
-          this.showLoading('aguarde...');
-
-          this.userProvider.postData(this.usuarioModel);
-
-          this.setUserSession(this.usuarioModel);
-
-          this.hideLoading();
-
-          if (this.usuarioModel == null){
-            this.msgError.push('Ocorreu um erro na operação');
-          }
-
-        }else{
-          
-          this.setUserSession(this.usuarioModel);
-
-        }
-
-      })
-     
   }  
 
   getDataGoogle(){
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve) => { 
       this.googlePlus.login({})
         .then(res => {
-   
           resolve(res);
         })
         .catch(() => {
@@ -222,16 +215,24 @@ export class Login {
     })
   }
 
+  authFace(){
+    return new Promise<FacebookLoginResponse>((resolve) => { 
+      this.facebook.login(['public_profile', 'user_friends', 'email'])
+        .then((res: FacebookLoginResponse) => {
+          resolve(res);
+        })
+        .catch( () => {
+          resolve(null);
+        });
+    });         
+  }  
+
   async loginGoogle(){
 
     const userGoogle: any = await this.getDataGoogle();
 
-    //alert('get daddos google...');
+    const userFind = await this.userProvider.getUserByEmail(userGoogle.email);
 
-    const userFind = await this.userProvider.getUserByEmail(this.usuarioModel.email);
-
-    alert(userFind);
-    
     if (userFind == null){
 
       this.usuarioModel = new UsuarioModel();
@@ -250,47 +251,21 @@ export class Login {
 
       if (this.usuarioModel == null){
         this.msgError.push('Ocorreu um erro na operação');
-      }        
-
+      }else{
+        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+      }   
+      
     }else{
-      //this.setUserSession(this.usuarioModel);
-      alert(this.usuarioModel);
+    
+      this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+
+      await this.setUserSession(this.usuarioModel);
+
+      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
 
     }    
 
-/*     this.googlePlus.login({})
-    .then(res => {
-
-      this.getUserByEmail(res.email);
-
-      if (this.usuarioModel == null){
-
-        this.usuarioModel = new UsuarioModel();
-        this.usuarioModel.nome = res.displayName;
-        this.usuarioModel.email = res.email;
-        this.usuarioModel.imgPerfil = res.imageUrl;  
-        
-        this.showLoading('aguarde...');
-
-        this.importExternalUser(this.usuarioModel);
-
-        this.setUserSession(this.usuarioModel);
-
-        this.hideLoading();
-
-        if (this.usuarioModel == null){
-          this.msgError.push('Ocorreu um erro na operação');
-        }        
-
-      }else{
-        
-        //this.setUserSession(this.usuarioModel);
-        alert(this.usuarioModel);
-
-      }
-
-    })
-    .catch(err => this.msgError.push('Ocorreu um erro na operação')); */
+    
 
   }
 
