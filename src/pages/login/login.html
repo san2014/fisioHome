@@ -18,9 +18,9 @@
       <form [formGroup]="formLogin">
       <ion-grid>
         <ion-row *ngFor="let msg of msgError">
-          <ion-item>
+          <ion-item text-wrap>
             <ion-col class="errorMsg">
-              {{msg}}
+              <h6>{{msg}}</h6>
             </ion-col>
           </ion-item>
         </ion-row>

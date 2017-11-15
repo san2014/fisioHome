@@ -28,6 +28,8 @@ export class UsuarioModel{
 
     tipo: number;
 
+    sexo: number;
+
     facebookId: number;
 
     googleId: number;

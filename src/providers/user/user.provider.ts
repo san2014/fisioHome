@@ -24,14 +24,13 @@ export class UserProvider {
 
   usuarios(): Promise<UsuarioModel>{
   
-    return new Promise(resolve => {
+    return new Promise( (resolve, reject) => {
 
       this.safeHttp.get(`${this.basepath}/usuario`).map(res => res.json())
         .subscribe(data => {
           resolve(data);
         }, err => {
-          resolve(null);
-          this.safeHttp.notResponse();
+          reject('Erro');
         });
 
     })
@@ -40,13 +39,17 @@ export class UserProvider {
 
   getUserByEmail(email: string): Promise<UsuarioModel>{
 
-    return new Promise(resolve => {
+    return new Promise( (resolve, reject) => {
       
       this.safeHttp.get(`/usuario/search/email=${email}`).map(res => res.json())
         .subscribe(data => {
-          resolve(data);
+          if(data.lenght == undefined){
+            reject('Not found records');
+          }else{
+            resolve(data);
+          }
         }, err => {
-          resolve(null);
+          reject('Erro');
         });
 
     })    

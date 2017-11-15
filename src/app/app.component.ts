@@ -98,7 +98,9 @@ export class MyApp {
       .then((response)=> {
         this.presentToast(response.msg);
         this.navToComponent("HomePage");
-      });
+      }).catch((erro) => {
+        this.presentToast(erro.msg);
+      })
   }
 
   pushRegister(){

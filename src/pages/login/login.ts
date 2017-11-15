@@ -10,6 +10,8 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
 import { LoginProvider } from "../../providers/login/login.provider";
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
+import { FshUtils } from '../../utils/fsh-util';
 
 @IonicPage()
 @Component({
@@ -30,6 +32,12 @@ export class Login {
 
   loading: Loading;
 
+  titleAlert: string = 'Desculpe...';
+  
+  msgAlert: string = 'Ocorreu uma falha na sua solicitação...Tente novamente mais tarde.';
+
+  msgThrow: string = 'Erro de comunicação ou Serviço insdiponível';  
+
   constructor(
     public navCtrl: NavController,
     private fb: FormBuilder,
@@ -40,6 +48,7 @@ export class Login {
     public facebook: Facebook,
     private googlePlus: GooglePlus,
     private loadingCtrl: LoadingController,
+    private utils: FshUtils
   ) {
 
       this.initialize();
@@ -133,53 +142,78 @@ export class Login {
   }
 
   async loginFace(){
+
+    try {
     
-    const credentials = await this.authFace();
+      const credentials = await this.authFace()
+        .catch(() => {
+          throw new Error(this.msgThrow);          
+        });    
 
-    const userFace: any = await this.getUserFace(credentials.authResponse.userID);
+      const userFace: any = await this.getUserFace(credentials.authResponse.userID)
+        .catch(() => {
+          throw new Error(this.msgThrow);          
+        });    
 
-    const userFind = await this.userProvider.getUserByEmail(userFace.email);
-    
-    if (userFind == null){
+      const userFind = await this.userProvider.getUserByEmail(userFace.email)
+        .catch(() => {
+          throw new Error(this.msgThrow);          
+        });    
 
-      this.usuarioModel = new UsuarioModel();
-      this.usuarioModel.nome = userFace.name;
-      this.usuarioModel.email = userFace.email;
-      this.usuarioModel.dt_nasc = userFace.birthday;
-      this.usuarioModel.imgPerfil = userFace.picture.data.url;
-      this.usuarioModel.tipo = 1;
-      
-      this.showLoading('aguarde...');
+      if (userFind == null){
 
-      this.userProvider.postData(this.usuarioModel);
+        this.usuarioModel = new UsuarioModel();
+        this.usuarioModel.nome = userFace.name;
+        this.usuarioModel.email = userFace.email;
+        this.usuarioModel.dt_nasc = userFace.birthday;
+        this.usuarioModel.imgPerfil = userFace.picture.data.url;
+        this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
+        this.usuarioModel.tipo = 1;
+        
+        this.showLoading('aguarde...');
 
-      this.setUserSession(this.usuarioModel);
+        this.userProvider.postData(this.usuarioModel)
+          .catch(() => {
+            throw new Error(this.msgThrow);          
+          });      
 
-      this.hideLoading();
+        this.setUserSession(this.usuarioModel)
+          .catch(() => {
+            throw new Error(this.msgThrow);          
+          });      
 
-      if (this.usuarioModel == null){
-        this.msgError.push('Ocorreu um erro na operação');
+        this.hideLoading();
+
+        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioModel})
+        
       }else{
-        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
-      }   
+
+        this.showLoading('aguarde...');
       
-    }else{
+        this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+
+        await this.setUserSession(this.usuarioModel)
+          .catch(() => {
+            throw new Error(this.msgThrow);          
+          });             
+
+        this.hideLoading();
+
+        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+
+      }     
     
-      this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+    } catch (error) {
 
-      await this.setUserSession(this.usuarioModel);
-
-      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
-
-    }  
-
+      this.utils.showAlert(this.titleAlert, this.msgAlert);
+      
+    }    
 
   }
 
   getUserFace(userid) {
-
     return new Promise ((resolve) => {
-      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday",["public_profile"])
+      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday,gender",["public_profile"])
         .then(profile => {
           resolve(profile);
         })
@@ -187,19 +221,17 @@ export class Login {
           resolve(null);
         });
     });
-
   } 
   
   setUserSession(usuario: UsuarioModel){
     if (usuario != null){
-
       return new Promise((resolve, reject) => {
         this.storage.set('usuarioLogado', usuario)
+          .then(() => resolve(usuario))
           .catch((erro) => {
-            this.usuarioModel = null;
+            reject('Erro');
           });
       })
-
     }
   }  
 
@@ -229,43 +261,63 @@ export class Login {
 
   async loginGoogle(){
 
-    const userGoogle: any = await this.getDataGoogle();
+    try {
 
-    const userFind = await this.userProvider.getUserByEmail(userGoogle.email);
+      const userGoogle: any = await this.getDataGoogle()
+        .catch(() => {
+          throw new Error(this.msgThrow);          
+        });
 
-    if (userFind == null){
+      const userFind = await this.userProvider.getUserByEmail(userGoogle.email)
+        .catch(() => {
+          throw new Error(this.msgThrow);
+        });
 
-      this.usuarioModel = new UsuarioModel();
-      this.usuarioModel.nome = userGoogle.displayName;
-      this.usuarioModel.email = userGoogle.email;
-      this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
-      this.usuarioModel.tipo = 1;      
+      if (userFind == null){
 
-      this.showLoading('aguarde...');
+        this.usuarioModel = new UsuarioModel();
+        this.usuarioModel.nome = userGoogle.displayName;
+        this.usuarioModel.email = userGoogle.email;
+        this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
+        this.usuarioModel.tipo = 1; 
 
-      await this.userProvider.postData(this.usuarioModel);
+        this.showLoading('aguarde...');
 
-      await this.setUserSession(this.usuarioModel);
+        await this.userProvider.postData(this.usuarioModel)
+          .catch(() => {
+            throw new Error(this.msgThrow);
+          });
 
-      this.hideLoading();
+        await this.setUserSession(this.usuarioModel)
+          .catch(() => {
+            throw new Error(this.msgThrow);
+          });        
 
-      if (this.usuarioModel == null){
-        this.msgError.push('Ocorreu um erro na operação');
+        this.hideLoading();
+
+        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioModel})
+        
       }else{
-        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
-      }   
+
+        this.showLoading('aguarde...');
       
-    }else{
-    
-      this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+        this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
 
-      await this.setUserSession(this.usuarioModel);
+        await this.setUserSession(this.usuarioModel);
 
-      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+        this.hideLoading();
+
+        alert(JSON.stringify(this.usuarioModel));
+
+        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+
+      }    
+
+    } catch (error) {
+      
+      this.utils.showAlert(this.titleAlert, this.msgAlert);
 
     }    
-
-    
 
   }
 
