@@ -10,7 +10,7 @@ import { UsuarioModel } from './../../model/usuario-model';
 })
 export class WelcomePage {
 
-  private usuario: UsuarioModel;
+  usuario: UsuarioModel;
 
   constructor(
     public navCtrl: NavController, 
@@ -18,5 +18,9 @@ export class WelcomePage {
   }
 
   ionViewDidLoad() {}
+
+  next(){
+    this.navCtrl.push('HometabPage',{'usuarioModel': this.usuario})
+  }
 
 }

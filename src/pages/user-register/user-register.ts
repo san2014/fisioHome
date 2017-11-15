@@ -118,12 +118,6 @@ export class UserRegister {
 
         this.fshUtils.hideLoading();
         
-/*         const titulo = 'Parabéns';
-        
-        const msg = `Seja bem vindo ${this.usuario.nome}! \n A seguir defina uma imagem para seu perfil...` ;
-        
-        this.fshUtils.showAlert(titulo, msg); */
-        
         this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario})
 
       })

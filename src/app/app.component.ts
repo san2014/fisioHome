@@ -14,7 +14,7 @@ import { UsuarioModel } from "../model/usuario-model";
 })
 export class MyApp {
 
-  rootPage: string = 'HomePage';
+  rootPage: string = 'HomPage';
 
   @ViewChild(Nav) nav: Nav;
 
