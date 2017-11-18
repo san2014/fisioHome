@@ -10,7 +10,6 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
 import { LoginProvider } from "../../providers/login/login.provider";
-import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { FshUtils } from '../../utils/fsh-util';
 
 @IonicPage()

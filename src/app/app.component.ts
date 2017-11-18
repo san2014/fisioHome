@@ -3,10 +3,9 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
-import { AlertController, NavController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 import { LoginProvider } from './../providers/login/login.provider';
-import { HomePage } from "../pages/home/home";
 import { UsuarioModel } from "../model/usuario-model";
 
 @Component({
@@ -14,7 +13,7 @@ import { UsuarioModel } from "../model/usuario-model";
 })
 export class MyApp {
 
-  rootPage: string = 'HomPage';
+  rootPage: string = 'HomePage';
 
   @ViewChild(Nav) nav: Nav;
 

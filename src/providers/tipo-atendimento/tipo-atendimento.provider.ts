@@ -1,18 +1,11 @@
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
-import { ENDPOINT_API } from "../../app/app-constantes";
-import { SafeHttp } from "./../../utils/safe-http";
 
 @Injectable()
 export class TipoAtendimentoProvider {
 
-  constructor(
-    public http: Http,
-    private safeHttp: SafeHttp
-  ) {}
+  constructor() {}
 
   tiposAtendimentos(): Promise<TipoAtendimentoModel[]>{
 
@@ -20,22 +13,26 @@ export class TipoAtendimentoProvider {
       {
         "id": 1,
         "descricao": "Ortopedia",
-        "valor": 55
+        "valor": 55,
+        "imgUrl": "assets/img/ortoped.png"
       },
       {
         "id": 2,
         "descricao": "Pediatria",
-        "valor": 55
+        "valor": 55,
+        "imgUrl": "assets/img/pediatric.png"
       },
       {
         "id": 3,
         "descricao": "Neurologia",
-        "valor": 65
+        "valor": 65,
+        "imgUrl": "assets/img/neuro.png"
       },
       {
         "id": 4,
         "descricao": "Geriataria",
-        "valor": 55
+        "valor": 55,
+        "imgUrl": "assets/img/geriatric.png"
       }
     ];
     

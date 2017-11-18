@@ -21,7 +21,6 @@ export class SafeHttp {
   }
 
   get(url: string, options?: RequestOptionsArgs) {
-    console.log(this.basepath);
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else { return this.http.get(`${this.basepath}${url}`, options) }

@@ -1,11 +1,8 @@
-import { ProfissionalModel } from './../../model/profissional-model';
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import { ENDPOINT_API } from "../../app/app-constantes";
-
+import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 
 @Injectable()
 export class PropostaProvider {

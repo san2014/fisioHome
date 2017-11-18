@@ -1,4 +1,3 @@
-import { SobrePageModule } from './../pages/sobre/sobre.module';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -12,6 +11,7 @@ import { NetworkService } from './../utils/network-service';
 import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { HttpClientModule } from '@angular/common/http';
 
 import { LoginProvider } from "../providers/login/login.provider";
 import { Facebook } from "@ionic-native/facebook";
@@ -23,6 +23,7 @@ import { Facebook } from "@ionic-native/facebook";
   imports: [
     BrowserModule,
     HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],

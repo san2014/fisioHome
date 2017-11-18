@@ -15,6 +15,9 @@ export class WelcomePage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams) {
+
+    this.usuario = this.navParams.get('usuarioModel');
+
   }
 
   ionViewDidLoad() {}

@@ -1,4 +1,3 @@
-import { IniciarPage } from './../iniciar/iniciar';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ProfRegisterPage } from './prof-register';

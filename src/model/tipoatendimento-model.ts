@@ -6,4 +6,6 @@ export class TipoAtendimentoModel{
 
     valor: number;
 
+    imgUrl: string;
+
 }

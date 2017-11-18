@@ -1,4 +1,3 @@
-import { PropostaSendPage } from './../proposta-send/proposta-send';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { Component } from '@angular/core';

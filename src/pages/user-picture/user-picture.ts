@@ -72,19 +72,6 @@ export class UserPicturePage {
     });
   }
 
-  private uploadFake(){
-    this.error = null;
-    this.loading = this.loadingCtrl.create({
-      content: 'Fazendo upload...'
-    });
-
-    this.loading.present();
-
-    setTimeout(() => {
-      this.loading.dismiss();
-    }, 3000);    
-  }
-
   private uploadPhoto(imageFileUri: any): void {
     this.error = null;
     this.loading = this.loadingCtrl.create({

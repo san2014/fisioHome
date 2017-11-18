@@ -1,3 +1,4 @@
+import { CepProvider } from './../../providers/cep/cep.provider';
    
 import { NavController, NavParams, IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
@@ -28,9 +29,11 @@ export class UserRegister {
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
+    private cepProvider: CepProvider,
     private navParams: NavParams) {
 
       this.initialize();
+
   }
 
   initialize() {
@@ -103,6 +106,27 @@ export class UserRegister {
       !this.formUser.get(campo).valid &&
       (this.formUser.get(campo).touched || this.formUser.get(campo).dirty)
     );
+
+  }
+
+  getAddresByCep(){
+
+    let cep = this.formUser.get('cep');
+
+    console.log(cep.valid);
+
+    this.fshUtils.showLoading('obtendo informações....');
+
+    this.cepProvider.getAddressByCep(cep.value)
+      .then((address) =>{
+        this.fshUtils.hideLoading();
+        this.usuario.logradouro = address.logradouro;
+        this.usuario.bairro = address.bairro;
+      })
+      .catch((erro) => {
+        this.fshUtils.hideLoading();
+        this.fshUtils.showAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+      });
 
   }
 
