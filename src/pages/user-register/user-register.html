@@ -75,7 +75,7 @@
       <ion-row>
         <ion-col>
             <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
-              (blur)="getAddresByCep()"
+              (ionBlur)="getAddresByCep()"
               [(ngModel)]="usuario.cep"
               [ngClass]="aplicaCssErro('cep')">
             </ion-input>

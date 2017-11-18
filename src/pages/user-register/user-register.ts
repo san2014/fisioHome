@@ -113,8 +113,6 @@ export class UserRegister {
 
     let cep = this.formUser.get('cep');
 
-    console.log(cep.valid);
-
     this.fshUtils.showLoading('obtendo informações....');
 
     this.cepProvider.getAddressByCep(cep.value)
@@ -131,7 +129,6 @@ export class UserRegister {
   }
 
   incluir(){
-    //this.navCtrl.push('UserPicturePage', {'usuario': this.usuario});
 
     this.formUser.value.flag_ativo = "1";
 

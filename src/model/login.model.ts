@@ -1,6 +1,6 @@
 export class LoginModel{
 
-    usuario: string;
+    email: string;
 
     senha: string;
 

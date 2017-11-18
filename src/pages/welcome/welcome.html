@@ -1,5 +1,5 @@
 <ion-content class="background" padding>
-
+  <div  class="container">
   <ion-row>
     <ion-col text-center>
         <img src="assets/img/success.png"/>
@@ -7,17 +7,29 @@
   </ion-row>
   <ion-row>
     <ion-col text-center>
-      <h6>{{usuario?.nome}}</h6>
-      <br/>
+      <div class='welcome'>
+        <h3><b>{{usuario.sexo == 1? 'Sr.' : 'Sra.' }}{{usuario.nome}}</b></h3>
+      </div>
     </ion-col>
   </ion-row>    
   <ion-row>
     <ion-col text-center>
-      <div class='welcome'>
-        Parabéns! Você já faz parte da rede FisioHome!
-      </div>
+        <ion-item text-wrap>
+          <div class='welcome'>
+            Parabéns! Você já faz parte da rede FisioHome!
+          </div>
+        </ion-item>
     </ion-col>
   </ion-row>  
+  <ion-row>
+    <ion-col text-center>
+      <ion-item text-wrap>
+        <div class='welcome'>
+          Ao continuar por favor selecione uma imagem para o seu Perfil...
+        </div>
+      </ion-item>
+    </ion-col>
+  </ion-row>   
   <ion-row>
     <ion-col>
       <button ion-button block round color="secondary" (click)="next()">
@@ -25,6 +37,7 @@
       </button>      
     </ion-col>
   </ion-row>
+  </div>
 
 
 </ion-content>

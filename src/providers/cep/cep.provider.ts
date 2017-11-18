@@ -1,6 +1,9 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import { Http } from '@angular/http';
+
 
 @Injectable()
 export class CepProvider {
@@ -9,26 +12,21 @@ export class CepProvider {
 
   constructor(
     private http: Http
-  ) {
-       
-/*     if (this.platform.is('cordova')){
-      this.basepath = 'https://viacep.com.br/ws';
-    }  */
-
-  }
+  ) {}
 
   getAddressByCep(cep: string): Promise<any>{
 
     return new Promise( (resolve, reject) => {
       this.http.get(`${this.basepath}/${cep}/json/`)
         .map(response => response.json())
-        .subscribe(address => {
-          resolve(address);
-        }, err => {
-          reject('Erro');
-        });
-        
-    })  
+        .toPromise()
+        .then(address => {
+          resolve(address)
+        })
+        .catch(
+          err => {reject('erro')}
+        );
+    });
 
   }
 

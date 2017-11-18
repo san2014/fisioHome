@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { UsuarioModel } from './../../model/usuario-model';
 import { ENDPOINT_API } from "../../app/app-constantes";
@@ -25,14 +26,16 @@ export class UserProvider {
   usuarios(): Promise<UsuarioModel>{
   
     return new Promise( (resolve, reject) => {
-
-      this.safeHttp.get(`${this.basepath}/usuario`).map(res => res.json())
-        .subscribe(data => {
-          resolve(data);
-        }, err => {
-          reject('Erro');
-        });
-
+      this.safeHttp.get(`${this.basepath}/usuario`)
+        .map(res => res.json())
+          .toPromise()
+            .then(data => {
+              resolve(data);
+            })
+            .catch(
+              err => {
+                reject('Erro');
+            });
     })
        
   }
@@ -40,18 +43,19 @@ export class UserProvider {
   getUserByEmail(email: string): Promise<UsuarioModel>{
 
     return new Promise( (resolve, reject) => {
-      
-      this.safeHttp.get(`/usuario/search/email=${email}`).map(res => res.json())
-        .subscribe(data => {
-          if(data.lenght == undefined){
-            reject('Not found records');
-          }else{
-            resolve(data);
-          }
-        }, err => {
-          reject('Erro');
-        });
-
+      this.safeHttp.get(`/usuario/search/email=${email}`)
+        .map(res => res.json())
+          .toPromise()
+            .then(data => {
+              if(data.lenght == undefined){
+                reject('Not found records');
+              }else{
+                resolve(data);
+              }
+            })
+            .catch(err => {
+                reject('Erro'); 
+            })
     })    
 
   }
@@ -66,14 +70,15 @@ export class UserProvider {
       this.safeHttp
         .post(`/usuario`, 
           params, 
-          new RequestOptions({headers: headers})
-        )
-        .subscribe((data) =>{
-          resolve(data.statusText);
-        }, 
-        error => ( reject('Erro') )
-        )
-      })
+          new RequestOptions({headers: headers}))
+          .toPromise()
+            .then((data) =>{
+              resolve(data.statusText);
+            })
+            .catch(error => {
+              reject('Erro')
+            });
+    })
   }  
 
   convertUserAPI(api_user: any): UsuarioModel{

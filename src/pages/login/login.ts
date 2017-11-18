@@ -58,7 +58,7 @@ export class Login {
 
     this.formLogin = this.fb.group(
       {
-        'usuario': ['', Validators.required],
+        'email': ['', Validators.required],
         'senha': ['',Validators.required]
       }); 
       
@@ -84,6 +84,8 @@ export class Login {
 
     await this.loginProvider.login(this.loginModel)
       .then(data => {
+
+        console.log(data);
 
         if (data !== null){
           this.usuarioModel = data;
