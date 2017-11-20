@@ -81,24 +81,6 @@ export class UserProvider {
     })
   }  
 
-  convertUserAPI(api_user: any): UsuarioModel{
 
-    console.log(api_user);
-
-    let usuarioModel = new UsuarioModel();
-
-    usuarioModel.id = api_user.usua_id;
-    usuarioModel.bairro = api_user.usua_bairro;
-    usuarioModel.nome = api_user.usua_nome;
-    usuarioModel.cpf = api_user.usua_cpf;
-    usuarioModel.rg = api_user.usua_rg;
-    usuarioModel.email = api_user.usua_email;
-    usuarioModel.cep = api_user.usua_cep;
-    usuarioModel.dt_nasc = api_user.usua_dt_nasc;
-    usuarioModel.numero_local = api_user.numero_local;
-
-    return usuarioModel;
-
-  }
 
 }

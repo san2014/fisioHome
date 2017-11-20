@@ -5,16 +5,16 @@ import 'rxjs/add/operator/toPromise';
 import { Storage } from '@ionic/storage';
 
 import { UsuarioModel } from "../../model/usuario-model";
-import { ENDPOINT_API } from "../../app/app-constantes";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
 import { SafeHttp } from "./../../utils/safe-http";
+import { FshUtils } from '../../utils/fsh-util';
 
 @Injectable()
 export class LoginProvider {
 
   constructor(
-    public http: Http,
+    private utils: FshUtils,
     private storage: Storage,
     private safeHttp: SafeHttp
   ){}
@@ -51,12 +51,9 @@ export class LoginProvider {
         .map(res => res.json())
         .toPromise()
           .then(data => {
-            data.forEach(element => {
-              if (element.senha == login.senha){
-                resolve(data);
-              } 
-            });
-            reject('invalid');
+            console.log(data.message[0]);
+            let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
+            resolve(usuario);
           })
           .catch( erro => {
             this.safeHttp.notResponse();

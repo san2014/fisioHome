@@ -191,7 +191,7 @@ export class Login {
 
         this.showLoading('aguarde...');
       
-        this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+        this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel)
           .catch(() => {
@@ -302,7 +302,7 @@ export class Login {
 
         this.showLoading('aguarde...');
       
-        this.usuarioModel = this.userProvider.convertUserAPI(userFind[0]);
+        this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel);
 

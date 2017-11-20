@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LoginProvider } from "../providers/login/login.provider";
 import { Facebook } from "@ionic-native/facebook";
+import { FshUtils } from '../utils/fsh-util';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { Facebook } from "@ionic-native/facebook";
     NetworkService,
     SafeHttp,
     Facebook,
-    GooglePlus
+    GooglePlus,
+    FshUtils
   ]
 })
 export class AppModule {}
