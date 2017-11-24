@@ -264,27 +264,41 @@ export class Login {
 
     try {
 
-      const userGoogle: any = await this.getDataGoogle()
+      this.showLoading('aguarde...');
+
+/*       const userGoogle: any = await this.getDataGoogle()
         .catch(() => {
+          console.log('googleData');
           throw new Error(this.msgThrow);          
-        });
+        }); */
+
+      let userGoogle: any = {};
+      userGoogle.id = 4387489;
+      userGoogle.displayName = 'Alesandro Carvalho';
+      userGoogle.email = 'carvalho.alesandro@mail.com';
+      userGoogle.imageUrl = 'https://lh6.googleusercontent.com/-a5YTtc5ve7M/AAAAAAAAAAI/AAAAAAAAFUg/MFAOBKngeAA/s36-c-k-no/photo.jpg';
 
       const userFind = await this.userProvider.getUserByEmail(userGoogle.email)
-        .catch(() => {
+        .catch((erro) => {
+          console.log(erro);
           throw new Error(this.msgThrow);
         });
 
-      if (userFind == null){
+      console.log(userFind);
+      console.log(userGoogle);
+
+      if ((userFind == null || userFind == undefined ) && userGoogle != null){
 
         this.usuarioModel = new UsuarioModel();
         this.usuarioModel.nome = userGoogle.displayName;
         this.usuarioModel.email = userGoogle.email;
         this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
+        this.usuarioModel.googleId = userGoogle.id;
         this.usuarioModel.tipo = 1; 
+        this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
+        console.log(this.usuarioModel);
 
-        this.showLoading('aguarde...');
-
-        await this.userProvider.postData(this.usuarioModel)
+/*         await this.userProvider.postData(this.usuarioModel)
           .catch(() => {
             throw new Error(this.msgThrow);
           });
@@ -292,21 +306,15 @@ export class Login {
         await this.setUserSession(this.usuarioModel)
           .catch(() => {
             throw new Error(this.msgThrow);
-          });        
+          });  */  
 
-        this.hideLoading();
-
-        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioModel})
+        this.navCtrl.push('UserRegister',{'usuarioModel': this.usuarioModel})
         
       }else{
 
-        this.showLoading('aguarde...');
-      
         this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel);
-
-        this.hideLoading();
 
         alert(JSON.stringify(this.usuarioModel));
 
@@ -320,6 +328,22 @@ export class Login {
 
     }    
 
+    this.hideLoading();
+
   }
+
+  generatePass(value: string): string{
+    value = value.substring(0,3);
+    for (let index = 0; index <= 4; index++) {
+      value = value + this.getRandomInt(1,9);
+    }
+    return value;
+  }
+
+  getRandomInt(min, max): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+  }  
 
 }

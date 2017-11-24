@@ -51,13 +51,14 @@ export class LoginProvider {
         .map(res => res.json())
         .toPromise()
           .then(data => {
-            console.log(data.message[0]);
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
             resolve(usuario);
           })
           .catch( erro => {
-            this.safeHttp.notResponse();
-            reject('Erro');            
+/*             this.safeHttp.notResponse();
+            reject('Erro');   */  
+            console.log( erro._body);
+            reject('Erro');  
           });
     });
         

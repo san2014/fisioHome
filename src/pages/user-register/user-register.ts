@@ -48,7 +48,7 @@ export class UserRegister {
           [
             Validators.required, 
             Validators.minLength(6),
-            Validators.maxLength(6)
+            Validators.maxLength(8)
           ]
         )
       ],
@@ -68,13 +68,12 @@ export class UserRegister {
       'flag_ativo' : ['']
     });
 
-    this.tipoUsuario = this.navParams.get('tipoUsuario');
-    
-    this.usuario = new UsuarioModel(); 
-    
-    this.usuario.flag_ativo = true;
+    this.usuario = this.navParams.get('usuarioModel');
 
-    this.getUsuarioLogado();
+    if (this.usuario.email == null){
+      this.usuario = new UsuarioModel(); 
+      this.getUsuarioLogado();
+    }
 
   }
 

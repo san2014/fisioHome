@@ -1,3 +1,4 @@
+import { FshUtils } from './../../utils/fsh-util';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Platform } from 'ionic-angular';
@@ -16,6 +17,7 @@ export class UserProvider {
   constructor(
     public http: Http,
     private safeHttp: SafeHttp,
+    private fshUtils: FshUtils,
     private platform: Platform
   ) {
     if (this.platform.is('cordova')){
@@ -47,11 +49,7 @@ export class UserProvider {
         .map(res => res.json())
           .toPromise()
             .then(data => {
-              if(data.lenght == undefined){
-                reject('Not found records');
-              }else{
-                resolve(data);
-              }
+                resolve(data[0]);
             })
             .catch(err => {
                 reject('Erro'); 
@@ -66,6 +64,8 @@ export class UserProvider {
     
     headers.append('Content-Type', 'application/json');
 
+    params = this.fshUtils.convertAPIUser(params);
+
     return new Promise( (resolve, reject) => {
       this.safeHttp
         .post(`/usuario`, 
@@ -76,7 +76,7 @@ export class UserProvider {
               resolve(data.statusText);
             })
             .catch(error => {
-              reject('Erro')
+              reject('Erro');
             });
     })
   }  
