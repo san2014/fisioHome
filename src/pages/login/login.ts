@@ -145,6 +145,8 @@ export class Login {
   async loginFace(){
 
     try {
+
+      this.showLoading('aguarde...');
     
       const credentials = await this.authFace()
         .catch(() => {
@@ -152,10 +154,13 @@ export class Login {
         });    
 
       const userFace: any = await this.getUserFace(credentials.authResponse.userID)
+        .then(() => {
+          throw new Error(this.msgThrow);
+        })
         .catch(() => {
           throw new Error(this.msgThrow);          
         });    
-
+      
       const userFind = await this.userProvider.getUserByEmail(userFace.email)
         .catch(() => {
           throw new Error(this.msgThrow);          
@@ -171,26 +176,9 @@ export class Login {
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
         this.usuarioModel.tipo = 1;
         
-        this.showLoading('aguarde...');
-
-        this.userProvider.postData(this.usuarioModel)
-          .catch(() => {
-            throw new Error(this.msgThrow);          
-          });      
-
-        this.setUserSession(this.usuarioModel)
-          .catch(() => {
-            throw new Error(this.msgThrow);          
-          });      
-
-        this.hideLoading();
-
-        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioModel})
+        this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-
-        this.showLoading('aguarde...');
-      
         this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel)
@@ -198,24 +186,22 @@ export class Login {
             throw new Error(this.msgThrow);          
           });             
 
-        this.hideLoading();
-
         this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
-
       }     
     
     } catch (error) {
-
       this.utils.showAlert(this.titleAlert, this.msgAlert);
-      
-    }    
+    }  
+    
+    this.hideLoading();
 
   }
 
   getUserFace(userid) {
     return new Promise ((resolve) => {
-      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,birthday,gender",["public_profile"])
+      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
         .then(profile => {
+          alert(JSON.stringify(profile));
           resolve(profile);
         })
         .catch(()=> {
@@ -266,26 +252,22 @@ export class Login {
 
       this.showLoading('aguarde...');
 
-/*       const userGoogle: any = await this.getDataGoogle()
+      let userGoogle: any = await this.getDataGoogle()
         .catch(() => {
           console.log('googleData');
           throw new Error(this.msgThrow);          
-        }); */
+        });
 
-      let userGoogle: any = {};
+/*       userGoogle = {};
       userGoogle.id = 4387489;
       userGoogle.displayName = 'Alesandro Carvalho';
       userGoogle.email = 'carvalho.alesandro@mail.com';
       userGoogle.imageUrl = 'https://lh6.googleusercontent.com/-a5YTtc5ve7M/AAAAAAAAAAI/AAAAAAAAFUg/MFAOBKngeAA/s36-c-k-no/photo.jpg';
-
+ */
       const userFind = await this.userProvider.getUserByEmail(userGoogle.email)
         .catch((erro) => {
-          console.log(erro);
           throw new Error(this.msgThrow);
         });
-
-      console.log(userFind);
-      console.log(userGoogle);
 
       if ((userFind == null || userFind == undefined ) && userGoogle != null){
 
@@ -296,27 +278,14 @@ export class Login {
         this.usuarioModel.googleId = userGoogle.id;
         this.usuarioModel.tipo = 1; 
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
-        console.log(this.usuarioModel);
 
-/*         await this.userProvider.postData(this.usuarioModel)
-          .catch(() => {
-            throw new Error(this.msgThrow);
-          });
-
-        await this.setUserSession(this.usuarioModel)
-          .catch(() => {
-            throw new Error(this.msgThrow);
-          });  */  
-
-        this.navCtrl.push('UserRegister',{'usuarioModel': this.usuarioModel})
+        this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
 
         this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel);
-
-        alert(JSON.stringify(this.usuarioModel));
 
         this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
 

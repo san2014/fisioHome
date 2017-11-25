@@ -49,7 +49,11 @@ export class UserProvider {
         .map(res => res.json())
           .toPromise()
             .then(data => {
-                resolve(data[0]);
+                try{
+                  resolve(data[0]);
+                }catch(notFound){
+                  resolve(null);
+                }
             })
             .catch(err => {
                 reject('Erro'); 

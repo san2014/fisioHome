@@ -1,6 +1,6 @@
 import { CepProvider } from './../../providers/cep/cep.provider';
    
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
@@ -29,8 +29,7 @@ export class UserRegister {
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
-    private cepProvider: CepProvider,
-    private navParams: NavParams) {
+    private cepProvider: CepProvider) {
 
       this.initialize();
 
@@ -68,12 +67,11 @@ export class UserRegister {
       'flag_ativo' : ['']
     });
 
-    this.usuario = this.navParams.get('usuarioModel');
+    this.usuario = new UsuarioModel();
 
-    if (this.usuario.email == null){
-      this.usuario = new UsuarioModel(); 
-      this.getUsuarioLogado();
-    }
+    this.usuario.flag_ativo = true;
+    
+    this.getUsuarioLogado();
 
   }
 

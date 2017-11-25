@@ -105,7 +105,7 @@
             </ion-input>
         </ion-col>
       </ion-row> 
-      <ion-row *ngIf="usuario.googleId == null">
+      <ion-row >
         <ion-col>
           <ion-item text-wrap color="primary">
               <div>A senha deve conter de 6 a 8 caracteres.</div>
@@ -116,7 +116,6 @@
         <ion-col>
             <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
             [(ngModel)]="usuario.senha"
-            [hidden]="usuario.googleId != null"
             [ngClass]="aplicaCssErro('senha')">
           </ion-input>
         </ion-col>

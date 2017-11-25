@@ -54,15 +54,16 @@ export class FshUtils{
     convertAPIUser(usuarioModel: UsuarioModel): any{
         let api_user: any = {};
 
-        api_user.usua_id = usuarioModel.id;
-        api_user.usua_bairro = usuarioModel.bairro;
-        api_user.usua_nome = usuarioModel.nome;
-        api_user.usua_cpf = usuarioModel.cpf;
-        api_user.usua_rg = usuarioModel.rg;
-        api_user.usua_email = usuarioModel.email;
-        api_user.usua_cep = usuarioModel.cep;
-        api_user.usua_dt_nasc = usuarioModel.dt_nasc;
-        api_user.numero_local = usuarioModel.numero_local;
+        api_user.usua_bairro = usuarioModel.bairro ? usuarioModel.bairro : '';
+        api_user.usua_nome = usuarioModel.nome ? usuarioModel.nome : '';
+        api_user.usua_cpf = usuarioModel.cpf ? usuarioModel.cpf : '';
+        api_user.usua_rg = usuarioModel.rg ? usuarioModel.rg : '';
+        api_user.usua_email = usuarioModel.email ? usuarioModel.email : '';
+        api_user.usua_cep = usuarioModel.cep ? usuarioModel.cep : '';
+        api_user.usua_dt_nasc = usuarioModel.dt_nasc ? usuarioModel.dt_nasc : '';
+        api_user.numero_local = usuarioModel.numero_local ? usuarioModel.numero_local : '';
+        api_user.flag_ativo = usuarioModel.flag_ativo ? usuarioModel.flag_ativo : '';
+        api_user.senha = usuarioModel.senha ? usuarioModel.senha : '';
 
         return api_user;
     }      

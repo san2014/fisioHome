@@ -1,0 +1,76 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{usuario.nome}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form [formGroup]="formUser">
+        <ion-grid>  
+          <ion-row>
+              <ion-col text-center>
+                  <img style="border-radius: 50%;" height="150" width="150" src="{{usuario.imgPerfil}}">
+              </ion-col>
+          </ion-row>          
+          <ion-row>
+            <ion-col>
+                <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
+                  (ionBlur)="getAddresByCep()"
+                  [(ngModel)]="usuario.cep"
+                  [ngClass]="aplicaCssErro('cep')">
+                </ion-input>
+            </ion-col>
+          </ion-row> 
+          <ion-row>
+            <ion-col>
+                <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" 
+                  [(ngModel)]="usuario.logradouro"
+                  [ngClass]="aplicaCssErro('logradouro')">
+                </ion-input>
+            </ion-col>
+          </ion-row>  
+          <ion-row>
+            <ion-col>
+                <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" 
+                  [(ngModel)]="usuario.bairro"
+                  [ngClass]="aplicaCssErro('bairro')">
+                </ion-input>
+            </ion-col>
+          </ion-row>   
+          <ion-row>
+            <ion-col>
+                <ion-input placeholder="Número" outline class="box-register" name="numero_local" formControlName="numero_local" 
+                  [(ngModel)]="usuario.numero_local"
+                  [ngClass]="aplicaCssErro('numero_local')">
+                </ion-input>
+            </ion-col>
+          </ion-row>          
+
+          <ion-row>
+            <ion-col>
+              <ion-list [(ngModel)]="usuario.sexo" formControlName="sexo" radio-group>
+                <ion-list-header>
+                  Sexo
+                </ion-list-header>
+                <ion-item>
+                  <ion-label>M</ion-label>
+                  <ion-radio name="sexo" value="1"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label>F</ion-label>
+                  <ion-radio name="sexo" value="2"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+          </ion-row>  
+      </ion-grid>
+
+      <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
+        Enviar
+      </button>
+    </form>
+</ion-content>
