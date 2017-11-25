@@ -15,7 +15,18 @@
               <ion-col text-center>
                   <img style="border-radius: 50%;" height="150" width="150" src="{{usuario.imgPerfil}}">
               </ion-col>
-          </ion-row>          
+          </ion-row>   
+          <ion-row>
+            <ion-col>
+                <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
+                  displayFormat="DD/MM/YYYY"
+                  cancelText="cancelar"
+                  doneText="ok"
+                  [(ngModel)]="usuario.dt_nasc"
+                  [ngClass]="aplicaCssErro('dt_nasc')">
+                </ion-datetime>
+            </ion-col>
+          </ion-row>                 
           <ion-row>
             <ion-col>
                 <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 

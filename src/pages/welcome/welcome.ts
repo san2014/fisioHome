@@ -17,6 +17,7 @@ export class WelcomePage {
     public navParams: NavParams) {
 
     this.usuario = this.navParams.get('usuarioModel');
+    this.usuario = new UsuarioModel();
 
   }
 

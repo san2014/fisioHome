@@ -150,23 +150,23 @@ export class Login {
     
       const credentials = await this.authFace()
         .catch(() => {
-          throw new Error(this.msgThrow);          
+          //throw new Error(this.msgThrow);  
+          throw new Error('credentials');        
         });    
 
       const userFace: any = await this.getUserFace(credentials.authResponse.userID)
-        .then(() => {
-          throw new Error(this.msgThrow);
-        })
         .catch(() => {
-          throw new Error(this.msgThrow);          
+          //throw new Error(this.msgThrow);          
+          throw new Error('getUserFace');          
         });    
       
       const userFind = await this.userProvider.getUserByEmail(userFace.email)
         .catch(() => {
-          throw new Error(this.msgThrow);          
+          //throw new Error(this.msgThrow);   
+          throw new Error('getUserByEmail');       
         });    
 
-      if (userFind == null){
+      if ((userFind == null || userFind == undefined ) && userFace != null){
 
         this.usuarioModel = new UsuarioModel();
         this.usuarioModel.nome = userFace.name;
@@ -175,11 +175,11 @@ export class Login {
         this.usuarioModel.imgPerfil = userFace.picture.data.url;
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
         this.usuarioModel.tipo = 1;
-        
+
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-        this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
+        this.usuarioModel = this.utils.convertUserAPI(userFind);
 
         await this.setUserSession(this.usuarioModel)
           .catch(() => {
@@ -190,7 +190,7 @@ export class Login {
       }     
     
     } catch (error) {
-      this.utils.showAlert(this.titleAlert, this.msgAlert);
+      this.utils.showAlert(this.titleAlert, error);
     }  
     
     this.hideLoading();
@@ -201,7 +201,6 @@ export class Login {
     return new Promise ((resolve) => {
       this.facebook.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
         .then(profile => {
-          alert(JSON.stringify(profile));
           resolve(profile);
         })
         .catch(()=> {
@@ -254,7 +253,6 @@ export class Login {
 
       let userGoogle: any = await this.getDataGoogle()
         .catch(() => {
-          console.log('googleData');
           throw new Error(this.msgThrow);          
         });
 
