@@ -55,7 +55,6 @@ export class Login {
   }
 
   initialize() {
-
     this.formLogin = this.fb.group(
       {
         'email': ['', Validators.required],
@@ -67,7 +66,6 @@ export class Login {
     this.loginModel = new LoginModel();
 
     this.usuarioModel = new UsuarioModel();
-
   }
 
   pushErroLogin(){
@@ -85,14 +83,12 @@ export class Login {
     await this.loginProvider.login(this.loginModel)
       .then(data => {
 
-        console.log(data);
-
         if (data !== null){
           this.usuarioModel = data;
           erro = false;
         }
         
-      })
+      });
 
       if (!erro){
         
@@ -150,20 +146,17 @@ export class Login {
     
       const credentials = await this.authFace()
         .catch(() => {
-          //throw new Error(this.msgThrow);  
-          throw new Error('credentials');        
+          throw new Error(this.msgThrow);  
         });    
 
       const userFace: any = await this.getUserFace(credentials.authResponse.userID)
         .catch(() => {
-          //throw new Error(this.msgThrow);          
-          throw new Error('getUserFace');          
+          throw new Error(this.msgThrow);          
         });    
       
       const userFind = await this.userProvider.getUserByEmail(userFace.email)
         .catch(() => {
-          //throw new Error(this.msgThrow);   
-          throw new Error('getUserByEmail');       
+          throw new Error(this.msgThrow);   
         });    
 
       if ((userFind == null || userFind == undefined ) && userFace != null){
@@ -256,12 +249,6 @@ export class Login {
           throw new Error(this.msgThrow);          
         });
 
-/*       userGoogle = {};
-      userGoogle.id = 4387489;
-      userGoogle.displayName = 'Alesandro Carvalho';
-      userGoogle.email = 'carvalho.alesandro@mail.com';
-      userGoogle.imageUrl = 'https://lh6.googleusercontent.com/-a5YTtc5ve7M/AAAAAAAAAAI/AAAAAAAAFUg/MFAOBKngeAA/s36-c-k-no/photo.jpg';
- */
       const userFind = await this.userProvider.getUserByEmail(userGoogle.email)
         .catch((erro) => {
           throw new Error(this.msgThrow);

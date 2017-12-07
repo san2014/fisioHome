@@ -15,13 +15,13 @@ export class WelcomePage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams) {
-
-    this.usuario = this.navParams.get('usuarioModel');
-    this.usuario = new UsuarioModel();
-
+      this.initialize();
   }
 
-  ionViewDidLoad() {}
+  initialize() {
+    this.usuario = this.navParams.get('usuarioModel');
+    this.usuario = new UsuarioModel();
+  }
 
   next(){
     this.navCtrl.push('HometabPage',{'usuarioModel': this.usuario})

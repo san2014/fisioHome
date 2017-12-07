@@ -1,14 +1,14 @@
-import { CepProvider } from './../../providers/cep/cep.provider';
-   
+
 import { NavController, IonicPage } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { FshUtils } from './../../utils/fsh-util';
 import { LoginProvider } from './../../providers/login/login.provider';
 import { UserProvider } from './../../providers/user/user.provider';
-import { UsuarioModel } from './../../model/usuario-model';
+import { FshUtils } from './../../utils/fsh-util';
+import { CepProvider } from './../../providers/cep/cep.provider';
 
+import { UsuarioModel } from './../../model/usuario-model';
 
 @IonicPage()
 @Component({
@@ -98,17 +98,19 @@ export class UserRegister {
    }  
   
   hasError(campo): boolean{
-   
     return (
       !this.formUser.get(campo).valid &&
       (this.formUser.get(campo).touched || this.formUser.get(campo).dirty)
     );
-
   }
 
   getAddresByCep(){
 
     let cep = this.formUser.get('cep');
+
+    if (!cep.valid){
+      return false;
+    }    
 
     this.fshUtils.showLoading('obtendo informações....');
 

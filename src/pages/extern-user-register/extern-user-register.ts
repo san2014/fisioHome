@@ -27,7 +27,15 @@ export class ExternUserRegisterPage {
     private userProvider: UserProvider,
     private cepProvider: CepProvider
   ) {
+
+    this.initialize();
+
+  }
+
+  initialize(){
+    
     this.usuario = new UsuarioModel();
+
     this.formUser = this.fb.group({
       'nome': [null],
       'sexo': ['',Validators.required],
@@ -44,16 +52,14 @@ export class ExternUserRegisterPage {
       'bairro': ['',Validators.required],
       'numero_local': ['',Validators.required]      
     });
-    this.usuario = this.navParams.get('usuario');    
-  }
+    
+    this.usuario = this.navParams.get('usuario');  
 
-  ionViewDidLoad() { }
+  }
 
   incluir(){
     
     this.usuario.flag_ativo = true;
-
-    console.log(this.usuario);
 
     this.fshUtils.showLoading('aguarde...');
     
@@ -101,12 +107,16 @@ export class ExternUserRegisterPage {
     );
   }
 
-  getAddresByCep(){
+  getAddresByCep(): boolean{
 
     let cep = this.formUser.get('cep');
+  
+    if (!cep.valid){
+      return false;
+    }
 
     this.fshUtils.showLoading('obtendo informações....');
-
+    
     this.cepProvider.getAddressByCep(cep.value)
       .then((address) =>{
         this.fshUtils.hideLoading();
@@ -117,7 +127,7 @@ export class ExternUserRegisterPage {
         this.fshUtils.hideLoading();
         this.fshUtils.showAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
       });
-
+      
   }  
 
 }

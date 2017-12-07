@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Loading, LoadingController, AlertController } from 'ionic-angular';
+
 import { UsuarioModel } from '../model/usuario-model';
 
 @Injectable()

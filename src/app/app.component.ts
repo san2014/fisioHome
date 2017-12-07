@@ -20,7 +20,6 @@ export class MyApp {
   menuSections: Array<{title: string, component: any}>
 
   usuario: UsuarioModel;
-
   
   constructor(
     platform: Platform,
@@ -43,13 +42,28 @@ export class MyApp {
           {title: 'Dados Cadastrais', component: 'UserRegister' },
           {title: 'Meu Histórico', component: 'IniciarPage'},
           {title: 'Avalie-nos', component: 'IniciarPage'},
-        ]
+        ];
+
+        // OneSignal Code start:
+        // Enable to debug issues:
+        // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
+        var notificationOpenedCallback = function(jsonData) {
+          console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+        };
+
+        window["plugins"].OneSignal
+          .startInit("25afd312-d462-41fd-aaf5-a5b2d0be65b1", "214682051360")
+          .handleNotificationOpened(notificationOpenedCallback)
+          .endInit();        
       });
+
+
+
   }
 
   initialize(){
     this.usuario = new UsuarioModel();
-
     this.loginProvider.getUsuarioLogado()
     .then((usuarioLogado) => {
       if (usuarioLogado !== null){
@@ -105,7 +119,6 @@ export class MyApp {
   pushRegister(){
     this.navToComponent("ProfInfoRegisterPage");
   }
-
 
 }
 
