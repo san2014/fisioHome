@@ -44,20 +44,9 @@ export class MyApp {
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ];
 
-        // OneSignal Code start:
-        // Enable to debug issues:
-        // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+        this.prepareNotifications();
 
-        var notificationOpenedCallback = function(jsonData) {
-          console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-        };
-
-        window["plugins"].OneSignal
-          .startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360")
-          .handleNotificationOpened(notificationOpenedCallback)
-          .endInit();        
       });
-
 
 
   }
@@ -70,6 +59,33 @@ export class MyApp {
         this.usuario = usuarioLogado;
       }
     });        
+  }
+
+  prepareNotifications(){
+
+    // OneSignal Code start:
+    // Enable to debug issues:
+    // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
+    var notificationOpenedCallback = function(jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    };
+
+    window["plugins"].OneSignal
+      .startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360")
+      .handleNotificationOpened(notificationOpenedCallback)
+      .endInit();    
+      
+    window["plugins"].OneSignal.getIds(ids => {
+        /*var msg = { 
+            contents: {
+              en: "message body"
+            },
+            include_player_ids: [ids.userId]
+        };*/  
+        this.usuario.oneSignalId = ids.userId;
+    });      
+    
   }
 
   presentToast(msg: string) {

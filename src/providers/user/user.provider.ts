@@ -82,8 +82,33 @@ export class UserProvider {
             .catch(error => {
               reject('Erro');
             });
-    })
-  }  
+    });
+
+  } 
+  
+  update(params) : Promise<string>{
+
+    const headers = new Headers();
+    
+    headers.append('Content-Type', 'application/json');
+
+    params = this.fshUtils.convertAPIUser(params);
+
+    return new Promise( (resolve, reject) => {
+      this.safeHttp
+        .put(`/usuario`, 
+          params, 
+          new RequestOptions({headers: headers}))
+          .toPromise()
+            .then((data) =>{
+              resolve(data.statusText);
+            })
+            .catch(error => {
+              reject('Erro');
+            });
+    });    
+
+  }
 
 
 

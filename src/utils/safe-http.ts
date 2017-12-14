@@ -37,6 +37,14 @@ export class SafeHttp {
       }
     }
 
+    put(url: string, body: string, options?: RequestOptionsArgs) {
+      if (this.networkService.noConnection()) {
+        this.networkService.showNetworkAlert();
+      } else {
+        return this.http.put(`${this.basepath}${url}`, body, options) 
+      }
+    }    
+
     notResponse(){
         this.networkService.notResponse();
     }

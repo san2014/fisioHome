@@ -34,6 +34,8 @@ export class UsuarioModel{
 
     googleId: number;
 
+    oneSignalId: number;
+
     flag_ativo: boolean;
 
 }
