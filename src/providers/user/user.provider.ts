@@ -13,6 +13,7 @@ import { SafeHttp } from './../../utils/safe-http';
 export class UserProvider {
 
   basepath: string = "/fsh_api";
+  oneSignalId: string;
 
   constructor(
     public http: Http,
@@ -22,6 +23,10 @@ export class UserProvider {
   ) {
     if (this.platform.is('cordova')){
       this.basepath = ENDPOINT_API;
+
+      window["plugins"].OneSignal.getIds(ids => {
+        this.oneSignalId = ids.userId;
+      });       
     }        
   }
 
@@ -67,6 +72,8 @@ export class UserProvider {
     const headers = new Headers();
     
     headers.append('Content-Type', 'application/json');
+
+    params.oneSignalId = this.oneSignalId;
 
     params = this.fshUtils.convertAPIUser(params);
 

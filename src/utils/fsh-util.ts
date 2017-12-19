@@ -48,6 +48,7 @@ export class FshUtils{
         usuarioModel.cep = api_user.usua_cep;
         usuarioModel.dt_nasc = api_user.usua_dt_nasc;
         usuarioModel.numero_local = api_user.numero_local;
+        usuarioModel.oneSignalId = api_user.oneSignalId;
 
         return usuarioModel;
     }  
@@ -66,6 +67,7 @@ export class FshUtils{
         api_user.logradouro = usuarioModel.logradouro ? usuarioModel.logradouro : '';
         api_user.bairro = usuarioModel.bairro ? usuarioModel.bairro : '';
         api_user.numero_local = usuarioModel.numero_local ? usuarioModel.numero_local : '';
+        api_user.oneSignalId = usuarioModel.oneSignalId ? usuarioModel.oneSignalId : '';
         api_user.flag_ativo = usuarioModel.flag_ativo ? 1 : 0;
 
         return api_user;
