@@ -44,10 +44,11 @@ export class MyApp {
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ];
 
-        this.prepareNotifications();
+        if (platform.is('cordova')){
+          this.prepareNotifications();
+        }          
 
       });
-
 
   }
 

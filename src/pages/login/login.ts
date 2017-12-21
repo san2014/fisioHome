@@ -49,9 +49,7 @@ export class Login {
     private loadingCtrl: LoadingController,
     private utils: FshUtils
   ) {
-
       this.initialize();
-
   }
 
   initialize() {
@@ -69,9 +67,7 @@ export class Login {
   }
 
   pushErroLogin(){
-
     this.msgError.push('Usuário ou senha inválidos');
-
   }
 
   async logar(){
@@ -79,59 +75,53 @@ export class Login {
     this.msgError = [];
 
     let erro: boolean = true;
+    
+    try {
 
-    await this.loginProvider.login(this.loginModel)
-      .then(data => {
-
-        if (data !== null){
-          this.usuarioModel = data;
-          erro = false;
-        }
+      await this.loginProvider.login(this.loginModel)
+        .then(data => {
+          if (data !== null){
+            this.usuarioModel = data;
+            erro = false;
+          }
+        })
+        .catch(() => {
+          throw new Error('Login Error');
+        });
         
-      });
+      await this.storage.set('usuarioLogado', this.usuarioModel)
+        .then(() => {
+          this.navCtrl
+            .push('HometabPage',{'usuarioModel': this.usuarioModel}),
+            error => { throw new Error('Login Error') }
+        })
+        .catch(() => {
+          throw new Error('Login Error');
+        });
 
-      if (!erro){
-        
-        await this.storage.set('usuarioLogado', this.usuarioModel)
-          .then(() => {
-          
-            this.navCtrl
-              .push('HometabPage',{'usuarioModel': this.usuarioModel}),
-              error => (erro = true)
-          }) 
-
-      }
-
-      if (erro){
-        this.pushErroLogin();
-      }
+    } catch (error) {
+      this.pushErroLogin();
+    }
 
   }
 
   ionViewWillEnter(){
-
     if (this.usuarioModel.id != undefined){
       this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
     }
-
   }
 
   ionViewDidLeave(){
-
     if (this.postUser != undefined){
       this.postUser.unsubscribe();
     }
-
   }
 
   showLoading(msg: string){
-    
     this.loading = this.loadingCtrl.create({
       content: msg
     });
-
     this.loading.present();     
-
   }
 
   hideLoading(){

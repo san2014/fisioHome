@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Storage } from '@ionic/storage';
@@ -45,10 +44,7 @@ export class LoginProvider {
         return resolve(this.getAdmin());
       }
 
-      this.safeHttp.post(`/usuario/login`,
-        JSON.stringify(login), 
-        new RequestOptions({headers: headers}))
-        .map(res => res.json())
+      this.safeHttp.post(`/usuario/login`, JSON.stringify(login))
         .toPromise()
           .then(data => {
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
