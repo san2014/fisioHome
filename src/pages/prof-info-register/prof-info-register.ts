@@ -29,12 +29,7 @@ export class ProfInfoRegisterPage {
   }
 
   initialize() {
-    this.usuario = new UsuarioModel();
-
-    this.loginProvider.getUsuarioLogado()
-      .then((usuarioLogado) => {
-        this.usuario = usuarioLogado;
-      });    
+    this.usuario = this.loginProvider.getUsuarioLogado();
   }
 
   continuar(){

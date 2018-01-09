@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 
 import { PropostaModel } from './../../model/proposta-model';
+import { LoginProvider } from '../../providers/login/login.provider';
+import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()
 @Component({
@@ -11,21 +13,55 @@ import { PropostaModel } from './../../model/proposta-model';
 export class PropostaSendPage {
 
   proposta: PropostaModel;
+  usuarioLogado: UsuarioModel;
 
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
     private view: ViewController,
+    private loginProvider: LoginProvider,
+    private toastCtrl: ToastController,
   ){
       this.initialize();
   }
 
   initialize(){
     this.proposta = this.navParams.get('proposta');
+    
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
   }
 
   aceitar(){
-    this.view.dismiss();
+
+    window["plugins"].OneSignal.getIds(ids => {
+
+      var body = {
+        msg: `O Paciente + ${this.usuarioLogado.nome} + solicita 
+        ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
+      }
+
+      var msg = { 
+          contents: {
+            en: body
+          },
+          include_player_ids: [this.proposta.profissional.oneSignalId]
+      };
+
+      window["plugins"].OneSignal.postNotification(msg,
+        successResponse => {
+          this.presentToast("Por favor, aguarde a resposta do Profissional");
+          this.view.dismiss();
+        },
+        erro => {
+          this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+          this.view.dismiss();
+        }
+      );
+
+    });
+
+
+    
   }
 
   recusar(){
@@ -35,5 +71,15 @@ export class PropostaSendPage {
   getValorPacote(){
     return this.proposta.qtd * this.proposta.tipoAtendimento.valor;
   }
+
+  presentToast(msg: string) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+  
+    toast.present();
+  }   
 
 }

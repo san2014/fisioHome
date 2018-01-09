@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {Http, Response} from "@angular/http";
+import { IonicPage, LoadingController, Loading, ToastController, NavController, NavParams, AlertController } from "ionic-angular";
+
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import 'rxjs/add/observable/throw';
+
 import {Observable} from "rxjs";
-import { IonicPage, LoadingController, Loading, ToastController, NavController, NavParams, AlertController } from "ionic-angular";
+
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
 
@@ -90,7 +93,7 @@ export class UserPicturePage {
     reader.onloadend = () => {
       const formData = new FormData();
       const imgBlob = new Blob([reader.result], {type: file.type});
-      formData.append('fileToUpload', imgBlob, file.name);
+      formData.append('fileToUpload', imgBlob, file.name); 
       this.postData(formData);
     };
     reader.readAsArrayBuffer(file);

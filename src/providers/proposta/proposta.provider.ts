@@ -27,7 +27,8 @@ export class PropostaProvider {
         "especialidades" : [
           {"id": "2", "descricao" :"Pediatria"},
           {"id": "3", "descricao" :"Neurologia"}
-        ]
+        ],
+        "oneSignalId": "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d"
       }
     ];
     

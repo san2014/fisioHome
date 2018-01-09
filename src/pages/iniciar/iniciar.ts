@@ -28,21 +28,30 @@ export class IniciarPage {
     this.initialize();
   }
 
-  initialize() {
-    this.usuarioLogado = new UsuarioModel();
+  async initialize() {
 
-    this.loginProvider.getUsuarioLogado()
-      .then((user) => {
-        this.usuarioLogado = user;
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+
+    console.log(this.usuarioLogado);
+
+    if (this.usuarioLogado !== undefined){
+
+      await this.tpAtdProvider.tiposAtendimentos()
+        .then(data =>{
+          this.tpsAtds = data;
+        })
+        .catch(() => this.tpsAtds = [])
         
-        this.tpAtdProvider.tiposAtendimentos()
-          .then(data =>{
-            this.tpsAtds = data;
-          })
-          .catch(() => this.tpsAtds = [])
-      })
-      .catch((error) => this.showAlert("Ocorreu um erro inesperado"));
+    }else{
+      
+      this.usuarioLogado = new UsuarioModel();
+
+      this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...")
+
+    }
+
   }
+
 
   initProposta(tipoAtendimento: TipoAtendimentoModel){
     this.navCtrl.push('PropostaInitPage', {'tipoAtendimento': tipoAtendimento});
@@ -50,9 +59,9 @@ export class IniciarPage {
 
   showAlert(msg: string) {
     let networkAlert = this.alert.create({
-      title: 'Conectado a Internet',
+      title: 'Atenção',
       message: msg,
-      buttons: ['Dismiss']
+      buttons: ['Ok']
     });
     
     networkAlert.present();

@@ -38,4 +38,6 @@ export class UsuarioModel{
 
     flag_ativo: boolean;
 
+    tokenRequests: string;
+
 }

@@ -75,13 +75,29 @@ export class Login {
     this.msgError = [];
 
     let erro: boolean = true;
+
+    let tokenGot: string;
+
+    this.showLoading('aguarde...');
     
     try {
+
+      await this.loginProvider.getToken()
+        .then(data => {
+          if (data !== null){
+            tokenGot = data;
+            erro = false;
+          }
+        })
+        .catch(() => {
+          throw new Error('Erro ao obter token de acesso...');
+        });      
 
       await this.loginProvider.login(this.loginModel)
         .then(data => {
           if (data !== null){
             this.usuarioModel = data;
+            this.usuarioModel.tokenRequests = tokenGot;
             erro = false;
           }
         })
@@ -99,9 +115,15 @@ export class Login {
           throw new Error('Login Error');
         });
 
+      
+
     } catch (error) {
+
       this.pushErroLogin();
+
     }
+
+    this.hideLoading();
 
   }
 

@@ -12,6 +12,8 @@ import { FshUtils } from '../../utils/fsh-util';
 @Injectable()
 export class LoginProvider {
 
+  usuarioLogado: UsuarioModel;
+
   constructor(
     private utils: FshUtils,
     private storage: Storage,
@@ -22,6 +24,7 @@ export class LoginProvider {
   getAdmin(): UsuarioModel{
 
     let admin =  new UsuarioModel();
+    
     admin.id = 1;
     admin.login = "admin";
     admin.nome = "Administrador do Sistema";
@@ -31,16 +34,24 @@ export class LoginProvider {
     return admin;
 
   }
+
+  getToken(): Promise<string>{
+
+    return new Promise((resolve, reject) => { 
+      this.safeHttp.getToken()
+      .toPromise()
+        .then(token => resolve (token.token))
+        .catch(erro => reject('erro')) 
+    });
+
+  }
   
   login(login: LoginModel): Promise<UsuarioModel>{
 
-    const headers = new Headers();
-    
-    headers.append('Content-Type', 'application/json');    
-    
     return new Promise((resolve, reject) => {
 
       if (login.email === "admin" && login.senha === "admin"){
+        this.usuarioLogado = this.getAdmin();
         return resolve(this.getAdmin());
       }
 
@@ -48,35 +59,48 @@ export class LoginProvider {
         .toPromise()
           .then(data => {
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
+            this.usuarioLogado = usuario;
             resolve(usuario);
           })
           .catch( erro => {
-/*             this.safeHttp.notResponse();
-            reject('Erro');   */  
-            console.log( erro._body);
+            this.safeHttp.notResponse();
             reject('Erro');  
           });
     });
         
   }
 
-  getUsuarioLogado() : Promise<UsuarioModel>{
+  getUsuarioLogado() : UsuarioModel{
+    return this.usuarioLogado;
+  } 
+  
+  getUsuarioSessao() : Promise<UsuarioModel>{
 
     return new Promise( (resolve, reject) => {
       this.storage.get('usuarioLogado')
         .then(data => {
+
           if (Array.isArray(data)){
+
+            this.usuarioLogado = data[0];
+            
             resolve(data[0]);
+
           }else{
+
+            this.usuarioLogado = data;
+            
             resolve(data);
+
           }
+
         })
         .catch(() => {
           reject('Erro')
         });
     });
 
-  }  
+  }    
 
   logout(): Promise<ResponseModel>{
     
@@ -85,6 +109,7 @@ export class LoginProvider {
     return new Promise( (resolve, reject) => {
       this.storage.clear()
         .then(() => {
+            this.usuarioLogado = undefined;
             response = {msg: 'Desconectado com sucesso', type: 1}
             resolve(response);
         })

@@ -49,6 +49,8 @@ export class FshUtils{
         usuarioModel.dt_nasc = api_user.usua_dt_nasc;
         usuarioModel.numero_local = api_user.numero_local;
         usuarioModel.oneSignalId = api_user.oneSignalId;
+        usuarioModel.facebookId = api_user.facebookId;
+        usuarioModel.googleId = api_user.googleId;
 
         return usuarioModel;
     }  
@@ -68,6 +70,8 @@ export class FshUtils{
         api_user.bairro = usuarioModel.bairro ? usuarioModel.bairro : '';
         api_user.numero_local = usuarioModel.numero_local ? usuarioModel.numero_local : '';
         api_user.oneSignalId = usuarioModel.oneSignalId ? usuarioModel.oneSignalId : '';
+        api_user.facebookId = usuarioModel.facebookId ? usuarioModel.facebookId : '';
+        api_user.googleId = usuarioModel.googleId ? usuarioModel.googleId : '';
         api_user.flag_ativo = usuarioModel.flag_ativo ? 1 : 0;
 
         return api_user;

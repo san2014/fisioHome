@@ -69,19 +69,12 @@ export class UserProvider {
   
   postData(params): Promise<string> {
 
-    const headers = new Headers();
-    
-    headers.append('Content-Type', 'application/json');
-
-    params.oneSignalId = this.oneSignalId;
-
     params = this.fshUtils.convertAPIUser(params);
 
-    return new Promise( (resolve, reject) => {
+     return new Promise( (resolve, reject) => {
       this.safeHttp
         .post(`/usuario`, 
-          params, 
-          new RequestOptions({headers: headers}))
+          params)
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);
@@ -95,17 +88,12 @@ export class UserProvider {
   
   update(params) : Promise<string>{
 
-    const headers = new Headers();
-    
-    headers.append('Content-Type', 'application/json');
-
     params = this.fshUtils.convertAPIUser(params);
 
     return new Promise( (resolve, reject) => {
       this.safeHttp
         .put(`/usuario`, 
-          params, 
-          new RequestOptions({headers: headers}))
+          params)
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);

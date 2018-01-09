@@ -53,20 +53,37 @@ export class MyApp {
   }
 
   initialize(){
+    
     this.usuario = new UsuarioModel();
-    this.loginProvider.getUsuarioLogado()
-    .then((usuarioLogado) => {
-      if (usuarioLogado !== null){
-        this.usuario = usuarioLogado;
-      }
-    });        
+
+    if (this.loginProvider.getUsuarioLogado() !== undefined){
+      this.usuario = this.loginProvider.getUsuarioLogado();
+    }
+
+  }
+
+  receivePush(msg: any){
+    let networkAlert = this.alertCtrl.create({
+      title: 'Nova Requisição',
+      message: msg,
+      buttons: [
+        {
+          text: 'Recusar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceitar',
+          handler: () => {
+            //
+          }
+        }
+      ]
+    });
+    
+    networkAlert.present();    
   }
 
   prepareNotifications(){
-
-    // OneSignal Code start:
-    // Enable to debug issues:
-    // window["plugins"].OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
 
     var notificationOpenedCallback = function(jsonData) {
       console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
@@ -78,12 +95,6 @@ export class MyApp {
       .endInit();    
       
     window["plugins"].OneSignal.getIds(ids => {
-        /*var msg = { 
-            contents: {
-              en: "message body"
-            },
-            include_player_ids: [ids.userId]
-        };*/  
         this.usuario.oneSignalId = ids.userId;
     });      
     

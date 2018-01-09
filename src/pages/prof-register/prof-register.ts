@@ -81,10 +81,7 @@ export class ProfRegisterPage {
   }
 
   setUserLogado(){
-    this.loginProvider.getUsuarioLogado()
-    .then((usuarioLogado) => {
-      this.usuario = usuarioLogado;
-    });    
+    this.usuario = this.loginProvider.getUsuarioLogado();
   }
 
   aplicaCssErro(campo: string) {
