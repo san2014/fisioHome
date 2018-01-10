@@ -13,8 +13,10 @@
     <ion-grid>  
       <ion-row>
         <ion-col>
-            <ion-input type="number" placeholder="Cpf" outline name="cpf" formControlName="cpf" 
+            <ion-input type="text" placeholder="Cpf" outline name="cpf" formControlName="cpf" 
+              (ionBlur)="validaCPF()"
               [(ngModel)]="usuario.cpf"
+              [brmasker]="{mask:'000.000.000-00', len:14}"
               [ngClass]="aplicaCssErro('cpf')">
             </ion-input>
         </ion-col>

@@ -20,21 +20,23 @@ export class UsuarioModel{
 
     bairro: string;
 
+    cidade: string;
+
     numero_local: string;
 
     email: string;
 
-    imgPerfil: string;
+    imgperfil: string;
 
     tipo: number;
 
     sexo: number;
 
-    facebookId: number;
+    facebook_id: number;
 
-    googleId: number;
+    google_id: number;
 
-    oneSignalId: number;
+    onesignal_id: number;
 
     flag_ativo: boolean;
 

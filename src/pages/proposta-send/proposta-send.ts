@@ -44,7 +44,7 @@ export class PropostaSendPage {
           contents: {
             en: body
           },
-          include_player_ids: [this.proposta.profissional.oneSignalId]
+          include_player_ids: [this.proposta.profissional.onesignal_id]
       };
 
       window["plugins"].OneSignal.postNotification(msg,

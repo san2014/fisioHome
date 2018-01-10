@@ -32,8 +32,6 @@ export class IniciarPage {
 
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
 
-    console.log(this.usuarioLogado);
-
     if (this.usuarioLogado !== undefined){
 
       await this.tpAtdProvider.tiposAtendimentos()

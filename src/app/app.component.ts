@@ -95,7 +95,7 @@ export class MyApp {
       .endInit();    
       
     window["plugins"].OneSignal.getIds(ids => {
-        this.usuario.oneSignalId = ids.userId;
+        this.usuario.onesignal_id = ids.userId;
     });      
     
   }

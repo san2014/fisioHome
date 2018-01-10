@@ -1,3 +1,4 @@
+import { LoginProvider } from './../login/login.provider';
 import { FshUtils } from './../../utils/fsh-util';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
@@ -19,8 +20,10 @@ export class UserProvider {
     public http: Http,
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
-    private platform: Platform
+    private platform: Platform,
+    private loginProvider: LoginProvider
   ) {
+    
     if (this.platform.is('cordova')){
       this.basepath = ENDPOINT_API;
 
@@ -33,7 +36,7 @@ export class UserProvider {
   usuarios(): Promise<UsuarioModel>{
   
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`${this.basepath}/usuario`)
+      this.safeHttp.get(`${this.basepath}/usuario`, this.getToken())
         .map(res => res.json())
           .toPromise()
             .then(data => {
@@ -50,7 +53,7 @@ export class UserProvider {
   getUserByEmail(email: string): Promise<UsuarioModel>{
 
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`/usuario/search/email=${email}`)
+      this.safeHttp.get(`/usuario/search/email=${email}`, this.getToken())
         .map(res => res.json())
           .toPromise()
             .then(data => {
@@ -73,8 +76,7 @@ export class UserProvider {
 
      return new Promise( (resolve, reject) => {
       this.safeHttp
-        .post(`/usuario`, 
-          params)
+        .post(`/usuario`, params, this.getToken())
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);
@@ -92,8 +94,7 @@ export class UserProvider {
 
     return new Promise( (resolve, reject) => {
       this.safeHttp
-        .put(`/usuario`, 
-          params)
+        .put(`/usuario`, params, this.getToken())
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);
@@ -103,6 +104,10 @@ export class UserProvider {
             });
     });    
 
+  }
+
+  getToken(): string{
+    return this.loginProvider.getUsuarioLogado().tokenRequests;
   }
 
 

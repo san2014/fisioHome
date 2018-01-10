@@ -104,6 +104,16 @@ export class UserRegister {
     );
   }
 
+  validaCPF(){
+    
+    const cpf = this.formUser.get('cpf');
+
+    if (this.fshUtils.validaCPF(cpf.value) === false){
+      cpf.setErrors({"required": "0"});
+    } 
+
+  }
+
   getAddresByCep(){
 
     let cep = this.formUser.get('cep');

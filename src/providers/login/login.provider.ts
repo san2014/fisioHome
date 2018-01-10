@@ -55,7 +55,7 @@ export class LoginProvider {
         return resolve(this.getAdmin());
       }
 
-      this.safeHttp.post(`/usuario/login`, JSON.stringify(login))
+      this.safeHttp.post(`/usuario/login`, JSON.stringify(login), this.usuarioLogado.tokenRequests)
         .toPromise()
           .then(data => {
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])

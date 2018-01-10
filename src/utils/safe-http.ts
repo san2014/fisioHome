@@ -5,8 +5,6 @@ import { Platform } from 'ionic-angular';
 import { ENDPOINT_API } from './../app/app-constantes';
 
 import { NetworkService } from './network-service'
-import { LoginProvider } from '../providers/login/login.provider';
-import { UserProvider } from '../providers/user/user.provider';
 
 @Injectable()
 export class SafeHttp {
@@ -19,7 +17,7 @@ export class SafeHttp {
       private http: HttpClient,
       private networkService: NetworkService,
       private platform: Platform,
-      loginProvider: UserProvider
+      
     ) {
        
         if (this.platform.is('cordova')){
@@ -29,44 +27,63 @@ export class SafeHttp {
 
     }
 
-    get(url: string) {
+    get(url: string, token: string) {
+      
       if (this.networkService.noConnection()) {
+        
         this.networkService.showNetworkAlert();
+
       } else { 
-        return this.http.get<any>(this.basepath+url) 
+        
+        let hearders = new HttpHeaders();
+      
+        hearders.set('Authorizartion', `JWT ${token}`);
+
+        return this.http.get<any>(this.basepath+url);
+
       }
+
     }
 
     getToken(){
+      
       if (this.networkService.noConnection()) {
         this.networkService.showNetworkAlert();
       } else {
         return this.http.post<any>(`${this.basepath}/auth`, this.bodyToken);
       }
+
     }
 
-    post(url: string, body: string) {
-      
-      let hearders = new HttpHeaders();
-      //hearders.set('Authorizartion', `JWT ${this.loginProvider.getUsuarioLogado().tokenRequests}`)
+    post(url: string, body: string, token: string) {
 
       if (this.networkService.noConnection()) {
+
         this.networkService.showNetworkAlert();
+
       } else {
-        return this.http.post<any>(`${this.basepath}${url}`, body) 
+        
+        let hearders = new HttpHeaders();
+      
+        hearders.set('Authorizartion', `JWT ${token}`);
+
+        return this.http.post<any>(`${this.basepath}${url}`, body, {headers: hearders}) 
       }
+
     }
 
-    put(url: string, body: string) {
+    put(url: string, body: string, token: string) {
+      
       if (this.networkService.noConnection()) {
         this.networkService.showNetworkAlert();
       } else {
         return this.http.put<any>(`${this.basepath}${url}`, body) 
       }
+
     }    
 
     notResponse(){
-        this.networkService.notResponse();
+      this.networkService.notResponse();
     }
   
 }

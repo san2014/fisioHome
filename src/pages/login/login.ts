@@ -177,7 +177,7 @@ export class Login {
         this.usuarioModel.nome = userFace.name;
         this.usuarioModel.email = userFace.email;
         this.usuarioModel.dt_nasc = userFace.birthday;
-        this.usuarioModel.imgPerfil = userFace.picture.data.url;
+        this.usuarioModel.imgperfil = userFace.picture.data.url;
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
         this.usuarioModel.tipo = 1;
 
@@ -271,8 +271,8 @@ export class Login {
         this.usuarioModel = new UsuarioModel();
         this.usuarioModel.nome = userGoogle.displayName;
         this.usuarioModel.email = userGoogle.email;
-        this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
-        this.usuarioModel.googleId = userGoogle.id;
+        this.usuarioModel.imgperfil = userGoogle.imageUrl;  
+        this.usuarioModel.google_id = userGoogle.id;
         this.usuarioModel.tipo = 1; 
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
 
