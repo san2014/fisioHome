@@ -89,9 +89,10 @@ export class Login {
             erro = false;
           }
         })
-        .catch(() => {
+        .catch((erro) => {
+          console.log(erro)
           throw new Error('Erro ao obter token de acesso...');
-        });      
+        });    
 
       await this.loginProvider.login(this.loginModel)
         .then(data => {
@@ -101,7 +102,8 @@ export class Login {
             erro = false;
           }
         })
-        .catch(() => {
+        .catch((erro) => {
+          console.log(erro);
           throw new Error('Login Error');
         });
         

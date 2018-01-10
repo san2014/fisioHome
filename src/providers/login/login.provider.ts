@@ -14,6 +14,8 @@ export class LoginProvider {
 
   usuarioLogado: UsuarioModel;
 
+  token: string;
+
   constructor(
     private utils: FshUtils,
     private storage: Storage,
@@ -35,12 +37,19 @@ export class LoginProvider {
 
   }
 
+  getTokenRequest(){
+    return this.token;
+  }
+
   getToken(): Promise<string>{
 
     return new Promise((resolve, reject) => { 
       this.safeHttp.getToken()
       .toPromise()
-        .then(token => resolve (token.token))
+        .then(token => {
+          this.token = token.token;
+          resolve (token.token);
+        })
         .catch(erro => reject('erro')) 
     });
 
@@ -55,7 +64,9 @@ export class LoginProvider {
         return resolve(this.getAdmin());
       }
 
-      this.safeHttp.post(`/usuario/login`, JSON.stringify(login), this.usuarioLogado.tokenRequests)
+      let loginAPI = {"email": login.email, "senha": login.senha};
+
+      this.safeHttp.post(`/usuario/login`, loginAPI, this.token)
         .toPromise()
           .then(data => {
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])

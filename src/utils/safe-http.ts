@@ -35,11 +35,11 @@ export class SafeHttp {
 
       } else { 
         
-        let hearders = new HttpHeaders();
+        let headers = new HttpHeaders();
       
-        hearders.set('Authorizartion', `JWT ${token}`);
+        headers = headers.set('Authorization', `JWT ${token}`);
 
-        return this.http.get<any>(this.basepath+url);
+        return this.http.get<any>(this.basepath+url, {headers: headers});
 
       }
 
@@ -55,7 +55,7 @@ export class SafeHttp {
 
     }
 
-    post(url: string, body: string, token: string) {
+    post(url: string, body: any, token: string) {
 
       if (this.networkService.noConnection()) {
 
@@ -63,11 +63,11 @@ export class SafeHttp {
 
       } else {
         
-        let hearders = new HttpHeaders();
+        let headers = new HttpHeaders();
       
-        hearders.set('Authorizartion', `JWT ${token}`);
+        headers = headers.set('Authorization', `JWT ${token}`);
 
-        return this.http.post<any>(`${this.basepath}${url}`, body, {headers: hearders}) 
+        return this.http.post<any>(`${this.basepath}${url}`, body, {headers: headers}) 
       }
 
     }

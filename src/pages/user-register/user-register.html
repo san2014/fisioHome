@@ -116,12 +116,18 @@
       </ion-row>  
       <ion-row>
         <ion-col>
-            <ion-input type="password" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
+            <ion-input type="text" placeholder="Senha" outline class="box-register" name="senha" formControlName="senha" 
             [(ngModel)]="usuario.senha"
             [ngClass]="aplicaCssErro('senha')">
           </ion-input>
         </ion-col>
       </ion-row>  
+
+      <ion-input [hidden]="true" type="text" name="tokenRequests" formControlName="tokenRequests" 
+      [(ngModel)]="usuario.tokenRequests"></ion-input>        
+
+      <ion-input [hidden]="true" type="text" name="onesignal_id" formControlName="onesignal_id" 
+      [(ngModel)]="usuario.onesignal_id"></ion-input>     
 
     </ion-grid>
   

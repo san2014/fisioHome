@@ -72,11 +72,15 @@ export class UserProvider {
   
   postData(params): Promise<string> {
 
+    let token = params.tokenRequests;
+
     params = this.fshUtils.convertAPIUser(params);
+
+    console.log(token);
 
      return new Promise( (resolve, reject) => {
       this.safeHttp
-        .post(`/usuario`, params, this.getToken())
+        .post(`/usuario`, params, token)
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);

@@ -64,7 +64,9 @@ export class UserRegister {
       'logradouro': ['',Validators.required],
       'bairro': ['',Validators.required],
       'numero_local': ['',Validators.required],
-      'flag_ativo' : ['']
+      'flag_ativo' : [''],
+      'onesignal_id':null,
+      'tokenRequests': null
     });
 
     this.usuario = new UsuarioModel();
@@ -75,8 +77,8 @@ export class UserRegister {
 
   }
 
-  async getUsuarioLogado(){
-    this.usuario = await this.loginProvider.getUsuarioLogado();
+  getUsuarioLogado(){
+    this.usuario = this.loginProvider.getUsuarioLogado();
     if (this.usuario == null){
       this.usuario = new UsuarioModel();
     }
@@ -137,31 +139,68 @@ export class UserRegister {
 
   }
 
-  incluir(){
+  async incluir(){
 
-    this.formUser.value.flag_ativo = "1";
+    let erro: boolean = false;
 
-    this.fshUtils.showLoading('aguarde...');
-    
-    this.userProvider.postData(this.formUser.value)
-      .then((res) => {
+    let tokenGot: string;
 
-        this.fshUtils.hideLoading();
-        
-        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario})
+    let msg: string;
 
-      })
-      .catch((error) => {
+    const titulo: string = 'Desculpe';
 
-        this.fshUtils.hideLoading();
-        
-        const titulo = 'Desculpe';
-        
-        const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
-        
-        this.fshUtils.showAlert(titulo, msg);  
+    try{
 
-      });
+      this.fshUtils.showLoading('aguarde...');
+
+      await this.loginProvider.getToken()
+        .then(data => {
+
+          if (data !== null){
+            tokenGot = data;
+          }
+
+        })
+        .catch(() => {
+          
+          msg = `Erro ao obter token de acesso. \n Tente novamente mais tarde....` ;    
+          
+          throw new Error('erro');
+
+        }); 
+      
+      this.formUser.value.tokenRequests = tokenGot;
+
+      this.formUser.value.flag_ativo = "1";
+
+      await this.userProvider.postData(this.formUser.value)
+        .then((res) => {
+
+          console.log(res);
+
+        })
+        .catch((error) => {
+
+          msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
+
+          throw new Error('erro');
+
+        });
+
+    }catch(error){
+
+      erro = true;
+      
+      this.fshUtils.showAlert(titulo, msg); 
+
+    }
+
+    this.fshUtils.hideLoading();
+
+    if (erro === false){
+      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario})
+    }
+
 
   }
 
