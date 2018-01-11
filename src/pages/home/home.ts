@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { LoginProvider } from './../../providers/login/login.provider';
 
-import { UsuarioModel } from '../../model/usuario-model';
-
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -22,13 +20,14 @@ export class HomePage {
   }
 
   initialize(){
-    
+
     this.loginProvider.getUsuarioSessao()
       .then((usuarioLogado) => {
         if (usuarioLogado !== null){
           this.navCtrl.push('HometabPage', {'usuarioLogado': usuarioLogado});
         }  
       });
+    
   }
 
   login(){

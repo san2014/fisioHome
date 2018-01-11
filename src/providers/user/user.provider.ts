@@ -1,7 +1,7 @@
+import { OneSignal } from '@ionic-native/onesignal';
 import { LoginProvider } from './../login/login.provider';
 import { FshUtils } from './../../utils/fsh-util';
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
 import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -13,30 +13,19 @@ import { SafeHttp } from './../../utils/safe-http';
 @Injectable()
 export class UserProvider {
 
-  basepath: string = "/fsh_api";
   oneSignalId: string;
 
   constructor(
-    public http: Http,
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
     private platform: Platform,
     private loginProvider: LoginProvider
-  ) {
-    
-    if (this.platform.is('cordova')){
-      this.basepath = ENDPOINT_API;
-
-      window["plugins"].OneSignal.getIds(ids => {
-        this.oneSignalId = ids.userId;
-      });       
-    }        
-  }
+  ) {}
 
   usuarios(): Promise<UsuarioModel>{
   
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`${this.basepath}/usuario`, this.getToken())
+      this.safeHttp.get(`/usuario`, this.getToken())
         .map(res => res.json())
           .toPromise()
             .then(data => {
@@ -76,8 +65,6 @@ export class UserProvider {
 
     params = this.fshUtils.convertAPIUser(params);
 
-    console.log(token);
-
      return new Promise( (resolve, reject) => {
       this.safeHttp
         .post(`/usuario`, params, token)
@@ -113,7 +100,5 @@ export class UserProvider {
   getToken(): string{
     return this.loginProvider.getUsuarioLogado().tokenRequests;
   }
-
-
 
 }

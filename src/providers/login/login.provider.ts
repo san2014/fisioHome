@@ -3,6 +3,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { Storage } from '@ionic/storage';
 
+import { OneSignal } from '@ionic-native/onesignal';
+
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
@@ -16,10 +18,13 @@ export class LoginProvider {
 
   token: string;
 
+  oneSignalId: string;
+
   constructor(
     private utils: FshUtils,
     private storage: Storage,
-    private safeHttp: SafeHttp
+    private safeHttp: SafeHttp,
+    private oneSignal: OneSignal
   ){}
 
 
@@ -54,6 +59,13 @@ export class LoginProvider {
     });
 
   }
+
+  checkOneSignalId(){
+    this.oneSignal.getIds()
+    .then(ids => {
+      this.oneSignalId = ids.userId;
+    });      
+  }
   
   login(login: LoginModel): Promise<UsuarioModel>{
 
@@ -69,6 +81,7 @@ export class LoginProvider {
       this.safeHttp.post(`/usuario/login`, loginAPI, this.token)
         .toPromise()
           .then(data => {
+            
             let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
             this.usuarioLogado = usuario;
             resolve(usuario);

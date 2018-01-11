@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
+import {OneSignal} from "@ionic-native/onesignal";
+
 import { LoginProvider } from './../providers/login/login.provider';
 import { UsuarioModel } from "../model/usuario-model";
 
@@ -24,10 +26,12 @@ export class MyApp {
   constructor(
     platform: Platform,
     statusBar: StatusBar,
+    splashScreen: SplashScreen,
     private loginProvider: LoginProvider,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    splashScreen: SplashScreen) {
+    public oneSignal : OneSignal
+    ) {
 
       this.initialize();
 
@@ -53,13 +57,7 @@ export class MyApp {
   }
 
   initialize(){
-    
     this.usuario = new UsuarioModel();
-
-    if (this.loginProvider.getUsuarioLogado() !== undefined){
-      this.usuario = this.loginProvider.getUsuarioLogado();
-    }
-
   }
 
   receivePush(msg: any){
@@ -74,7 +72,7 @@ export class MyApp {
         {
           text: 'Aceitar',
           handler: () => {
-            //
+            alert('Aguarde implementação....');
           }
         }
       ]
@@ -85,19 +83,17 @@ export class MyApp {
 
   prepareNotifications(){
 
-    var notificationOpenedCallback = function(jsonData) {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    };
-
-    window["plugins"].OneSignal
-      .startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360")
-      .handleNotificationOpened(notificationOpenedCallback)
-      .endInit();    
-      
-    window["plugins"].OneSignal.getIds(ids => {
-        this.usuario.onesignal_id = ids.userId;
-    });      
+    this.oneSignal.startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360");
     
+    this.oneSignal.handleNotificationOpened()
+      .subscribe(data => {
+        this.receivePush(JSON.stringify(data));
+      });
+
+    this.loginProvider.checkOneSignalId();
+
+    this.oneSignal.endInit();
+
   }
 
   presentToast(msg: string) {

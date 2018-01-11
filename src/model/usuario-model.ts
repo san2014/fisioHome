@@ -36,7 +36,7 @@ export class UsuarioModel{
 
     google_id: number;
 
-    onesignal_id: number;
+    onesignal_id: string;
 
     flag_ativo: boolean;
 

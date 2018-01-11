@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
@@ -11,10 +12,10 @@ import { NetworkService } from './../utils/network-service';
 import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { HttpClientModule } from '@angular/common/http';
+import { Facebook } from "@ionic-native/facebook";
+import { OneSignal } from '@ionic-native/onesignal';
 
 import { LoginProvider } from "../providers/login/login.provider";
-import { Facebook } from "@ionic-native/facebook";
 import { FshUtils } from '../utils/fsh-util';
 
 @NgModule({
@@ -42,7 +43,8 @@ import { FshUtils } from '../utils/fsh-util';
     SafeHttp,
     Facebook,
     GooglePlus,
-    FshUtils
+    FshUtils,
+    OneSignal
   ]
 })
 export class AppModule {}
