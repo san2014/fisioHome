@@ -36,6 +36,7 @@ export class MyApp {
       this.initialize();
 
       platform.ready().then(() => {
+
         // Okay, so the platform is ready and our plugins are available.
         // Here you can do any higher level native things you might need.
         statusBar.styleDefault();
@@ -48,16 +49,21 @@ export class MyApp {
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ];
 
+      })
+      .then(()=> {
         if (platform.is('cordova')){
           this.prepareNotifications();
-        }          
-
+        }   
+      })
+      .then(() => {
+        this.loginProvider.initTokenRequest();
       });
 
   }
 
   initialize(){
     this.usuario = new UsuarioModel();
+    
   }
 
   receivePush(msg: any){
@@ -90,7 +96,7 @@ export class MyApp {
         this.receivePush(JSON.stringify(data));
       });
 
-    this.loginProvider.checkOneSignalId();
+    this.loginProvider.initOneSignalId();
 
     this.oneSignal.endInit();
 

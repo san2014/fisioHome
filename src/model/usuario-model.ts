@@ -2,7 +2,7 @@ export class UsuarioModel{
     
     id: number;
 
-    login: string;
+    login?: string;
 
     senha: string;
 
@@ -26,9 +26,9 @@ export class UsuarioModel{
 
     email: string;
 
-    imgperfil: string;
+    imgperfil?: string;
 
-    tipo: number;
+    tipo?: number;
 
     sexo: number;
 
@@ -39,7 +39,5 @@ export class UsuarioModel{
     onesignal_id: string;
 
     flag_ativo: boolean;
-
-    tokenRequests: string;
 
 }

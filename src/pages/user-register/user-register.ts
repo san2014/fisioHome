@@ -52,7 +52,14 @@ export class UserRegister {
         )
       ],
       'email': ['',Validators.compose([Validators.required, Validators.email])],
-      'dt_nasc': ['',Validators.required],
+      'dt_nasc': ['',Validators.compose(
+          [
+            Validators.required,
+            Validators.pattern(/^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/)
+
+          ]
+        )
+      ],
       'cep': ['',Validators.compose
         (
           [
@@ -143,8 +150,6 @@ export class UserRegister {
 
     let erro: boolean = false;
 
-    let tokenGot: string;
-
     let msg: string;
 
     const titulo: string = 'Desculpe';
@@ -153,30 +158,12 @@ export class UserRegister {
 
       this.fshUtils.showLoading('aguarde...');
 
-      await this.loginProvider.getToken()
-        .then(data => {
-
-          if (data !== null){
-            tokenGot = data;
-          }
-
-        })
-        .catch(() => {
-          
-          msg = `Erro ao obter token de acesso. \n Tente novamente mais tarde....` ;    
-          
-          throw new Error('erro');
-
-        }); 
-      
-      this.formUser.value.tokenRequests = tokenGot;
-
       this.formUser.value.flag_ativo = "1";
 
       await this.userProvider.postData(this.formUser.value)
         .then((res) => {
 
-          console.log(res);
+          this.usuario.id = res.insert_id;
 
         })
         .catch((error) => {
@@ -198,9 +185,12 @@ export class UserRegister {
     this.fshUtils.hideLoading();
 
     if (erro === false){
-      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario})
+      this.loginProvider.setUsuarioSessao(this.usuario)
+        .then(res => {
+          console.log(this.usuario);
+          this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario});
+        });
     }
-
 
   }
 

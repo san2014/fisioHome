@@ -1,4 +1,3 @@
-import { OneSignal } from '@ionic-native/onesignal';
 import { LoginProvider } from './../login/login.provider';
 import { FshUtils } from './../../utils/fsh-util';
 import { Injectable } from '@angular/core';
@@ -6,14 +5,13 @@ import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
+import { OneSignal } from '@ionic-native/onesignal';
+
 import { UsuarioModel } from './../../model/usuario-model';
-import { ENDPOINT_API } from "../../app/app-constantes";
 import { SafeHttp } from './../../utils/safe-http';
 
 @Injectable()
 export class UserProvider {
-
-  oneSignalId: string;
 
   constructor(
     private safeHttp: SafeHttp,
@@ -59,18 +57,16 @@ export class UserProvider {
 
   }
   
-  postData(params): Promise<string> {
-
-    let token = params.tokenRequests;
+  postData(params): Promise<any> {
 
     params = this.fshUtils.convertAPIUser(params);
 
      return new Promise( (resolve, reject) => {
       this.safeHttp
-        .post(`/usuario`, params, token)
+        .post(`/usuario`, params, this.getToken())
           .toPromise()
             .then((data) =>{
-              resolve(data.statusText);
+              resolve(data);
             })
             .catch(error => {
               reject('Erro');
@@ -98,7 +94,7 @@ export class UserProvider {
   }
 
   getToken(): string{
-    return this.loginProvider.getUsuarioLogado().tokenRequests;
+    return this.loginProvider.getToken();
   }
 
 }

@@ -74,50 +74,32 @@ export class Login {
 
     this.msgError = [];
 
-    let erro: boolean = true;
-
-    let tokenGot: string;
+    let erro: boolean = false;
 
     this.showLoading('aguarde...');
     
     try {
 
-      await this.loginProvider.getToken()
-        .then(data => {
-          if (data !== null){
-            tokenGot = data;
-            erro = false;
-          }
-        })
-        .catch((erro) => {
-          console.log(erro)
-          throw new Error('Erro ao obter token de acesso...');
-        });    
-
       await this.loginProvider.login(this.loginModel)
         .then(data => {
           if (data !== null){
             this.usuarioModel = data;
-            this.usuarioModel.tokenRequests = tokenGot;
-            erro = false;
           }
         })
         .catch((erro) => {
           console.log(erro);
-          throw new Error('Login Error');
-        });
-        
-      await this.storage.set('usuarioLogado', this.usuarioModel)
-        .then(() => {
-          this.navCtrl
-            .push('HometabPage',{'usuarioModel': this.usuarioModel}),
-            error => { throw new Error('Login Error') }
-        })
-        .catch(() => {
+          erro = true;
           throw new Error('Login Error');
         });
 
-      
+        await this.loginProvider.setUsuarioSessao(this.usuarioModel)
+          .then(res => {
+            this.navCtrl.push('HometabPage', {'usuarioModel': this.usuarioModel});    
+          })
+          .catch(() => {
+            erro = true;
+            throw new Error('Login Error');
+          });          
 
     } catch (error) {
 

@@ -57,13 +57,11 @@
             
       <ion-row>
         <ion-col>
-            <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
-              displayFormat="DD/MM/YYYY"
-              cancelText="cancelar"
-              doneText="ok"
+            <ion-input placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
+              [brmasker]="{mask:'00/00/0000', len:10}"
               [(ngModel)]="usuario.dt_nasc"
               [ngClass]="aplicaCssErro('dt_nasc')">
-            </ion-datetime>
+            </ion-input>
         </ion-col>
       </ion-row>
       <ion-row>

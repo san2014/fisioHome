@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -8,8 +9,9 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
+
 import { SafeHttp } from "./../../utils/safe-http";
-import { FshUtils } from '../../utils/fsh-util';
+import { FshUtils } from './../../utils/fsh-util';
 
 @Injectable()
 export class LoginProvider {
@@ -21,10 +23,10 @@ export class LoginProvider {
   oneSignalId: string;
 
   constructor(
-    private utils: FshUtils,
     private storage: Storage,
     private safeHttp: SafeHttp,
-    private oneSignal: OneSignal
+    private oneSignal: OneSignal,
+    private fshUtils: FshUtils
   ){}
 
 
@@ -42,12 +44,12 @@ export class LoginProvider {
 
   }
 
-  getTokenRequest(){
+  getToken(){
     return this.token;
   }
 
-  getToken(): Promise<string>{
-
+  initTokenRequest(): Promise<string>{
+    
     return new Promise((resolve, reject) => { 
       this.safeHttp.getToken()
       .toPromise()
@@ -60,7 +62,7 @@ export class LoginProvider {
 
   }
 
-  checkOneSignalId(){
+  initOneSignalId(){
     this.oneSignal.getIds()
     .then(ids => {
       this.oneSignalId = ids.userId;
@@ -78,17 +80,16 @@ export class LoginProvider {
 
       let loginAPI = {"email": login.email, "senha": login.senha};
 
-      this.safeHttp.post(`/usuario/login`, loginAPI, this.token)
+      this.safeHttp.post(`/usuario/login`, loginAPI, this.getToken())
         .toPromise()
           .then(data => {
-            
-            let usuario: UsuarioModel = this.utils.convertUserAPI(data.message[0])
+            let usuario: UsuarioModel = this.fshUtils.convertUserAPI(data);
             this.usuarioLogado = usuario;
             resolve(usuario);
           })
           .catch( erro => {
             this.safeHttp.notResponse();
-            reject('Erro');  
+            reject(erro);  
           });
     });
         
@@ -124,7 +125,27 @@ export class LoginProvider {
         });
     });
 
-  }    
+  }   
+  
+  setUsuarioSessao(usuario: UsuarioModel): Promise<boolean>{
+
+    return new Promise ( (resolve, reject) => {
+
+      this.storage.set('usuarioLogado', usuario)
+        .then(() => {
+            resolve(true);
+            error => { 
+              reject('Ocorreu um erro ao inserir dados na sessao');
+            }
+        })
+        .catch(() => {
+          reject('Ocorreu um erro ao inserir dados na sessao');
+        })
+      }
+
+    );    
+
+  }
 
   logout(): Promise<ResponseModel>{
     
