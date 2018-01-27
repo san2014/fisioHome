@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
@@ -67,24 +67,45 @@ export class MyApp {
   }
 
   receivePush(msg: any){
-    let networkAlert = this.alertCtrl.create({
-      title: 'Nova Requisição',
-      message: msg,
-      buttons: [
-        {
-          text: 'Recusar',
-          role: 'cancel'
-        },
-        {
-          text: 'Aceitar',
-          handler: () => {
-            alert('Aguarde implementação....');
+
+    let dialog : Alert;
+
+    if (msg.tipo === "prop"){
+
+      dialog = this.alertCtrl.create({
+        title: 'Nova Requisição',
+        message: msg,
+        buttons: [
+          {
+            text: 'Recusar',
+            role: 'cancel'
+          },
+          {
+            text: 'Aceitar',
+            handler: () => {
+              alert('Aguarde implementação....');
+            }
           }
-        }
-      ]
-    });
+        ]
+      });      
+
+    }else{
+
+      dialog = this.alertCtrl.create({
+        title: 'Atenção',
+        message: msg,
+        buttons: [
+          {
+            text: 'Ok',
+            role: 'cancel'
+          }
+        ]
+      });        
+
+    }
+
     
-    networkAlert.present();    
+    dialog.present();    
   }
 
   prepareNotifications(){
@@ -93,7 +114,7 @@ export class MyApp {
     
     this.oneSignal.handleNotificationOpened()
       .subscribe(data => {
-        this.receivePush(JSON.stringify(data));
+          this.receivePush(JSON.stringify(data));  
       });
 
     this.loginProvider.initOneSignalId();

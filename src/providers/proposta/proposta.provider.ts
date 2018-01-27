@@ -15,7 +15,7 @@ export class PropostaProvider {
     let list =[
       {
         "usuario": {
-          "id": "3",
+          "id": "684",
           "nome": "Luana Costa"
         },
         "credenciamento": "11234-CFTO",

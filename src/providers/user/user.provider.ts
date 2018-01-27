@@ -61,7 +61,7 @@ export class UserProvider {
 
     params = this.fshUtils.convertAPIUser(params);
 
-     return new Promise( (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
       this.safeHttp
         .post(`/usuario`, params, this.getToken())
           .toPromise()

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
-import { ENDPOINT_API } from './../app/app-constantes';
+import { ENDPOINT_API, CEP_API } from './../app/app-constantes';
 
 import { NetworkService } from './network-service'
 
@@ -10,6 +10,8 @@ import { NetworkService } from './network-service'
 export class SafeHttp {
 
     basepath: string = "/fsh_api";
+
+    basePathCEP: string = CEP_API;
 
     bodyToken: any = {'chave': '7ntEIOpemKb1RF7LIcbYVA7'};
   
@@ -23,7 +25,6 @@ export class SafeHttp {
         if (this.platform.is('cordova')){
           this.basepath = ENDPOINT_API;
         }  
-        //this.basepath = ENDPOINT_API;
 
     }
 
@@ -42,6 +43,20 @@ export class SafeHttp {
         return this.http.get<any>(this.basepath+url, {headers: headers});
 
       }
+
+    }
+
+    getCEP(url: string){
+
+      if (this.networkService.noConnection()) {
+        
+        this.networkService.showNetworkAlert();
+
+      } else { 
+        
+        return this.http.get<any>(CEP_API+url);
+
+      }      
 
     }
 

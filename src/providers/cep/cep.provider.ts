@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { Http } from '@angular/http';
+
+import { SafeHttp } from '../../utils/safe-http';
 
 
 @Injectable()
 export class CepProvider {
 
-  basepath:string = 'https://viacep.com.br/ws';
-
   constructor(
-    private http: Http
+    private safeHttp: SafeHttp
   ) {}
 
   getAddressByCep(cep: string): Promise<any>{
 
     return new Promise( (resolve, reject) => {
-      this.http.get(`${this.basepath}/${cep}/json/`)
-        .map(response => response.json())
+      this.safeHttp.getCEP(`/${cep}/json/`)
         .toPromise()
         .then(address => {
           resolve(address)

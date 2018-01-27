@@ -38,6 +38,6 @@ export class UsuarioModel{
 
     onesignal_id: string;
 
-    flag_ativo: boolean;
+    flag_ativo: number;
 
 }

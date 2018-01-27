@@ -73,19 +73,19 @@ export class UserRegister {
       'numero_local': ['',Validators.required],
       'flag_ativo' : [''],
       'onesignal_id':null,
-      'tokenRequests': null
+      'tipo': null
     });
 
     this.usuario = new UsuarioModel();
 
-    this.usuario.flag_ativo = true;
+    this.usuario.flag_ativo = 1;
+    this.usuario.onesignal_id = this.loginProvider.getToken();
     
     this.getUsuarioLogado();
 
   }
 
   getUsuarioLogado(){
-    this.usuario = this.loginProvider.getUsuarioLogado();
     if (this.usuario == null){
       this.usuario = new UsuarioModel();
     }
@@ -157,8 +157,6 @@ export class UserRegister {
     try{
 
       this.fshUtils.showLoading('aguarde...');
-
-      this.formUser.value.flag_ativo = "1";
 
       await this.userProvider.postData(this.formUser.value)
         .then((res) => {

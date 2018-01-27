@@ -151,7 +151,7 @@ export class UserPicturePage {
 
   enviar(){
     this.presentAlert('Obrigado', 'Seu cadastro foi concluído com sucesso! Vamos começar!');
-    this.navCtrl.push('HometabPage',{'usuarioModel': this.usuario})
+    this.navCtrl.push('HometabPage',{'usuarioLogado': this.usuario})
   }
 
 }

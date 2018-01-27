@@ -37,7 +37,7 @@ export class LoginProvider {
     admin.id = 1;
     admin.login = "admin";
     admin.nome = "Administrador do Sistema";
-    admin.flag_ativo = true;
+    admin.flag_ativo = 1;
     admin.tipo = 1;
 
     return admin;

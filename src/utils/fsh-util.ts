@@ -52,7 +52,7 @@ export class FshUtils{
         usuarioModel.onesignal_id = api_user.oneSignal_id;
         usuarioModel.facebook_id = api_user.facebook_id;
         usuarioModel.google_id = api_user.google_id;
-        usuarioModel.tipo = api_user.tipo;
+        usuarioModel.tipo = api_user.usua_tipo;
 
         return usuarioModel;
     }  

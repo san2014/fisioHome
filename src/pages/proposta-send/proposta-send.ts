@@ -36,6 +36,8 @@ export class PropostaSendPage {
     window["plugins"].OneSignal.getIds(ids => {
 
       var body = {
+        tipo: "prop",
+        userId: this.proposta.profissional.id,
         msg: `O Paciente + ${this.usuarioLogado.nome} + solicita 
         ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
       }

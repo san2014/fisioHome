@@ -55,12 +55,12 @@ export class ExternUserRegisterPage {
     
     this.usuario = this.navParams.get('usuario');  
 
+    this.usuario.flag_ativo = 1;
+
   }
 
   incluir(){
     
-    this.usuario.flag_ativo = true;
-
     this.fshUtils.showLoading('aguarde...');
     
     this.userProvider.postData(this.usuario)
