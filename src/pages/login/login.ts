@@ -143,8 +143,8 @@ export class Login {
       const credentials = await this.authFace()
         .catch(() => {
           throw new Error(this.msgThrow);  
-        });    
-
+        });
+        
       const userFace: any = await this.getUserFace(credentials.authResponse.userID)
         .catch(() => {
           throw new Error(this.msgThrow);          

@@ -68,6 +68,7 @@ export class UserRegister {
           ]
         )
       ],
+      'cidade': ['',Validators.required],
       'logradouro': ['',Validators.required],
       'bairro': ['',Validators.required],
       'numero_local': ['',Validators.required],
@@ -79,6 +80,7 @@ export class UserRegister {
     this.usuario = new UsuarioModel();
 
     this.usuario.flag_ativo = 1;
+    this.usuario.tipo = 1;
     this.usuario.onesignal_id = this.loginProvider.getToken();
     
     this.getUsuarioLogado();
@@ -138,6 +140,7 @@ export class UserRegister {
         this.fshUtils.hideLoading();
         this.usuario.logradouro = address.logradouro;
         this.usuario.bairro = address.bairro;
+        this.usuario.cidade = address.localidade;
       })
       .catch((erro) => {
         this.fshUtils.hideLoading();

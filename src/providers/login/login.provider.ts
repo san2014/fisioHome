@@ -133,6 +133,7 @@ export class LoginProvider {
 
       this.storage.set('usuarioLogado', usuario)
         .then(() => {
+            this.usuarioLogado = usuario;
             resolve(true);
             error => { 
               reject('Ocorreu um erro ao inserir dados na sessao');

@@ -105,6 +105,14 @@
             </ion-input>
         </ion-col>
       </ion-row> 
+      <ion-row>
+          <ion-col>
+              <ion-input placeholder="Cidade" outline class="box-register" name="cidade" formControlName="cidade" 
+                [(ngModel)]="usuario.cidade"
+                [ngClass]="aplicaCssErro('cidade')">
+              </ion-input>
+          </ion-col>
+        </ion-row>        
       <ion-row >
         <ion-col>
           <ion-item text-wrap color="primary">
