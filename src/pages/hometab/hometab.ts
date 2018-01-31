@@ -1,3 +1,4 @@
+import { LoginProvider } from './../../providers/login/login.provider';
 import { NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
@@ -21,11 +22,24 @@ export class HometabPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private loginProvider: LoginProvider
   ) {
     
-    this.usuarioLogado = this.navParams.get('usuarioLogado');
+    this.initialize();
     
+  }
+
+  initialize(){
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+    
+    if (this.usuarioLogado == null){
+      this.navCtrl.push('Login');
+    }
+  }
+
+  ionViewDidEnter(){
+    this.initialize();
   }
 
 }
