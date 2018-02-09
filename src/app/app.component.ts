@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
-import {OneSignal} from "@ionic-native/onesignal";
+import {OneSignal, OSNotification, OSNotificationPayload} from "@ionic-native/onesignal";
 
 import { LoginProvider } from './../providers/login/login.provider';
 import { UsuarioModel } from "../model/usuario-model";
@@ -66,11 +66,43 @@ export class MyApp {
     
   }
 
-  receivePush(msg: any){
+  prepareNotifications(){
+
+    this.oneSignal.startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360");
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+    
+    this.oneSignal.handleNotificationOpened()
+      .subscribe(data => { this.receivePush(data.notification.payload) });
+
+    this.loginProvider.initOneSignalId();
+
+    this.oneSignal.endInit();
+
+  }
+
+  receivePush(msg: OSNotificationPayload){
 
     let dialog : Alert;
 
-    if (msg.tipo === "prop"){
+    const msgJSON: any = JSON.parse(msg.body);
+
+    const title = msgJSON.title;
+
+    dialog = this.alertCtrl.create({
+      title: msg.title,
+      message: msgJSON.msg,
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel'
+        }
+      ]
+    });   
+    
+    dialog.present();
+
+    /*if (msg.tipo === "proposta"){
 
       dialog = this.alertCtrl.create({
         title: 'Nova Requisição',
@@ -105,23 +137,10 @@ export class MyApp {
     }
 
     
-    dialog.present();    
-  }
-
-  prepareNotifications(){
-
-    this.oneSignal.startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360");
-    
-    this.oneSignal.handleNotificationOpened()
-      .subscribe(data => {
-          this.receivePush(JSON.stringify(data));  
-      });
-
-    this.loginProvider.initOneSignalId();
-
-    this.oneSignal.endInit();
+    dialog.present();    */
 
   }
+
 
   presentToast(msg: string) {
     let toast = this.toastCtrl.create({

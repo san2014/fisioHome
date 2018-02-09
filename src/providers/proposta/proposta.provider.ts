@@ -14,10 +14,8 @@ export class PropostaProvider {
 
     let list =[
       {
-        "usuario": {
-          "id": "684",
-          "nome": "Luana Costa"
-        },
+        "id": "684",
+        "nome": "Luana Costa",
         "credenciamento": "11234-CFTO",
         "vencimento": "18/08/2018",
         "conta": "3456678",
@@ -28,7 +26,8 @@ export class PropostaProvider {
           {"id": "2", "descricao" :"Pediatria"},
           {"id": "3", "descricao" :"Neurologia"}
         ],
-        "oneSignalId": "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d"
+        //"onesignal_id": "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d"
+        "onesignal_id": "4185dc34-d33f-48a4-bd13-092266a8c6d9"
       }
     ];
     

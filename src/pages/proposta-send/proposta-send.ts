@@ -36,15 +36,14 @@ export class PropostaSendPage {
     window["plugins"].OneSignal.getIds(ids => {
 
       var body = {
-        tipo: "prop",
+        tipo: "proposta",
         userId: this.proposta.profissional.id,
-        msg: `O Paciente + ${this.usuarioLogado.nome} + solicita 
-        ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
+        msg: `O Paciente ${this.usuarioLogado.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
       }
 
       var msg = { 
           contents: {
-            en: body
+            en: JSON.stringify(body)
           },
           include_player_ids: [this.proposta.profissional.onesignal_id]
       };
