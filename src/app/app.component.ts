@@ -85,13 +85,17 @@ export class MyApp {
 
     let dialog : Alert;
 
+    alert(JSON.stringify(msg));
+
     const msgJSON: any = JSON.parse(msg.body);
+
+    const additionalData: any = msg.additionalData;
+
+    alert(JSON.stringify(additionalData));
 
     const title = msgJSON.title;
 
-    dialog.present();
-
-    if (msg.additionalData === "proposta"){
+    if (additionalData === "proposta"){
 
       dialog = this.alertCtrl.create({
         title: 'Nova Solicitação',
