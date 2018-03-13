@@ -89,24 +89,13 @@ export class MyApp {
 
     const title = msgJSON.title;
 
-    dialog = this.alertCtrl.create({
-      title: msg.title,
-      message: msgJSON.msg,
-      buttons: [
-        {
-          text: 'Ok',
-          role: 'cancel'
-        }
-      ]
-    });   
-    
     dialog.present();
 
-    /*if (msg.tipo === "proposta"){
+    if (msg.additionalData === "proposta"){
 
       dialog = this.alertCtrl.create({
-        title: 'Nova Requisição',
-        message: msg,
+        title: 'Nova Solicitação',
+        message: msgJSON.msg,
         buttons: [
           {
             text: 'Recusar',
@@ -125,7 +114,7 @@ export class MyApp {
 
       dialog = this.alertCtrl.create({
         title: 'Atenção',
-        message: msg,
+        message: msgJSON.msg,
         buttons: [
           {
             text: 'Ok',
@@ -137,7 +126,7 @@ export class MyApp {
     }
 
     
-    dialog.present();    */
+    dialog.present();    
 
   }
 

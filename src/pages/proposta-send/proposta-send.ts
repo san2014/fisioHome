@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
 
+import { OneSignal } from '@ionic-native/onesignal';
+import { OSNotificationPayload } from '@ionic-native/onesignal';
+import { OSNotification } from '@ionic-native/onesignal';
+
 import { PropostaModel } from './../../model/proposta-model';
 import { LoginProvider } from '../../providers/login/login.provider';
 import { UsuarioModel } from '../../model/usuario-model';
@@ -21,6 +25,7 @@ export class PropostaSendPage {
     private view: ViewController,
     private loginProvider: LoginProvider,
     private toastCtrl: ToastController,
+    private oneSignal : OneSignal
   ){
       this.initialize();
   }
@@ -31,38 +36,50 @@ export class PropostaSendPage {
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
   }
 
-  aceitar(){
+  async aceitar() {
 
-    window["plugins"].OneSignal.getIds(ids => {
-
-      var body = {
-        tipo: "proposta",
-        userId: this.proposta.profissional.id,
-        msg: `O Paciente ${this.usuarioLogado.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
-      }
-
-      var msg = { 
-          contents: {
-            en: JSON.stringify(body)
-          },
-          include_player_ids: [this.proposta.profissional.onesignal_id]
-      };
-
-      window["plugins"].OneSignal.postNotification(msg,
-        successResponse => {
-          this.presentToast("Por favor, aguarde a resposta do Profissional");
-          this.view.dismiss();
-        },
-        erro => {
-          this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
-          this.view.dismiss();
-        }
-      );
-
-    });
-
-
+    try{
     
+      this.oneSignal.getIds()
+        .then((next) => {
+        
+          let body = {
+            tipo: "proposta",
+            userId: this.proposta.profissional.id,
+            msg: `O Paciente ${this.usuarioLogado.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
+          }
+
+          let notificationOBJ: any = {
+            contents: {en: `Olá ${this.proposta.profissional.nome}! Tem uma nova solicitação de atendimento para você!`},
+            include_player_ids: [this.proposta.profissional.onesignal_id],
+            data: body
+          };  
+          
+          this.oneSignal.postNotification(notificationOBJ)
+            .then((res) => {
+    
+              this.presentToast("Por favor, aguarde a resposta do Profissional");
+    
+            })
+            .catch((erro) => {
+    
+              alert(JSON.stringify(erro));
+              
+              throw new Error(erro);
+              
+            });
+
+        });
+
+    }catch(error){
+    
+      alert(JSON.stringify(error));
+      //this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+
+    }       
+    
+    //this.view.dismiss();
+
   }
 
   recusar(){
