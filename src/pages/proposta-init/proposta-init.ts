@@ -1,11 +1,15 @@
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController,
-         ToastController, ModalController } from 'ionic-angular';
 
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { ToastController, ModalController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';         
+
+import { PropostaProvider } from './../../providers/proposta/proposta.provider';         
+import { LoginProvider } from '../../providers/login/login.provider';
+
+import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { PropostaModel } from "../../model/proposta-model";
-import { PropostaProvider } from './../../providers/proposta/proposta.provider';
+import { UsuarioModel } from './../../model/usuario-model';
 
 @IonicPage()
 @Component({
@@ -18,6 +22,8 @@ export class PropostaInitPage {
 
   proposta: PropostaModel;
 
+  usuarioLogado: UsuarioModel;
+
   formProposta: FormGroup;
 
   constructor(
@@ -26,6 +32,7 @@ export class PropostaInitPage {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private propostaProvider: PropostaProvider,
+    private loginProvider: LoginProvider,
     public modalCtrl: ModalController,
     public navParams: NavParams
   ){
@@ -49,8 +56,13 @@ export class PropostaInitPage {
       'dtInicio': ['', Validators.required]
     });
 
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+
     this.proposta = new PropostaModel();
+    
     this.proposta.tipoAtendimento = this.tipoAtendimento;
+    
+    this.proposta.cliente = this.usuarioLogado;
   }
 
   presentToast(msg: string) {

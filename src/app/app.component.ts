@@ -9,6 +9,7 @@ import {OneSignal, OSNotification, OSNotificationPayload} from "@ionic-native/on
 
 import { LoginProvider } from './../providers/login/login.provider';
 import { UsuarioModel } from "../model/usuario-model";
+import { PropostaModel } from './../model/proposta-model';
 
 @Component({
   templateUrl: 'app.html'
@@ -83,19 +84,15 @@ export class MyApp {
 
   receivePush(msg: OSNotificationPayload){
 
+    alert(JSON.stringify(msg.additionalData));
+
     let dialog : Alert;
 
-    alert(JSON.stringify(msg));
+    const msgJSON: any = msg.additionalData;
 
-    const msgJSON: any = JSON.parse(msg.body);
+    const proposta: PropostaModel = msgJSON.proposta;
 
-    const additionalData: any = msg.additionalData;
-
-    alert(JSON.stringify(additionalData));
-
-    const title = msgJSON.title;
-
-    if (additionalData === "proposta"){
+    if (msgJSON.tipo === "proposta"){
 
       dialog = this.alertCtrl.create({
         title: 'Nova Solicitação',
@@ -103,16 +100,40 @@ export class MyApp {
         buttons: [
           {
             text: 'Recusar',
-            role: 'cancel'
+            handler: () => {
+              this.recusarProposta(proposta);
+            }
           },
           {
             text: 'Aceitar',
             handler: () => {
-              alert('Aguarde implementação....');
+              this.aceitarProposta(proposta);
             }
           }
         ]
       });      
+
+    }else if (msgJSON.tipo === "aceitaProposta"){
+
+      dialog = this.alertCtrl.create({
+        title: 'Confirmar Atendimento',
+        message: msgJSON.msg,
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              alert('Solicitação cancelada...')
+            }
+          },
+          {
+            text: 'Aceitar',
+            handler: () => {
+              alert('Navegar para pagamento...')
+            }
+          }
+        ]
+      });        
+       
 
     }else{
 
@@ -125,15 +146,93 @@ export class MyApp {
             role: 'cancel'
           }
         ]
-      });        
+      });       
 
     }
 
-    
     dialog.present();    
 
   }
 
+  aceitarProposta(proposta: PropostaModel) {
+
+    try{
+    
+      this.oneSignal.getIds()
+        .then((next) => {
+        
+          let body = {
+            tipo: "aceitaProposta",
+            msg: `O Profissional ${proposta.profissional.nome} está disponível para lhe atender! Clique Ok para continuar`
+          }
+
+          let notificationOBJ: any = {
+            contents: {en: `Olá ${proposta.cliente.nome}! Encontramos um Fisioterapeuta para lhe atender!`},
+            include_player_ids: [proposta.cliente.onesignal_id],
+            data: body
+          };  
+          
+          this.oneSignal.postNotification(notificationOBJ)
+            .then((res) => {
+    
+              this.presentToast("Por favor, aguarde a resposta do Paciente");
+    
+            })
+            .catch((erro) => {
+    
+              throw new Error(erro);
+              
+            });
+
+        });
+
+    }catch(error){
+    
+      this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+
+    }       
+    
+  }  
+
+  recusarProposta(proposta: PropostaModel) {
+
+    try{
+    
+      this.oneSignal.getIds()
+        .then((next) => {
+        
+          let body = {
+            tipo: "recusaProposta",
+            msg: `O Fisioterapeuta ${proposta.profissional.nome} encontra-se indisponível no momento, deseja fazer nova requisição? `
+          }
+
+          let notificationOBJ: any = {
+            contents: {en: `Olá ${proposta.cliente.nome}! Fisioterapeuta indisponível no momento!`},
+            include_player_ids: [proposta.cliente.onesignal_id],
+            data: body
+          };  
+          
+          this.oneSignal.postNotification(notificationOBJ)
+            .then((res) => {
+    
+              this.presentToast("Sua resposta foi enviada ao Paciente");
+    
+            })
+            .catch((erro) => {
+    
+              throw new Error(erro);
+              
+            });
+
+        });
+
+    }catch(error){
+    
+      this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+
+    }       
+    
+  }   
 
   presentToast(msg: string) {
     let toast = this.toastCtrl.create({

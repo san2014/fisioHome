@@ -17,13 +17,11 @@ import { UsuarioModel } from '../../model/usuario-model';
 export class PropostaSendPage {
 
   proposta: PropostaModel;
-  usuarioLogado: UsuarioModel;
 
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
     private view: ViewController,
-    private loginProvider: LoginProvider,
     private toastCtrl: ToastController,
     private oneSignal : OneSignal
   ){
@@ -32,11 +30,9 @@ export class PropostaSendPage {
 
   initialize(){
     this.proposta = this.navParams.get('proposta');
-    
-    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
   }
 
-  async aceitar() {
+  aceitar() {
 
     try{
     
@@ -45,8 +41,9 @@ export class PropostaSendPage {
         
           let body = {
             tipo: "proposta",
-            userId: this.proposta.profissional.id,
-            msg: `O Paciente ${this.usuarioLogado.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`
+            oneSignalId: this.proposta.cliente.onesignal_id,
+            msg: `O Paciente ${this.proposta.cliente.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`,
+            proposta: this.proposta
           }
 
           let notificationOBJ: any = {
@@ -63,8 +60,6 @@ export class PropostaSendPage {
             })
             .catch((erro) => {
     
-              alert(JSON.stringify(erro));
-              
               throw new Error(erro);
               
             });
@@ -73,13 +68,10 @@ export class PropostaSendPage {
 
     }catch(error){
     
-      alert(JSON.stringify(error));
-      //this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+      this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
 
     }       
     
-    //this.view.dismiss();
-
   }
 
   recusar(){
