@@ -71,20 +71,18 @@ export class MyApp {
 
     this.oneSignal.startInit("120907ba-b9de-4717-9395-38dd5a54b6b8", "214682051360");
 
+    this.loginProvider.initOneSignalId();
+
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
     
     this.oneSignal.handleNotificationOpened()
       .subscribe(data => { this.receivePush(data.notification.payload) });
-
-    this.loginProvider.initOneSignalId();
 
     this.oneSignal.endInit();
 
   }
 
   receivePush(msg: OSNotificationPayload){
-
-    alert(JSON.stringify(msg.additionalData));
 
     let dialog : Alert;
 
@@ -163,15 +161,16 @@ export class MyApp {
         
           let body = {
             tipo: "aceitaProposta",
-            msg: `O Profissional ${proposta.profissional.nome} está disponível para lhe atender! Clique Ok para continuar`
+            msg: `O Profissional ${proposta.profissional.nome} está disponível para lhe atender! Clique Ok para continuar`,
+            proposta: proposta
           }
 
           let notificationOBJ: any = {
-            contents: {en: `Olá ${proposta.cliente.nome}! Encontramos um Fisioterapeuta para lhe atender!`},
+            contents: {en: `Olá! Encontramos um Fisioterapeuta para lhe atender!`},
             include_player_ids: [proposta.cliente.onesignal_id],
             data: body
           };  
-          
+
           this.oneSignal.postNotification(notificationOBJ)
             .then((res) => {
     
@@ -207,7 +206,7 @@ export class MyApp {
           }
 
           let notificationOBJ: any = {
-            contents: {en: `Olá ${proposta.cliente.nome}! Fisioterapeuta indisponível no momento!`},
+            contents: {en: `Desculpe... Fisioterapeuta indisponível no momento!`},
             include_player_ids: [proposta.cliente.onesignal_id],
             data: body
           };  

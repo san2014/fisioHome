@@ -63,6 +63,7 @@ export class PropostaInitPage {
     this.proposta.tipoAtendimento = this.tipoAtendimento;
     
     this.proposta.cliente = this.usuarioLogado;
+
   }
 
   presentToast(msg: string) {

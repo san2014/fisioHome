@@ -74,8 +74,11 @@ export class LoginProvider {
     return new Promise((resolve, reject) => {
 
       if (login.email === "admin" && login.senha === "admin"){
+        
         this.usuarioLogado = this.getAdmin();
+        
         return resolve(this.getAdmin());
+        
       }
 
       let loginAPI = {"email": login.email, "senha": login.senha};
@@ -83,21 +86,36 @@ export class LoginProvider {
       this.safeHttp.post(`/usuario/login`, loginAPI, this.getToken())
         .toPromise()
           .then(data => {
+
             let usuario: UsuarioModel = this.fshUtils.convertUserAPI(data);
+
             this.usuarioLogado = usuario;
+
             resolve(usuario);
+            
           })
           .catch( erro => {
+            
             this.safeHttp.notResponse();
+            
             reject(erro);  
+
           });
     });
         
   }
 
   getUsuarioLogado() : UsuarioModel{
+    
+    this.usuarioLogado.onesignal_id = this.oneSignalId;
+    
     return this.usuarioLogado;
+    
   } 
+
+  getOneSignalId(): string{
+    return this.oneSignalId;
+  }
   
   getUsuarioSessao() : Promise<UsuarioModel>{
 
@@ -114,7 +132,7 @@ export class LoginProvider {
           }else{
 
             this.usuarioLogado = data;
-            
+
             resolve(data);
 
           }

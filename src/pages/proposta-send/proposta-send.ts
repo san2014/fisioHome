@@ -47,7 +47,7 @@ export class PropostaSendPage {
           }
 
           let notificationOBJ: any = {
-            contents: {en: `Olá ${this.proposta.profissional.nome}! Tem uma nova solicitação de atendimento para você!`},
+            contents: {en: `Tem uma nova solicitação de atendimento para você!`},
             include_player_ids: [this.proposta.profissional.onesignal_id],
             data: body
           };  
@@ -64,11 +64,15 @@ export class PropostaSendPage {
               
             });
 
+            this.view.dismiss();
+
         });
 
     }catch(error){
     
       this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+
+      this.view.dismiss();
 
     }       
     
