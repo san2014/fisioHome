@@ -6,8 +6,6 @@ import { OSNotificationPayload } from '@ionic-native/onesignal';
 import { OSNotification } from '@ionic-native/onesignal';
 
 import { PropostaModel } from './../../model/proposta-model';
-import { LoginProvider } from '../../providers/login/login.provider';
-import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()
 @Component({

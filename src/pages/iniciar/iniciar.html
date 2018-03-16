@@ -1,6 +1,11 @@
 <ion-header>
     
   <ion-navbar color="default">
+    <button id="notification-button" ion-button clear menuToggle right>
+        <ion-icon name="notifications">
+          <ion-badge id="notifications-badge" color="danger">{{getNotifications()}}</ion-badge>
+        </ion-icon>              
+    </button>    
     <button ion-button menuToggle right>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -8,12 +13,20 @@
       <h6><ion-icon name="contact"></ion-icon>
       <b>{{usuarioLogado.nome}}</b></h6>
     </ion-title>
+
   </ion-navbar>
 
 </ion-header>
     
 
 <ion-content class="card-background-page">
+
+  <ion-item>
+      <button ion-button color="secondary" (click)="increaseBadge()">
+        Push
+      </button>    
+  </ion-item>
+
   <ion-grid  *ngIf="usuarioLogado.tipo == 1">
     <init-cli [tpsAtds]="tpsAtds" (tpAtdSelect)="initProposta($event)"></init-cli>
   </ion-grid>

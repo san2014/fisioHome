@@ -29,8 +29,12 @@ export class HomePage {
 
   initialize(){
 
+    this.showLoading('aguarde...');
+
      this.loginProvider.getUsuarioSessao()
       .then((usuarioLogado) => {
+
+        this.hideLoading();
         
         if (usuarioLogado !== null){
           
@@ -46,8 +50,6 @@ export class HomePage {
 
   ionViewDidEnter(){
 
-    this.showLoading('aguarde...');
-    
     if (this.usuarioLogado !== null){
       this.handleHomePage();
     } 
@@ -63,8 +65,6 @@ export class HomePage {
   }
 
   handleHomePage(){
-    
-    this.hideLoading();
     
     this.navCtrl.push('HometabPage', {'usuarioLogado': this.usuarioLogado});
     

@@ -92,7 +92,7 @@ export class MyApp {
 
     if (msgJSON.tipo === "proposta"){
 
-      dialog = this.alertCtrl.create({
+/*       dialog = this.alertCtrl.create({
         title: 'Nova Solicitação',
         message: msgJSON.msg,
         buttons: [
@@ -109,7 +109,11 @@ export class MyApp {
             }
           }
         ]
-      });      
+      });       */
+
+      this.loginProvider.requestPermissionBadge();
+      
+      this.loginProvider.increaseBadge();
 
     }else if (msgJSON.tipo === "aceitaProposta"){
 

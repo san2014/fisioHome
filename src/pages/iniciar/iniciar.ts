@@ -23,7 +23,7 @@ export class IniciarPage {
     public navParams: NavParams,
     public tpAtdProvider: TipoAtendimentoProvider,
     private loginProvider: LoginProvider,
-    private alert: AlertController
+    private alert: AlertController,
   ) {
     this.initialize();
   }
@@ -50,6 +50,15 @@ export class IniciarPage {
 
   }
 
+  getNotifications(){
+    this.loginProvider.qtdNotificacoes;
+  }
+
+
+  increaseBadge(){
+    this.loginProvider.requestPermissionBadge();
+    this.increaseBadge();
+  }  
 
   initProposta(tipoAtendimento: TipoAtendimentoModel){
     this.navCtrl.push('PropostaInitPage', {'tipoAtendimento': tipoAtendimento});

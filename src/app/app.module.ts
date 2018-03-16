@@ -14,6 +14,7 @@ import { MyApp } from './app.component';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Facebook } from "@ionic-native/facebook";
 import { OneSignal } from '@ionic-native/onesignal';
+import { Badge } from '@ionic-native/badge';
 
 import { LoginProvider } from "../providers/login/login.provider";
 import { FshUtils } from '../utils/fsh-util';
@@ -44,7 +45,8 @@ import { FshUtils } from '../utils/fsh-util';
     Facebook,
     GooglePlus,
     FshUtils,
-    OneSignal
+    OneSignal,
+    Badge
   ]
 })
 export class AppModule {}

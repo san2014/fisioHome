@@ -23,6 +23,23 @@ page-iniciar {
         color: darkslategrey;
         }
 
+    }  
+    
+    #notification-button {            
+        position: relative;
+        width: 42px;
+        top:1px;
+        right: 1px;
+        overflow: visible!important;
+    }
+
+
+    #notifications-badge {
+        background-color: red;
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        border-radius: 100%;
     }    
 
 }
