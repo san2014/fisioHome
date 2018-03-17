@@ -81,7 +81,7 @@ export class UserRegister {
 
     this.usuario.flag_ativo = 1;
     this.usuario.tipo = 1;
-    this.usuario.onesignal_id = this.loginProvider.getToken();
+    this.usuario.onesignal_id = this.loginProvider.getOneSignalId();
     
     this.getUsuarioLogado();
 

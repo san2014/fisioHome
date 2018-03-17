@@ -23,12 +23,9 @@ export class LoginProvider {
 
   oneSignalId: string;
 
-  qtdNotificacoes: number;
-
   constructor(
     private storage: Storage,
     private safeHttp: SafeHttp,
-    private oneSignal: OneSignal,
     private fshUtils: FshUtils,
     private badge: Badge
   ){}
@@ -66,12 +63,7 @@ export class LoginProvider {
 
   }
 
-  initOneSignalId(){
-    this.oneSignal.getIds()
-    .then(ids => {
-      this.oneSignalId = ids.userId;
-    });      
-  }
+
   
   login(login: LoginModel): Promise<UsuarioModel>{
 
@@ -118,6 +110,10 @@ export class LoginProvider {
     return this.usuarioLogado;
     
   } 
+
+  setOneSignalId(id: string){
+    this.oneSignalId = id;
+  }
 
   getOneSignalId(): string{
     return this.oneSignalId;
@@ -189,64 +185,6 @@ export class LoginProvider {
         })
     });
 
-  }
-
-  async getBages(){
-    try {
-      let qtdBadges = await this.badge.get(); 
-      this.qtdNotificacoes = qtdBadges;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async requestPermissionBadge(){
-    try {
-      console.log('requestPermissionBadge');
-      let hasPermission = await this.badge.hasPermission();
-      console.log(hasPermission);
-
-      if (!hasPermission){
-        let permission = await this.badge.registerPermission();
-        console.log(permission)
-      }
-
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-
-  async clearBadges(){
-    try {
-      let badge = await this.badge.clear();
-    } 
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-  async increaseBadge(){
-    try {
-      let badge = await this.badge.increase(Number("1"))
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-  async decreaseBadge(){
-    try {
-      let badge = await this.badge.decrease(Number("1"))
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }  
-
-  getQtdNotificacoes(){
-    return this.qtdNotificacoes;
   }
 
 }

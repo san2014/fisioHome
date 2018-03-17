@@ -1,15 +1,14 @@
 import {Component} from '@angular/core';
-import {Http, Response} from "@angular/http";
-import { IonicPage, LoadingController, Loading, ToastController, NavController, NavParams, AlertController } from "ionic-angular";
+import { IonicPage, LoadingController, Loading, ToastController } from "ionic-angular";
+import { NavController, NavParams, AlertController } from "ionic-angular";
 
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/catch";
-import 'rxjs/add/observable/throw';
-
-import {Observable} from "rxjs";
+import { Observable } from 'rxjs/Observable';
 
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
+
+import { SafeHttp } from './../../utils/safe-http';
+import { LoginProvider } from './../../providers/login/login.provider';
 
 import { UsuarioModel } from './../../model/usuario-model';
 
@@ -27,14 +26,15 @@ export class UserPicturePage {
   public usuario: UsuarioModel;
 
   constructor(
-    private readonly http: Http,
+    private readonly safeHttp: SafeHttp,
     public navCtrl: NavController,
     public navParams: NavParams,
     private readonly loadingCtrl: LoadingController,
     private readonly toastCtrl: ToastController,
     private readonly camera: Camera,
     private readonly file: File,
-    private alert: AlertController    
+    private alert: AlertController,
+    private loginProvider: LoginProvider 
   ) {
     this.initialize();
   }
@@ -101,11 +101,13 @@ export class UserPicturePage {
 
   //substituir pela url da nossa API
   private postData(formData: FormData) {
-    this.http.post("http://192.168.0.8/upload.php", formData)
+    this.safeHttp.post("http://192.168.0.8/upload.php", formData, this.loginProvider.getToken())
+      .toPromise()
       .catch((e) => this.handleError(e))
-      .map(response => response.text())
-      .finally(() => this.loading.dismiss())
-      .subscribe(ok => this.showToast(ok));
+      .then((ok) => {
+        this.loading.dismiss()
+        this.showToast(ok)
+      })
   }
 
   private showToast(ok: boolean) {
@@ -130,7 +132,7 @@ export class UserPicturePage {
   private handleError(error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
-      const body = error.json() || '';
+      const body: any = error.json() || '';
       const err = body.error || JSON.stringify(body);
       errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
     } else {

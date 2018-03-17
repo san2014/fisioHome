@@ -21,21 +21,17 @@ export class HomePage {
     private loginProvider: LoginProvider,
     public navParams: NavParams,
     private loadingCtrl: LoadingController
-  ) {
-      
-      this.initialize();
+  ) { }
 
-  }
-
-  initialize(){
+  async initialize(){
 
     this.showLoading('aguarde...');
 
-     this.loginProvider.getUsuarioSessao()
+     await this.loginProvider.getUsuarioSessao()
       .then((usuarioLogado) => {
 
         this.hideLoading();
-        
+
         if (usuarioLogado !== null){
           
           this.usuarioLogado = usuarioLogado;
@@ -48,12 +44,11 @@ export class HomePage {
     
   }
 
-  ionViewDidEnter(){
 
-    if (this.usuarioLogado !== null){
-      this.handleHomePage();
-    } 
-    
+  ionViewCanEnter(){
+
+    this.initialize();
+
   }
    
   login(){
