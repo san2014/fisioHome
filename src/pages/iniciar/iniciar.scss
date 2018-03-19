@@ -40,6 +40,71 @@ page-iniciar {
         top: -3px;
         right: -3px;
         border-radius: 100%;
-    }    
+    }  
+    
+    .fakeItem {
+        h1, h2, h3, p {
+          background-color: lightgrey;
+          opacity: 0.5;
+          height: 1em;
+          margin-top: 10px;
+        }
+
+        h1 {
+            width: 100%; 
+        }
+      
+        h2 {
+          width: 35%;
+        }
+      
+        h3 {
+          width: 40%;
+        }  
+      
+        p {
+          width: 60%;
+        }
+
+        &--line {
+            height: 10px;
+            margin: 10px;
+            animation: pulse 1s infinite ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% {
+                background-color: rgba(165, 165, 165, 0.1)
+            }
+            50% {
+                background-color: rgba(165, 165, 165, 0.3)
+            }
+            100% {
+                background-color: rgba(165, 165, 165, 0.1)
+            }
+        }
+
+        @mixin nth-children($points...) {
+            @each $point in $points {
+                &:nth-child(#{$point}) {
+                    @content;
+                }
+            }
+        }        
+        
+        @include nth-children(1, 5, 9) {
+            width: 150px;
+        }
+        @include nth-children(2, 6, 10) {
+            width: 250px;
+        }
+        @include nth-children(3, 7) {
+            width: 50px;
+        }
+        @include nth-children(4, 8) {
+            width: 100px;
+        }        
+    
+    }     
 
 }

@@ -27,6 +27,8 @@ export class IniciarPage {
 
   qtdNotificacoes: number;
 
+  fakeItems: Array<any> = new Array(4);
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,13 +60,15 @@ export class IniciarPage {
 
       try {
 
-        await this.tpAtdProvider.tiposAtendimentos()
-        .then(data =>{
-          this.tpsAtds = data;
-        })
-        .catch((error) => {
-          throw new Error(error)
-        });
+        await setTimeout(() => {
+           this.tpAtdProvider.tiposAtendimentos()
+          .then(data =>{
+            this.tpsAtds = data;
+          })
+          .catch((error) => {
+            throw new Error(error)
+          });          
+        }, 3000);
 
       } catch (error) {
 
@@ -86,10 +90,11 @@ export class IniciarPage {
 
     this.initOneSignalId();
 
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
     
     this.oneSignal.handleNotificationOpened()
       .subscribe(data => { 
+        alert('received');
         this.receivePush(data.notification.payload);
       });
 
@@ -138,6 +143,8 @@ export class IniciarPage {
         ]
       });       */
 
+      alert('increase badges');
+
       this.increaseBadges();
       
 
@@ -174,11 +181,11 @@ export class IniciarPage {
             role: 'cancel'
           }
         ]
-      });       
+      });  
+      
+      dialog.present();    
 
     }
-
-    dialog.present();    
 
   }
 
@@ -369,7 +376,13 @@ export class IniciarPage {
   }    
 
   getNotifications(){
+    
+    if(this.qtdNotificacoes < 1){
+      return null;
+    }
+
     return this.qtdNotificacoes;
+    
   }
   
 }

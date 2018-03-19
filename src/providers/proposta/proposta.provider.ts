@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+
 import 'rxjs/add/operator/map';
+
+import { SafeHttp } from '../../utils/safe-http';
 
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 
 @Injectable()
 export class PropostaProvider {
 
-  constructor(public http: Http) {}
+  constructor(public safeHttp: SafeHttp) {}
 
   findProfDisponiveis(tipo: TipoAtendimentoModel): Promise<any>{
 

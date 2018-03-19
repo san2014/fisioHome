@@ -3,7 +3,7 @@
   <ion-navbar color="default">
     <button id="notification-button" ion-button clear menuToggle right>
         <ion-icon name="notifications">
-          <ion-badge id="notifications-badge" color="danger">{{getNotifications()}}</ion-badge>
+          <ion-badge id="notifications-badge" color="danger">{{qtdNotificacoes}}</ion-badge>
         </ion-icon>              
     </button>    
     <button ion-button menuToggle right>
@@ -35,7 +35,16 @@
   </ion-item>
 
   <ion-grid  *ngIf="usuarioLogado.tipo == 1">
-    <init-cli [tpsAtds]="tpsAtds" (tpAtdSelect)="initProposta($event)"></init-cli>
+    <init-cli *ngIf="tpsAtds" [tpsAtds]="tpsAtds" (tpAtdSelect)="initProposta($event)"></init-cli>
+
+    <ion-row *ngIf="!tpsAtds">
+      <ion-col col-6 *ngFor="let fake of fakeItems" >
+        <button ion-item no-lines class="fakeItem--line"> 
+          <h1></h1>
+        </button>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 
   <ion-grid *ngIf="usuarioLogado.tipo == 2">
