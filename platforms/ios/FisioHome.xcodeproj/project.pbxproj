@@ -1,0 +1,645 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+/* Begin PBXBuildFile section */
+		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
+		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
+		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
+		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
+		3047A5121AB8059700498E2A /* build-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */; };
+		3047A5131AB8059700498E2A /* build-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5101AB8059700498E2A /* build-release.xcconfig */; };
+		3047A5141AB8059700498E2A /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5111AB8059700498E2A /* build.xcconfig */; };
+		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
+		001574AA593442608F5BE52D /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = CD85C2E816FE4312ABAA3AB5 /* CDVLogger.m */; };
+		D3029822E4E14FA48BA7106A /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 058D837E0FB944BDB49ECECE /* CDVDevice.m */; };
+		CE904A7E701A49048CC9A0CF /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 600FAE51E927438E9B8F9EF9 /* FacebookConnectPlugin.m */; };
+		F6F1591E495244F0942601ED /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9AC98CD345A413B86BB63D4 /* Bolts.framework */; };
+		ABDA51FA33BA42FB839E930E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 431F574F05DC44EB853BB4AA /* FBSDKCoreKit.framework */; };
+		1BFD866BDF374896AA7A0E82 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 197F5E01CF254F13889AE379 /* FBSDKLoginKit.framework */; };
+		E7D9D95B6EE7461DA53024AD /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A4185D80494B779E4907C5 /* FBSDKShareKit.framework */; };
+		D7E25956DAC140A9AADBE43B /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 36EFC3D2C97940C2A28C2540 /* CDVFile.m */; };
+		EF89126CA32E4FE3A30B11D1 /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 88ED7F2D8B2849829D2BE84F /* CDVLocalFilesystem.m */; };
+		0E6D7AF2EA26428B91842A91 /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = F38EBF6BFFE049E6AB637D15 /* CDVAssetLibraryFilesystem.m */; };
+		32EC1A2AE1BF4D038B75A355 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 506146012C194A8EABBD094E /* CDVConnection.m */; };
+		718EBF8C730F44AF80E7A5C2 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 734FC7B37A2B40F0B6EBC4CE /* CDVReachability.m */; };
+		6CF7B65312D44BBEA86528A8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0979ACBC4E4F5EAC5BE1DC /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F2F75293F1594F4798CCA453 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 325698E10F624AFC85DCEC05 /* CoreTelephony.framework */; };
+		8743A817007E490ABC6C9677 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 734D7209D13747D08E4C82C0 /* CDVSplashScreen.m */; };
+		F775F860741A4A0FA30970CC /* CDVViewController+SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F28267B4A1F4DEB99AECA43 /* CDVViewController+SplashScreen.m */; };
+		49EF1DB6942743F9885FCC8D /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = F3FB52E20DD54B9E91C4CBC7 /* CDVStatusBar.m */; };
+		D9D081B123CD482E88C588FE /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B872C5C007F46DE956E0FA8 /* SQLitePlugin.m */; };
+		2374ABE9795B4324B1F00FE9 /* sqlite3.c in Resources */ = {isa = PBXBuildFile; fileRef = DE52E77D90CC49F182AA2BB7 /* sqlite3.c */; settings = {COMPILER_FLAGS = "-DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_MEMSTATUS=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -DSQLITE_OMIT_PROGRESS_CALLBACK -DSQLITE_OMIT_SHARED_CACHE -DSQLITE_TEMP_STORE=2 -DSQLITE_OMIT_LOAD_EXTENSION -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -DSQLITE_DEFAULT_PAGE_SIZE=1024 -DSQLITE_DEFAULT_CACHE_SIZE=2000"; }; };
+		9D47839772C34B998A8AC708 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A38F72BA004D6A909D57D3 /* IonicKeyboard.m */; };
+		18F2B76EBB8446A2BE94DBFD /* GooglePlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 21796B6F5DD740CFBAEF830E /* GooglePlus.m */; };
+		2D9315F5E2BE459F9082A487 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB37E3DCA5B04464B0F22CB9 /* GoogleAppUtilities.framework */; };
+		DF6FB0560AF94C268CA04016 /* GoogleAuthUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C36FA4521C4867A2341BB2 /* GoogleAuthUtilities.framework */; };
+		888943D0FD7B4E0FBD734787 /* GoogleNetworkingUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914B076C47FB42DD84D623B3 /* GoogleNetworkingUtilities.framework */; };
+		A4CFB6D9745447769D764E2D /* GoogleSignIn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E842F8447E4FBEA50864B7 /* GoogleSignIn.framework */; };
+		09075EFDF2944F2DB915405A /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A7044EBC8641A8A3497D9B /* GoogleSymbolUtilities.framework */; };
+		2C6249CEF48E4D3AB22F2CC0 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91E86792497449C49A6CAE95 /* GoogleUtilities.framework */; };
+		25E4890086394B8689E6D20D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5828E30D3C4A9D9744B2C1 /* AddressBook.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		22F6848A72FC4A32A485A521 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49D178BC966C42E9A771E1A4 /* CoreText.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		25C7E6B26A2E48469C18FFD1 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E96C14BB663D428C8CB2F057 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		98603D101E604EB891668D83 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 425C0EEBCC0A4A9FA68B2808 /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		CE99A75C6F754B7EB6D4B189 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE9DFEBA10A422BA98F5625 /* libz.tbd */; settings = {ATTRIBUTES = (Weak, ); }; };
+		F4BE6DD6D380463B95DBE64D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B986298790A4508B35BD41C /* libz.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E693D336186147CDA21A69E2 /* FisioHome.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 5EAE7D194B8D4A19A73CDA22 /* FisioHome.entitlements */; };
+		6642924E827040D9986BDF7F /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFDBB29C00F942E3BB6CDE0D /* UIImage+CropScaleOrientation.m */; };
+		3D365A0A62DF4E52B2946206 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 113DB3FF80FD48B79477192B /* CDVCamera.m */; };
+		B7A0BDE0A0B141A1B2AD49B2 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE94BA26DF34304BD0564A5 /* CDVJpegHeaderWriter.m */; };
+		4A79CCAC3E1F42A69809CAE2 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16CB8426A6041D6A7CFE32F /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DCC1DF81509141DAB26298BE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B231804416084AAAB602DD23 /* CoreLocation.framework */; };
+		DBEBECBC33944CF18A6A9559 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45409599397A4CC6A3F62EAB /* AVFoundation.framework */; };
+		6C45FD7A311448AC960D2B18 /* OneSignalPush.m in Sources */ = {isa = PBXBuildFile; fileRef = F3DDB7F1710A43AB9C054DCF /* OneSignalPush.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+		301BF550109A68C00062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "FisioHome/Images.xcassets"; sourceTree = SOURCE_ROOT; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* FisioHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FisioHome.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
+		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
+		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		302D95F014D2391D003F00A1 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		3047A50F1AB8059700498E2A /* build-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-debug.xcconfig"; path = cordova/build-debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		3047A5101AB8059700498E2A /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-release.xcconfig"; path = cordova/build-release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3047A5111AB8059700498E2A /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = build.xcconfig; path = cordova/build.xcconfig; sourceTree = SOURCE_ROOT; };
+		32CA4F630368D1EE00C91783 /* FisioHome-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FisioHome-Prefix.pch"; sourceTree = "<group>"; };
+		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = "FisioHome/CDVLaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
+		8D1107310486CEB800E47090 /* FisioHome-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "FisioHome-Info.plist"; path = "FisioHome/FisioHome-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
+		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
+		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "FisioHome/config.xml"; sourceTree = "<group>"; };
+		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		CD85C2E816FE4312ABAA3AB5 /* CDVLogger.m */ = {isa = PBXFileReference; name = "CDVLogger.m"; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		FF5A3EE44EA14A8898A8E201 /* CDVLogger.h */ = {isa = PBXFileReference; name = "CDVLogger.h"; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		058D837E0FB944BDB49ECECE /* CDVDevice.m */ = {isa = PBXFileReference; name = "CDVDevice.m"; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		45210DBF080B4BE7B5E5BA7B /* CDVDevice.h */ = {isa = PBXFileReference; name = "CDVDevice.h"; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		600FAE51E927438E9B8F9EF9 /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; name = "FacebookConnectPlugin.m"; path = "cordova-plugin-facebook4/FacebookConnectPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		3DE09992017F4AC8AD0BA4A5 /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; name = "FacebookConnectPlugin.h"; path = "cordova-plugin-facebook4/FacebookConnectPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		D9AC98CD345A413B86BB63D4 /* Bolts.framework */ = {isa = PBXFileReference; name = "Bolts.framework"; path = "FisioHome/Plugins/cordova-plugin-facebook4/Bolts.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		431F574F05DC44EB853BB4AA /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; name = "FBSDKCoreKit.framework"; path = "FisioHome/Plugins/cordova-plugin-facebook4/FBSDKCoreKit.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		197F5E01CF254F13889AE379 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; name = "FBSDKLoginKit.framework"; path = "FisioHome/Plugins/cordova-plugin-facebook4/FBSDKLoginKit.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		76A4185D80494B779E4907C5 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; name = "FBSDKShareKit.framework"; path = "FisioHome/Plugins/cordova-plugin-facebook4/FBSDKShareKit.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		36EFC3D2C97940C2A28C2540 /* CDVFile.m */ = {isa = PBXFileReference; name = "CDVFile.m"; path = "cordova-plugin-file/CDVFile.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		88ED7F2D8B2849829D2BE84F /* CDVLocalFilesystem.m */ = {isa = PBXFileReference; name = "CDVLocalFilesystem.m"; path = "cordova-plugin-file/CDVLocalFilesystem.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		F38EBF6BFFE049E6AB637D15 /* CDVAssetLibraryFilesystem.m */ = {isa = PBXFileReference; name = "CDVAssetLibraryFilesystem.m"; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		56930941EA89408F8A6582BC /* CDVFile.h */ = {isa = PBXFileReference; name = "CDVFile.h"; path = "cordova-plugin-file/CDVFile.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C224C1D2FAE444C3A6307384 /* CDVLocalFilesystem.h */ = {isa = PBXFileReference; name = "CDVLocalFilesystem.h"; path = "cordova-plugin-file/CDVLocalFilesystem.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		C85DAB67D80E43B1AD9A3809 /* CDVAssetLibraryFilesystem.h */ = {isa = PBXFileReference; name = "CDVAssetLibraryFilesystem.h"; path = "cordova-plugin-file/CDVAssetLibraryFilesystem.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		506146012C194A8EABBD094E /* CDVConnection.m */ = {isa = PBXFileReference; name = "CDVConnection.m"; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		734FC7B37A2B40F0B6EBC4CE /* CDVReachability.m */ = {isa = PBXFileReference; name = "CDVReachability.m"; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		22A043A035B341D3A651EDEC /* CDVConnection.h */ = {isa = PBXFileReference; name = "CDVConnection.h"; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		CD5DC8AF20A248D6B15BCCEF /* CDVReachability.h */ = {isa = PBXFileReference; name = "CDVReachability.h"; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		7E0979ACBC4E4F5EAC5BE1DC /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		325698E10F624AFC85DCEC05 /* CoreTelephony.framework */ = {isa = PBXFileReference; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		734D7209D13747D08E4C82C0 /* CDVSplashScreen.m */ = {isa = PBXFileReference; name = "CDVSplashScreen.m"; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		4F28267B4A1F4DEB99AECA43 /* CDVViewController+SplashScreen.m */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.m"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		CDCA895E397C452DBEC9D033 /* CDVSplashScreen.h */ = {isa = PBXFileReference; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		14EA6E3413CF4450B1494FA7 /* CDVViewController+SplashScreen.h */ = {isa = PBXFileReference; name = "CDVViewController+SplashScreen.h"; path = "cordova-plugin-splashscreen/CDVViewController+SplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		F3FB52E20DD54B9E91C4CBC7 /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B982124A0DD14507A6881522 /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		0B872C5C007F46DE956E0FA8 /* SQLitePlugin.m */ = {isa = PBXFileReference; name = "SQLitePlugin.m"; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		DE52E77D90CC49F182AA2BB7 /* sqlite3.c */ = {isa = PBXFileReference; name = "sqlite3.c"; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1B8C1D287FD3429EBCFDFF63 /* SQLitePlugin.h */ = {isa = PBXFileReference; name = "SQLitePlugin.h"; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		9CFA1F47F97941AEA8F1ED83 /* sqlite3.h */ = {isa = PBXFileReference; name = "sqlite3.h"; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		36A38F72BA004D6A909D57D3 /* IonicKeyboard.m */ = {isa = PBXFileReference; name = "IonicKeyboard.m"; path = "ionic-plugin-keyboard/IonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		7C213FCC070A4CE7BB756009 /* IonicKeyboard.h */ = {isa = PBXFileReference; name = "IonicKeyboard.h"; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		21796B6F5DD740CFBAEF830E /* GooglePlus.m */ = {isa = PBXFileReference; name = "GooglePlus.m"; path = "cordova-plugin-googleplus/GooglePlus.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		976F7A952D3F47DCAC3FAEF2 /* GooglePlus.h */ = {isa = PBXFileReference; name = "GooglePlus.h"; path = "cordova-plugin-googleplus/GooglePlus.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		FB37E3DCA5B04464B0F22CB9 /* GoogleAppUtilities.framework */ = {isa = PBXFileReference; name = "GoogleAppUtilities.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleAppUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		B8C36FA4521C4867A2341BB2 /* GoogleAuthUtilities.framework */ = {isa = PBXFileReference; name = "GoogleAuthUtilities.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleAuthUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		914B076C47FB42DD84D623B3 /* GoogleNetworkingUtilities.framework */ = {isa = PBXFileReference; name = "GoogleNetworkingUtilities.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleNetworkingUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		E7E842F8447E4FBEA50864B7 /* GoogleSignIn.framework */ = {isa = PBXFileReference; name = "GoogleSignIn.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleSignIn.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		91A7044EBC8641A8A3497D9B /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; name = "GoogleSymbolUtilities.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleSymbolUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		91E86792497449C49A6CAE95 /* GoogleUtilities.framework */ = {isa = PBXFileReference; name = "GoogleUtilities.framework"; path = "FisioHome/Plugins/cordova-plugin-googleplus/GoogleUtilities.framework"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		1A5828E30D3C4A9D9744B2C1 /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		49D178BC966C42E9A771E1A4 /* CoreText.framework */ = {isa = PBXFileReference; name = "CoreText.framework"; path = "System/Library/Frameworks/CoreText.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		E96C14BB663D428C8CB2F057 /* SafariServices.framework */ = {isa = PBXFileReference; name = "SafariServices.framework"; path = "System/Library/Frameworks/SafariServices.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		425C0EEBCC0A4A9FA68B2808 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		EFE9DFEBA10A422BA98F5625 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		6B986298790A4508B35BD41C /* libz.dylib */ = {isa = PBXFileReference; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = compiled.mach-o.dylib; explicitFileType = undefined; includeInIndex = 0; };
+		5EAE7D194B8D4A19A73CDA22 /* FisioHome.entitlements */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "FisioHome.entitlements"; path = "FisioHome.entitlements"; sourceTree = "<group>"; fileEncoding = 4; };
+		FFDBB29C00F942E3BB6CDE0D /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; name = "UIImage+CropScaleOrientation.m"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		113DB3FF80FD48B79477192B /* CDVCamera.m */ = {isa = PBXFileReference; name = "CDVCamera.m"; path = "cordova-plugin-camera/CDVCamera.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		5FE94BA26DF34304BD0564A5 /* CDVJpegHeaderWriter.m */ = {isa = PBXFileReference; name = "CDVJpegHeaderWriter.m"; path = "cordova-plugin-camera/CDVJpegHeaderWriter.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B15B256FDD744D028EAE71D7 /* UIImage+CropScaleOrientation.h */ = {isa = PBXFileReference; name = "UIImage+CropScaleOrientation.h"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		D5EA4ED1780341A18629DEC8 /* CDVCamera.h */ = {isa = PBXFileReference; name = "CDVCamera.h"; path = "cordova-plugin-camera/CDVCamera.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		1A11899DF30F4077AFA0875F /* CDVJpegHeaderWriter.h */ = {isa = PBXFileReference; name = "CDVJpegHeaderWriter.h"; path = "cordova-plugin-camera/CDVJpegHeaderWriter.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		1146AE3EBFCA401CA6FCF45E /* CDVExif.h */ = {isa = PBXFileReference; name = "CDVExif.h"; path = "cordova-plugin-camera/CDVExif.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		B16CB8426A6041D6A7CFE32F /* ImageIO.framework */ = {isa = PBXFileReference; name = "ImageIO.framework"; path = "System/Library/Frameworks/ImageIO.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		B231804416084AAAB602DD23 /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		45409599397A4CC6A3F62EAB /* AVFoundation.framework */ = {isa = PBXFileReference; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		F3DDB7F1710A43AB9C054DCF /* OneSignalPush.m */ = {isa = PBXFileReference; name = "OneSignalPush.m"; path = "onesignal-cordova-plugin/OneSignalPush.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		838070AFA3AE4F439A8B1A2B /* OneSignalPush.h */ = {isa = PBXFileReference; name = "OneSignalPush.h"; path = "onesignal-cordova-plugin/OneSignalPush.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
+				F6F1591E495244F0942601ED /* Bolts.framework in Frameworks */,
+				ABDA51FA33BA42FB839E930E /* FBSDKCoreKit.framework in Frameworks */,
+				1BFD866BDF374896AA7A0E82 /* FBSDKLoginKit.framework in Frameworks */,
+				E7D9D95B6EE7461DA53024AD /* FBSDKShareKit.framework in Frameworks */,
+				6CF7B65312D44BBEA86528A8 /* SystemConfiguration.framework in Frameworks */,
+				F2F75293F1594F4798CCA453 /* CoreTelephony.framework in Frameworks */,
+				2D9315F5E2BE459F9082A487 /* GoogleAppUtilities.framework in Frameworks */,
+				DF6FB0560AF94C268CA04016 /* GoogleAuthUtilities.framework in Frameworks */,
+				888943D0FD7B4E0FBD734787 /* GoogleNetworkingUtilities.framework in Frameworks */,
+				A4CFB6D9745447769D764E2D /* GoogleSignIn.framework in Frameworks */,
+				09075EFDF2944F2DB915405A /* GoogleSymbolUtilities.framework in Frameworks */,
+				2C6249CEF48E4D3AB22F2CC0 /* GoogleUtilities.framework in Frameworks */,
+				25E4890086394B8689E6D20D /* AddressBook.framework in Frameworks */,
+				22F6848A72FC4A32A485A521 /* CoreText.framework in Frameworks */,
+				25C7E6B26A2E48469C18FFD1 /* SafariServices.framework in Frameworks */,
+				98603D101E604EB891668D83 /* Security.framework in Frameworks */,
+				CE99A75C6F754B7EB6D4B189 /* libz.tbd in Frameworks */,
+				F4BE6DD6D380463B95DBE64D /* libz.dylib in Frameworks */,
+				4A79CCAC3E1F42A69809CAE2 /* ImageIO.framework in Frameworks */,
+				DCC1DF81509141DAB26298BE /* CoreLocation.framework in Frameworks */,
+				DBEBECBC33944CF18A6A9559 /* AVFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				302D95EE14D2391D003F00A1 /* MainViewController.h */,
+				302D95EF14D2391D003F00A1 /* MainViewController.m */,
+				302D95F014D2391D003F00A1 /* MainViewController.xib */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppDelegate.m */,
+			);
+			name = Classes;
+			path = "FisioHome/Classes";
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* FisioHome.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				EB87FDF41871DAF40020F90C /* config.xml */,
+				EB87FDF31871DA8E0020F90C /* www */,
+				EB87FDF11871DA420020F90C /* Staging */,
+				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				307C750510C5A3420062BCA9 /* Plugins */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* FisioHome-Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+				ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */,
+			);
+			name = "Other Sources";
+			path = "FisioHome";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0207DA571B56EA530066E2B4 /* Images.xcassets */,
+				3047A50E1AB8057F00498E2A /* config */,
+				8D1107310486CEB800E47090 /* FisioHome-Info.plist */,
+				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
+				5EAE7D194B8D4A19A73CDA22 /* FisioHome.entitlements */,
+			);
+			name = Resources;
+			path = "FisioHome/Resources";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9AC98CD345A413B86BB63D4 /* Bolts.framework */,
+				431F574F05DC44EB853BB4AA /* FBSDKCoreKit.framework */,
+				197F5E01CF254F13889AE379 /* FBSDKLoginKit.framework */,
+				76A4185D80494B779E4907C5 /* FBSDKShareKit.framework */,
+				7E0979ACBC4E4F5EAC5BE1DC /* SystemConfiguration.framework */,
+				325698E10F624AFC85DCEC05 /* CoreTelephony.framework */,
+				FB37E3DCA5B04464B0F22CB9 /* GoogleAppUtilities.framework */,
+				B8C36FA4521C4867A2341BB2 /* GoogleAuthUtilities.framework */,
+				914B076C47FB42DD84D623B3 /* GoogleNetworkingUtilities.framework */,
+				E7E842F8447E4FBEA50864B7 /* GoogleSignIn.framework */,
+				91A7044EBC8641A8A3497D9B /* GoogleSymbolUtilities.framework */,
+				91E86792497449C49A6CAE95 /* GoogleUtilities.framework */,
+				1A5828E30D3C4A9D9744B2C1 /* AddressBook.framework */,
+				49D178BC966C42E9A771E1A4 /* CoreText.framework */,
+				E96C14BB663D428C8CB2F057 /* SafariServices.framework */,
+				425C0EEBCC0A4A9FA68B2808 /* Security.framework */,
+				EFE9DFEBA10A422BA98F5625 /* libz.tbd */,
+				6B986298790A4508B35BD41C /* libz.dylib */,
+				B16CB8426A6041D6A7CFE32F /* ImageIO.framework */,
+				B231804416084AAAB602DD23 /* CoreLocation.framework */,
+				45409599397A4CC6A3F62EAB /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		301BF52E109A57CC0062928A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				301BF535109A57CC0062928A /* libCordova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3047A50E1AB8057F00498E2A /* config */ = {
+			isa = PBXGroup;
+			children = (
+				3047A50F1AB8059700498E2A /* build-debug.xcconfig */,
+				3047A5101AB8059700498E2A /* build-release.xcconfig */,
+				3047A5111AB8059700498E2A /* build.xcconfig */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		307C750510C5A3420062BCA9 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				CD85C2E816FE4312ABAA3AB5 /* CDVLogger.m */,
+				FF5A3EE44EA14A8898A8E201 /* CDVLogger.h */,
+				058D837E0FB944BDB49ECECE /* CDVDevice.m */,
+				45210DBF080B4BE7B5E5BA7B /* CDVDevice.h */,
+				600FAE51E927438E9B8F9EF9 /* FacebookConnectPlugin.m */,
+				3DE09992017F4AC8AD0BA4A5 /* FacebookConnectPlugin.h */,
+				36EFC3D2C97940C2A28C2540 /* CDVFile.m */,
+				88ED7F2D8B2849829D2BE84F /* CDVLocalFilesystem.m */,
+				F38EBF6BFFE049E6AB637D15 /* CDVAssetLibraryFilesystem.m */,
+				56930941EA89408F8A6582BC /* CDVFile.h */,
+				C224C1D2FAE444C3A6307384 /* CDVLocalFilesystem.h */,
+				C85DAB67D80E43B1AD9A3809 /* CDVAssetLibraryFilesystem.h */,
+				506146012C194A8EABBD094E /* CDVConnection.m */,
+				734FC7B37A2B40F0B6EBC4CE /* CDVReachability.m */,
+				22A043A035B341D3A651EDEC /* CDVConnection.h */,
+				CD5DC8AF20A248D6B15BCCEF /* CDVReachability.h */,
+				734D7209D13747D08E4C82C0 /* CDVSplashScreen.m */,
+				4F28267B4A1F4DEB99AECA43 /* CDVViewController+SplashScreen.m */,
+				CDCA895E397C452DBEC9D033 /* CDVSplashScreen.h */,
+				14EA6E3413CF4450B1494FA7 /* CDVViewController+SplashScreen.h */,
+				F3FB52E20DD54B9E91C4CBC7 /* CDVStatusBar.m */,
+				B982124A0DD14507A6881522 /* CDVStatusBar.h */,
+				0B872C5C007F46DE956E0FA8 /* SQLitePlugin.m */,
+				DE52E77D90CC49F182AA2BB7 /* sqlite3.c */,
+				1B8C1D287FD3429EBCFDFF63 /* SQLitePlugin.h */,
+				9CFA1F47F97941AEA8F1ED83 /* sqlite3.h */,
+				36A38F72BA004D6A909D57D3 /* IonicKeyboard.m */,
+				7C213FCC070A4CE7BB756009 /* IonicKeyboard.h */,
+				21796B6F5DD740CFBAEF830E /* GooglePlus.m */,
+				976F7A952D3F47DCAC3FAEF2 /* GooglePlus.h */,
+				FFDBB29C00F942E3BB6CDE0D /* UIImage+CropScaleOrientation.m */,
+				113DB3FF80FD48B79477192B /* CDVCamera.m */,
+				5FE94BA26DF34304BD0564A5 /* CDVJpegHeaderWriter.m */,
+				B15B256FDD744D028EAE71D7 /* UIImage+CropScaleOrientation.h */,
+				D5EA4ED1780341A18629DEC8 /* CDVCamera.h */,
+				1A11899DF30F4077AFA0875F /* CDVJpegHeaderWriter.h */,
+				1146AE3EBFCA401CA6FCF45E /* CDVExif.h */,
+				F3DDB7F1710A43AB9C054DCF /* OneSignalPush.m */,
+				838070AFA3AE4F439A8B1A2B /* OneSignalPush.h */,
+			);
+			name = Plugins;
+			path = "FisioHome/Plugins";
+			sourceTree = SOURCE_ROOT;
+		};
+		EB87FDF11871DA420020F90C /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				F840E1F0165FE0F500CFE078 /* config.xml */,
+				301BF56E109A69640062928A /* www */,
+			);
+			name = Staging;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* FisioHome */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "FisioHome" */;
+			buildPhases = (
+				304B58A110DAC018002A0835 /* Copy www directory */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301BF551109A68C00062928A /* PBXTargetDependency */,
+			);
+			name = "FisioHome";
+			productName = "FisioHome";
+			productReference = 1D6058910D05DD3D006BFB54 /* FisioHome.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 510;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__NON-CLI__" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 301BF52E109A57CC0062928A /* Products */;
+					ProjectRef = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* FisioHome */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		301BF535109A57CC0062928A /* libCordova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCordova.a;
+			remoteRef = 301BF534109A57CC0062928A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
+				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
+				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
+				E693D336186147CDA21A69E2 /* FisioHome.entitlements in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		304B58A110DAC018002A0835 /* Copy www directory */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy www directory";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				001574AA593442608F5BE52D /* CDVLogger.m in Sources */,
+				D3029822E4E14FA48BA7106A /* CDVDevice.m in Sources */,
+				CE904A7E701A49048CC9A0CF /* FacebookConnectPlugin.m in Sources */,
+				D7E25956DAC140A9AADBE43B /* CDVFile.m in Sources */,
+				EF89126CA32E4FE3A30B11D1 /* CDVLocalFilesystem.m in Sources */,
+				0E6D7AF2EA26428B91842A91 /* CDVAssetLibraryFilesystem.m in Sources */,
+				32EC1A2AE1BF4D038B75A355 /* CDVConnection.m in Sources */,
+				718EBF8C730F44AF80E7A5C2 /* CDVReachability.m in Sources */,
+				8743A817007E490ABC6C9677 /* CDVSplashScreen.m in Sources */,
+				F775F860741A4A0FA30970CC /* CDVViewController+SplashScreen.m in Sources */,
+				49EF1DB6942743F9885FCC8D /* CDVStatusBar.m in Sources */,
+				D9D081B123CD482E88C588FE /* SQLitePlugin.m in Sources */,
+				2374ABE9795B4324B1F00FE9 /* sqlite3.c in Resources */,
+				9D47839772C34B998A8AC708 /* IonicKeyboard.m in Sources */,
+				18F2B76EBB8446A2BE94DBFD /* GooglePlus.m in Sources */,
+				6642924E827040D9986BDF7F /* UIImage+CropScaleOrientation.m in Sources */,
+				3D365A0A62DF4E52B2946206 /* CDVCamera.m in Sources */,
+				B7A0BDE0A0B141A1B2AD49B2 /* CDVJpegHeaderWriter.m in Sources */,
+				6C45FD7A311448AC960D2B18 /* OneSignalPush.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		301BF551109A68C00062928A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CordovaLib;
+			targetProxy = 301BF550109A68C00062928A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FisioHome/FisioHome-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "FisioHome/FisioHome-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = "FisioHome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+				);
+				CODE_SIGN_ENTITLEMENTS = "FisioHome/Resources/FisioHome.entitlements";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5101AB8059700498E2A /* build-release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FisioHome/FisioHome-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "FisioHome/FisioHome-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				PRODUCT_NAME = "FisioHome";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-facebook4\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+					"\"FisioHome/Plugins/cordova-plugin-googleplus\"",
+				);
+				CODE_SIGN_ENTITLEMENTS = "FisioHome/Resources/FisioHome.entitlements";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "FisioHome/Resources/FisioHome.entitlements";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3047A5111AB8059700498E2A /* build.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "FisioHome/Resources/FisioHome.entitlements";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "FisioHome" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__NON-CLI__" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
