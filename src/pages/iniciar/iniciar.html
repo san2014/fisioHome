@@ -1,11 +1,13 @@
 <ion-header>
     
   <ion-navbar color="default">
-    <button id="notification-button" ion-button clear menuToggle right>
+    <ion-buttons end>
+    <button id="notification-button" (click)="navToNotifications()" ion-button clear icon-only>
         <ion-icon name="notifications">
           <ion-badge id="notifications-badge" color="danger">{{qtdNotificacoes}}</ion-badge>
         </ion-icon>              
     </button>    
+    </ion-buttons>
     <button ion-button menuToggle right>
       <ion-icon name="menu"></ion-icon>
     </button>

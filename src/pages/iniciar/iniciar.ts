@@ -384,5 +384,9 @@ export class IniciarPage {
     return this.qtdNotificacoes;
     
   }
+
+  public navToNotifications(){
+    this.navCtrl.push('NotificationsViewsPage');
+  }
   
 }
