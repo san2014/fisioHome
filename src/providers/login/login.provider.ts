@@ -1,18 +1,22 @@
-
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import { NgIfContext } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { Badge } from '@ionic-native/badge';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+
 
 import { OneSignal } from '@ionic-native/onesignal';
 
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
+import { NotificacaoModel } from './../../model/notificacao-model';
 
 import { SafeHttp } from "./../../utils/safe-http";
 import { FshUtils } from './../../utils/fsh-util';
+
 
 @Injectable()
 export class LoginProvider {
@@ -63,8 +67,6 @@ export class LoginProvider {
 
   }
 
-
-  
   login(login: LoginModel): Promise<UsuarioModel>{
 
     return new Promise((resolve, reject) => {
@@ -167,7 +169,7 @@ export class LoginProvider {
     );    
 
   }
-
+  
   logout(): Promise<ResponseModel>{
     
     let response: ResponseModel;

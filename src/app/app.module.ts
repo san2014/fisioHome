@@ -17,6 +17,7 @@ import { Badge } from '@ionic-native/badge';
 
 import { LoginProvider } from "../providers/login/login.provider";
 import { FshUtils } from '../utils/fsh-util';
+import { NotificacaoProvider } from '../providers/notificacao/notificacao.provider';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FshUtils } from '../utils/fsh-util';
     GooglePlus,
     FshUtils,
     OneSignal,
-    Badge
+    Badge,
+    NotificacaoProvider
   ]
 })
 export class AppModule {}

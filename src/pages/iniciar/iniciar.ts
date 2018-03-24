@@ -1,3 +1,5 @@
+import { DetalheNotificacao } from './../../model/detalhe-notificacao-model';
+import { NotificacaoProvider } from './../../providers/notificacao/notificacao.provider';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AlertController, ToastController } from 'ionic-angular';
@@ -11,6 +13,7 @@ import { LoginProvider } from './../../providers/login/login.provider';
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 import { TipoAtendimentoProvider } from "../../providers/tipo-atendimento/tipo-atendimento.provider";
 import { PropostaModel } from '../../model/proposta-model';
+import { NotificacaoModel } from '../../model/notificacao-model';
 
 
 
@@ -39,6 +42,7 @@ export class IniciarPage {
     private platform: Platform,
     public oneSignal : OneSignal,
     private toastCtrl: ToastController,
+    private notificacaoProvider: NotificacaoProvider
   ) {
 
     platform.ready()
@@ -60,14 +64,18 @@ export class IniciarPage {
 
       try {
 
+        this.notificacaoProvider.initNotificacoes();
+
         await setTimeout(() => {
-           this.tpAtdProvider.tiposAtendimentos()
-          .then(data =>{
-            this.tpsAtds = data;
-          })
-          .catch((error) => {
-            throw new Error(error)
-          });          
+
+          this.tpAtdProvider.tiposAtendimentos()
+            .then(data =>{
+              this.tpsAtds = data;
+            })
+            .catch((error) => {
+              throw new Error(error)
+            });   
+
         }, 3000);
 
       } catch (error) {
@@ -90,11 +98,10 @@ export class IniciarPage {
 
     this.initOneSignalId();
 
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
     
     this.oneSignal.handleNotificationOpened()
       .subscribe(data => { 
-        alert('received');
         this.receivePush(data.notification.payload);
       });
 
@@ -116,75 +123,74 @@ export class IniciarPage {
 
   receivePush(msg: OSNotificationPayload){
 
-    let dialog : Alert;
-
-    const msgJSON: any = msg.additionalData;
-
-    const proposta: PropostaModel = msgJSON.proposta;
-
-    if (msgJSON.tipo === "proposta"){
-
-/*       dialog = this.alertCtrl.create({
-        title: 'Nova Solicitação',
-        message: msgJSON.msg,
-        buttons: [
-          {
-            text: 'Recusar',
-            handler: () => {
-              this.recusarProposta(proposta);
-            }
-          },
-          {
-            text: 'Aceitar',
-            handler: () => {
-              this.aceitarProposta(proposta);
-            }
-          }
-        ]
-      });       */
-
-      alert('increase badges');
-
-      this.increaseBadges();
+    try {
       
-
-    }else if (msgJSON.tipo === "aceitaProposta"){
-
-      dialog = this.alertCtrl.create({
-        title: 'Confirmar Atendimento',
-        message: msgJSON.msg,
-        buttons: [
-          {
-            text: 'Cancelar',
-            handler: () => {
-              alert('Solicitação cancelada...')
+      let dialog : Alert;
+  
+      const msgJSON: any = msg.additionalData;
+  
+      const proposta: PropostaModel = msgJSON.proposta;
+  
+      if (msgJSON.tipo === "proposta"){
+  
+        let notificacao: NotificacaoModel = new NotificacaoModel();
+  
+        notificacao.msg = msg.body;
+  
+        let detalheNotificacao: DetalheNotificacao;
+  
+        detalheNotificacao = msgJSON;
+  
+        notificacao.dados = detalheNotificacao;
+  
+        this.notificacaoProvider.salvarNotificacaoSessao(notificacao);
+  
+        this.increaseBadges();
+        
+  
+      }else if (msgJSON.tipo === "aceitaProposta"){
+  
+        dialog = this.alertCtrl.create({
+          title: 'Confirmar Atendimento',
+          message: msgJSON.msg,
+          buttons: [
+            {
+              text: 'Cancelar',
+              handler: () => {
+                alert('Solicitação cancelada...')
+              }
+            },
+            {
+              text: 'Aceitar',
+              handler: () => {
+                alert('Navegar para pagamento...')
+              }
             }
-          },
-          {
-            text: 'Aceitar',
-            handler: () => {
-              alert('Navegar para pagamento...')
+          ]
+        });        
+         
+  
+      }else{
+  
+        dialog = this.alertCtrl.create({
+          title: 'Atenção',
+          message: msgJSON.msg,
+          buttons: [
+            {
+              text: 'Ok',
+              role: 'cancel'
             }
-          }
-        ]
-      });        
-       
+          ]
+        });  
+        
+        dialog.present();    
+  
+      }
 
-    }else{
+    } catch (error) {
 
-      dialog = this.alertCtrl.create({
-        title: 'Atenção',
-        message: msgJSON.msg,
-        buttons: [
-          {
-            text: 'Ok',
-            role: 'cancel'
-          }
-        ]
-      });  
+      alert(error);
       
-      dialog.present();    
-
     }
 
   }
@@ -227,6 +233,7 @@ export class IniciarPage {
       this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
 
     }       
+
     
   }  
 
@@ -353,7 +360,7 @@ export class IniciarPage {
 
     }
     catch (error) {
-      console.log(error);
+      alert(error);
     }
 
   }

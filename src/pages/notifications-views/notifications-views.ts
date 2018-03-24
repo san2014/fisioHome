@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { NotificacaoModel } from './../../model/notificacao-model';
+import { NotificacaoProvider } from '../../providers/notificacao/notificacao.provider';
 
 @IonicPage()
 @Component({
@@ -11,30 +12,25 @@ import { NotificacaoModel } from './../../model/notificacao-model';
 })
 export class NotificationsViewsPage {
 
-  notifications: Array<NotificacaoModel> = [];
+  //notificacoes: Array<NotificacaoModel> = [];
+  notificacoes: Array<NotificacaoModel>;
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public notificacaoProvider: NotificacaoProvider
+  ) {
+      this.initialize();
+  }
 
-      let notificacao: NotificacaoModel = new NotificacaoModel();
+  async initialize(){
 
-      let detalheNotificacao: DetalheNotificacao; 
-      
-      detalheNotificacao =  {
-                              tipo: "proposta",
-                              oneSignalId: "fdsfkjfkpe924024",
-                              msg: `O Paciente solicita atendimentos`,
-                              proposta: null  
-                            };  
+    let clearNot = await this.notificacaoProvider.limparNotificacoes();
 
-      notificacao.msg = "Tem mensagem pra você";
-      
-      notificacao.dados = detalheNotificacao;
+    let notSave = await this.notificacaoProvider.salvarNotificacaoSessao(new NotificacaoModel());
 
-      this.notifications.push(notificacao);
-      console.log(this.notifications);
-
+    this.notificacoes = await this.notificacaoProvider.getNotificacoes();
+     
   }
 
   ionViewDidLoad() {
