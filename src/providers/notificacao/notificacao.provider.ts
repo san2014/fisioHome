@@ -45,19 +45,6 @@ export class NotificacaoProvider {
 
   async salvarNotificacaoSessao(notificacao: NotificacaoModel): Promise<boolean>{
 
-/*     let detalheNotificacao: DetalheNotificacao; 
-    
-    detalheNotificacao =  {
-                            tipo: "proposta",
-                            oneSignalId: "fdsfkjfkpe924024",
-                            msg: `O Paciente solicita atendimentos`,
-                            proposta: null  
-                          };  
-
-    notificacao.msg = "Tem mensagem pra você";
-    
-    notificacao.dados = detalheNotificacao;     */
-
     let notificacoes: Array<NotificacaoModel>;
 
     let callBack: boolean = false;
@@ -69,11 +56,11 @@ export class NotificacaoProvider {
 
     notificacoes.unshift(notificacao);
 
-    this.storage.set('notificacoes', notificacoes)
+    await this.storage.set('notificacoes', notificacoes)
     .then(()=>{
       callBack = true;
-    })    
-
+    })   
+    console.log(notificacoes);
     return callBack;
 
   }

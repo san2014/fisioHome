@@ -14,7 +14,7 @@
         <ion-list>
           <ion-item>
             <ion-thumbnail item-start>
-              <img src="assets/img/noimg.png">
+              <img style="border-radius: 50%;" height="150" width="150" src={{proposta.profissional.imgperfil}}>
             </ion-thumbnail>
             <br/>
             <h2>{{proposta.profissional.nome}}</h2>
@@ -28,11 +28,6 @@
         <h6>Valor do Pacote: {{getValorPacote()}}</h6>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col>
-        <h6>clienteId: {{proposta.cliente.onesignal_id}}</h6>
-      </ion-col>
-    </ion-row>    
     <ion-row>
       <ion-col>
         <button color="secondary" ion-button round block (click)="aceitar()">Aceitar</button>

@@ -30,41 +30,28 @@ export class PropostaSendPage {
     this.proposta = this.navParams.get('proposta');
   }
 
-  aceitar() {
+  async aceitar() {
 
     try{
-    
-      this.oneSignal.getIds()
-        .then((next) => {
-        
-          let body = {
-            tipo: "proposta",
-            oneSignalId: this.proposta.cliente.onesignal_id,
-            msg: `O Paciente ${this.proposta.cliente.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`,
-            proposta: this.proposta
-          }
 
-          let notificationOBJ: any = {
-            contents: {en: `Tem uma nova solicitação de atendimento para você!`},
-            include_player_ids: [this.proposta.profissional.onesignal_id],
-            data: body
-          };  
-          
-          this.oneSignal.postNotification(notificationOBJ)
-            .then((res) => {
-    
-              this.presentToast("Por favor, aguarde a resposta do Profissional");
-    
-            })
-            .catch((erro) => {
-    
-              throw new Error(erro);
-              
-            });
+      let oneSignalIds = await this.oneSignal.getIds();
 
-            this.view.dismiss();
+      let body = {
+        tipo: "proposta",
+        oneSignalId: this.proposta.cliente.onesignal_id,
+        msg: `O Paciente ${this.proposta.cliente.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`,
+        proposta: this.proposta
+      }
 
-        });
+      let notificationOBJ: any = {
+        contents: {en: `Tem uma nova solicitação de atendimento para você!`},
+        include_player_ids: [this.proposta.profissional.onesignal_id],
+        data: body
+      };        
+
+      let postNotification = await this.oneSignal.postNotification(notificationOBJ);
+      
+      this.view.dismiss();
 
     }catch(error){
     

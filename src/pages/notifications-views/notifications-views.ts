@@ -12,8 +12,7 @@ import { NotificacaoProvider } from '../../providers/notificacao/notificacao.pro
 })
 export class NotificationsViewsPage {
 
-  //notificacoes: Array<NotificacaoModel> = [];
-  notificacoes: Array<NotificacaoModel>;
+  notificacoes: Array<NotificacaoModel> = [];
 
   constructor(
     public navCtrl: NavController,
@@ -25,16 +24,39 @@ export class NotificationsViewsPage {
 
   async initialize(){
 
-    let clearNot = await this.notificacaoProvider.limparNotificacoes();
-
-    let notSave = await this.notificacaoProvider.salvarNotificacaoSessao(new NotificacaoModel());
-
     this.notificacoes = await this.notificacaoProvider.getNotificacoes();
+
+    console.log(this.notificacoes);
      
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationsViewsPage');
+  }
+
+  async increase(){
+
+    let notificacao: NotificacaoModel = new NotificacaoModel();
+
+    let detalheNotificacao: DetalheNotificacao; 
+    
+    detalheNotificacao =  {
+                            tipo: "proposta",
+                            oneSignalId: "fdsfkjfkpe924024",
+                            msg: `O Paciente solicita atendimentos`,
+                            proposta: null  
+                          };  
+
+    notificacao.msg = "Tem mensagem pra você";
+    
+    notificacao.dados = detalheNotificacao;
+    
+    let callBack = await this.notificacaoProvider.salvarNotificacaoSessao(notificacao);   
+    
+    if (callBack){
+      this.notificacoes.push(notificacao);
+    }
+
   }
 
 }

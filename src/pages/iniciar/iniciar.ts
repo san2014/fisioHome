@@ -120,7 +120,6 @@ export class IniciarPage {
 
   }  
 
-
   receivePush(msg: OSNotificationPayload){
 
     try {
@@ -131,7 +130,7 @@ export class IniciarPage {
   
       const proposta: PropostaModel = msgJSON.proposta;
   
-      if (msgJSON.tipo === "proposta"){
+      if (msgJSON.tipo !== "notice"){
   
         let notificacao: NotificacaoModel = new NotificacaoModel();
   
@@ -146,29 +145,6 @@ export class IniciarPage {
         this.notificacaoProvider.salvarNotificacaoSessao(notificacao);
   
         this.increaseBadges();
-        
-  
-      }else if (msgJSON.tipo === "aceitaProposta"){
-  
-        dialog = this.alertCtrl.create({
-          title: 'Confirmar Atendimento',
-          message: msgJSON.msg,
-          buttons: [
-            {
-              text: 'Cancelar',
-              handler: () => {
-                alert('Solicitação cancelada...')
-              }
-            },
-            {
-              text: 'Aceitar',
-              handler: () => {
-                alert('Navegar para pagamento...')
-              }
-            }
-          ]
-        });        
-         
   
       }else{
   
@@ -394,6 +370,10 @@ export class IniciarPage {
 
   public navToNotifications(){
     this.navCtrl.push('NotificationsViewsPage');
+  }
+
+  public clearNots(){
+    this.notificacaoProvider.limparNotificacoes();
   }
   
 }
