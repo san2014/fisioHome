@@ -1,3 +1,13 @@
 page-notifications-views {
-
+    .list-avatar-page {
+        .ion-name {
+            font-size: 10px;
+            font-weight: bolder;
+        }        
+        ion-note {
+          font-size: 12px;
+          align-self: flex-start;
+          margin-top: 14px;
+        }
+    }
 }

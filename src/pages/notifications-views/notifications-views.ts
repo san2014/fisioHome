@@ -26,13 +26,9 @@ export class NotificationsViewsPage {
 
     this.notificacoes = await this.notificacaoProvider.getNotificacoes();
 
-    console.log(this.notificacoes);
-     
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NotificationsViewsPage');
-  }
+  ionViewDidLoad() {}
 
   async increase(){
 

@@ -17,7 +17,6 @@ export class InitCliComponent {
   constructor() {}
 
   initProposta(tipoAtendimento: TipoAtendimentoModel){
-    //console.log(tipoAtendimento);
     this.tpAtdSelect.emit(tipoAtendimento);
   }  
 

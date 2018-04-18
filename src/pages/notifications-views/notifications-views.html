@@ -6,23 +6,21 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="list-avatar-page">
 
     <ion-list>
-        <ion-item *ngFor="let row of notificacoes async">
-          <button ion-item>
-            <ion-row>
-              <ion-col>
-                <h2>{{row.msg}}</h2>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <p>{{row.dados.msg}}</p>
-              </ion-col>
-            </ion-row>
-          </button>
-        </ion-item>
-      </ion-list>
 
-</ion-content>
+      <ion-item *ngFor="let row of notificacoes async">
+        <button ion-item no-lines>
+          <ion-avatar item-start>
+            <img src={{row.dados.proposta?.cliente?.imgperfil}}>
+          </ion-avatar>
+          <p class="ion-name">{{row.dados.proposta?.cliente?.nome}}</p>
+          <p>{{row.dados.msg}}</p>
+          <ion-note item-end>{{row.dados.proposta?.dataInicio | date: 'dd/MM/yyyy'}}</ion-note>
+        </button>
+      </ion-item>
+        
+    </ion-list>
+
+  </ion-content>
