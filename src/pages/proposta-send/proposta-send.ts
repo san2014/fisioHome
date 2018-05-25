@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, Loading } from 'ionic-angular';
 
 import { OneSignal } from '@ionic-native/onesignal';
 import { OSNotificationPayload } from '@ionic-native/onesignal';
@@ -16,12 +16,15 @@ export class PropostaSendPage {
 
   proposta: PropostaModel;
 
+  loading: Loading;
+
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
     private view: ViewController,
     private toastCtrl: ToastController,
-    private oneSignal : OneSignal
+    private oneSignal : OneSignal,
+    private loadingCtrl: LoadingController,
   ){
       this.initialize();
   }
@@ -33,6 +36,8 @@ export class PropostaSendPage {
   async aceitar() {
 
     try{
+
+      this.showLoading('aguarde...');
 
       let oneSignalIds = await this.oneSignal.getIds();
 
@@ -51,9 +56,13 @@ export class PropostaSendPage {
 
       let postNotification = await this.oneSignal.postNotification(notificationOBJ);
       
+      this.hideLoading();
+
       this.view.dismiss();
 
     }catch(error){
+
+      this.hideLoading();
     
       this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
 
@@ -80,5 +89,16 @@ export class PropostaSendPage {
   
     toast.present();
   }   
+
+  showLoading(msg: string){
+    this.loading = this.loadingCtrl.create({
+      content: msg
+    });
+    this.loading.present();     
+  }
+
+  hideLoading(){
+    this.loading.dismiss();
+  }  
 
 }

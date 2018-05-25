@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, Alert } from 'ionic-angular';
+import { Platform, Nav, Alert, Loading, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
@@ -21,6 +21,8 @@ export class MyApp {
   menuSections: Array<{title: string, component: any}>
 
   usuario: UsuarioModel;
+
+  loading: Loading;
   
   constructor(
     platform: Platform,
@@ -29,6 +31,7 @@ export class MyApp {
     private loginProvider: LoginProvider,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
     ) {
 
       this.initialize();
@@ -49,7 +52,10 @@ export class MyApp {
 
       })
       .then(() => {
-        this.loginProvider.initTokenRequest();
+        this.showLoading('obtendo token...');
+        this.loginProvider.initTokenRequest()
+          .then(()=>{this.hideLoading()})
+          .catch(()=>{this.hideLoading()});
       });
 
   }
@@ -97,7 +103,7 @@ export class MyApp {
     this.loginProvider.logout()
       .then((response)=> {
         this.presentToast(response.msg);
-        this.navToComponent("HomePage");
+        this.nav.setRoot("HomePage");
       }).catch((erro) => {
         this.presentToast(erro.msg);
       })
@@ -106,6 +112,17 @@ export class MyApp {
   pushRegister(){
     this.navToComponent("ProfInfoRegisterPage");
   }
+
+  showLoading(msg: string){
+    this.loading = this.loadingCtrl.create({
+      content: msg
+    });
+    this.loading.present();     
+  }
+
+  hideLoading(){
+    this.loading.dismiss();
+  }  
 
 }
 

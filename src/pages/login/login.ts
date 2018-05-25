@@ -94,7 +94,7 @@ export class Login {
 
         await this.loginProvider.setUsuarioSessao(this.usuarioModel)
           .then(res => {
-            this.navCtrl.push('HometabPage', {'usuarioModel': this.usuarioModel});    
+            this.navCtrl.setRoot('HometabPage', {'usuarioModel': this.usuarioModel});    
           })
           .catch(() => {
             erro = true;
@@ -151,8 +151,9 @@ export class Login {
         });    
       
       const userFind = await this.userProvider.getUserByEmail(userFace.email)
-        .catch(() => {
-          throw new Error(this.msgThrow);   
+        .catch((error) => {
+          //throw new Error(this.msgThrow);   
+          throw new Error(JSON.stringify(error));
         });    
 
       if ((userFind == null || userFind == undefined ) && userFace != null){
@@ -175,7 +176,7 @@ export class Login {
             throw new Error(this.msgThrow);          
           });             
 
-        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+        this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
       }     
     
     } catch (error) {
@@ -268,7 +269,7 @@ export class Login {
 
         await this.setUserSession(this.usuarioModel);
 
-        this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel});
+        this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
 
       }    
 

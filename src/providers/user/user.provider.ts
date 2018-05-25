@@ -51,7 +51,7 @@ export class UserProvider {
                 }
             })
             .catch(err => {
-                reject('Erro'); 
+                reject('Erro ao obter usuario por email'); 
             })
     })    
 
