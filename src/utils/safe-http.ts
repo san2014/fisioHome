@@ -14,7 +14,7 @@ export class SafeHttp {
     basePathCEP: string = CEP_API;
 
     bodyToken: any = {'chave': '7ntEIOpemKb1RF7LIcbYVA7'};
-  
+
     constructor(
       private http: HttpClient,
       private networkService: NetworkService,
@@ -24,8 +24,8 @@ export class SafeHttp {
        
         if (this.platform.is('cordova')){
           this.basepath = ENDPOINT_API;
-        }  
-
+        } 
+        
     }
 
     get(url: string, token: string) {
@@ -38,9 +38,11 @@ export class SafeHttp {
         
         let headers = new HttpHeaders();
       
-        headers = headers.set('Authorization', `JWT ${token}`);
+        headers = headers.set('Authorization', `Bearer ${token}`);
 
-        return this.http.get<any>(this.basepath+url, {headers: headers});
+        let urlCall : string = this.basepath + url;
+
+        return this.http.get<any>(urlCall, {headers: headers});
 
       }
 
@@ -53,8 +55,10 @@ export class SafeHttp {
         this.networkService.showNetworkAlert();
 
       } else { 
+
+        let urlCall : string = CEP_API + url;
         
-        return this.http.get<any>(CEP_API+url);
+        return this.http.get<any>(urlCall);
 
       }      
 
@@ -80,9 +84,12 @@ export class SafeHttp {
         
         let headers = new HttpHeaders();
       
-        headers = headers.set('Authorization', `JWT ${token}`);
+        headers = headers.set('Authorization', `Bearer ${token}`);
 
-        return this.http.post<any>(`${this.basepath}${url}`, body, {headers: headers}) 
+        let urlCall : string = this.basepath + url;
+
+        return this.http.post<any>(urlCall, body, {headers: headers});
+        
       }
 
     }
@@ -90,9 +97,15 @@ export class SafeHttp {
     put(url: string, body: string, token: string) {
       
       if (this.networkService.noConnection()) {
+
         this.networkService.showNetworkAlert();
+        
       } else {
-        return this.http.put<any>(`${this.basepath}${url}`, body) 
+        
+        let urlCall : string = this.basepath + url;
+
+        return this.http.put<any>(urlCall, body) 
+
       }
 
     }    

@@ -12,7 +12,7 @@ export class UsuarioModel{
 
     nome: string;
 
-    dt_nasc: string;
+    dt_nasc: Date;
 
     cep: number;
 

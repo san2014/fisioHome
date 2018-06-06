@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgIfContext } from '@angular/common';
 import { Storage } from '@ionic/storage';
@@ -25,14 +26,30 @@ export class LoginProvider {
 
   token: string;
 
+  refreshToken: string;
+
+  accessToken: string;
+
   oneSignalId: string;
+
+  client_api: string;
+
+  pass_api: string; 
+  
+  refreshUrl: string;
+    
+  loginUrl: string;  
 
   constructor(
     private storage: Storage,
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
-    private badge: Badge
-  ){}
+    private badge: Badge,
+    private http: HttpClient
+  ){
+    this.loginUrl = "/oauth/token?grant_type=password&username=";
+    this.refreshUrl = "/oauth/token?grant_type=refresh_token&refresh_token=";    
+  }
 
 
   getAdmin(): UsuarioModel{
@@ -55,12 +72,21 @@ export class LoginProvider {
 
   initTokenRequest(): Promise<string>{
     
-    return new Promise((resolve, reject) => { 
-      this.safeHttp.getToken()
-      .toPromise()
+    return new Promise<string>((resolve, reject) => { 
+      this.storage.get('accessToken')
         .then(token => {
-          this.token = token.token;
-          resolve (token.token);
+          
+          this.accessToken = token.accessToken;
+
+          this.storage.get('refreshToken')
+            .then(token => {
+              
+              this.accessToken = token.rereshToken;
+              
+              resolve (token.accessToken);
+              
+            });
+
         })
         .catch(erro => reject('erro')) 
     });
@@ -79,26 +105,31 @@ export class LoginProvider {
         
       }
 
-      let loginAPI = {"email": login.email, "senha": login.senha};
+      this.loginUrl + login.email + "&password=" + encodeURIComponent(login.senha);
 
-      this.safeHttp.post(`/usuario/login`, loginAPI, this.getToken())
+      let headers = new HttpHeaders();
+
+      headers = headers.set('Authorization', 'Basic' + btoa(`${this.client_api} : ${this.pass_api}`));
+  
+      return this.http.post<UsuarioModel>(this.loginUrl, {headers: headers})
         .toPromise()
-          .then(data => {
+        .then(data => {
 
-            let usuario: UsuarioModel = this.fshUtils.convertUserAPI(data);
+          let usuario: UsuarioModel = this.fshUtils.convertUserAPI(data);
 
-            this.usuarioLogado = usuario;
+          this.usuarioLogado = usuario;
 
-            resolve(usuario);
-            
-          })
-          .catch( erro => {
-            
-            this.safeHttp.notResponse();
-            
-            reject(erro);  
+          resolve(usuario);
+          
+        })
+        .catch( erro => {
+          
+          this.safeHttp.notResponse();
+          
+          reject(erro);  
 
-          });
+        });
+
     });
         
   }
@@ -188,5 +219,17 @@ export class LoginProvider {
     });
 
   }
+
+  public getAccessToken(refreshToken){
+  
+    let headers = new HttpHeaders();
+
+    headers = headers.set('Authorization', 'Basic' + btoa(`${this.client_api} : ${this.pass_api}`));  
+    
+    let urlCall: string = this.safeHttp.basepath + this.refreshUrl + refreshToken;
+
+    return this.http.post<any>(urlCall, {headers: headers});
+
+  }   
 
 }
