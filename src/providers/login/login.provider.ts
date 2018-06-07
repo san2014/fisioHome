@@ -14,6 +14,7 @@ import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
 import { NotificacaoModel } from './../../model/notificacao-model';
+import { TokenResponseModel } from './../../model/token-response.model';
 
 import { SafeHttp } from "./../../utils/safe-http";
 import { FshUtils } from './../../utils/fsh-util';
@@ -93,17 +94,9 @@ export class LoginProvider {
 
   }
 
-  login(login: LoginModel): Promise<UsuarioModel>{
+  login(login: LoginModel): Promise<TokenResponseModel>{
 
     return new Promise((resolve, reject) => {
-
-      if (login.email === "admin" && login.senha === "admin"){
-        
-        this.usuarioLogado = this.getAdmin();
-        
-        return resolve(this.getAdmin());
-        
-      }
 
       this.loginUrl + login.email + "&password=" + encodeURIComponent(login.senha);
 
@@ -111,27 +104,35 @@ export class LoginProvider {
 
       headers = headers.set('Authorization', 'Basic' + btoa(`${this.client_api} : ${this.pass_api}`));
   
-      return this.http.post<UsuarioModel>(this.loginUrl, {headers: headers})
+      this.http.post<any>(this.loginUrl, {headers: headers})
         .toPromise()
-        .then(data => {
-
-          let usuario: UsuarioModel = this.fshUtils.convertUserAPI(data);
-
-          this.usuarioLogado = usuario;
-
-          resolve(usuario);
-          
-        })
-        .catch( erro => {
-          
-          this.safeHttp.notResponse();
-          
-          reject(erro);  
-
-        });
+          .then(data => {
+            resolve(data);
+          })
+          .catch( erro => {
+            this.safeHttp.notResponse();
+            reject(erro);  
+          });
 
     });
         
+  }
+
+  getUsuarioAtual(token: string): Promise<UsuarioModel>{
+
+    return new Promise((resolve, reject) => {
+
+      this.safeHttp.post(this.loginUrl, null, token)
+        .toPromise()
+          .then(data => {
+            resolve(data);
+          })
+          .catch( erro => {
+            reject(erro);  
+          });      
+
+    });
+
   }
 
   getUsuarioLogado() : UsuarioModel{

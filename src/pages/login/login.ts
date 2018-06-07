@@ -1,3 +1,4 @@
+
 import { Subscription } from 'rxjs/Subscription';
 import { UserProvider } from './../../providers/user/user.provider';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -10,7 +11,10 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
 import { LoginProvider } from "../../providers/login/login.provider";
+import { TokenResponseModel } from './../../model/token-response.model';
+
 import { FshUtils } from '../../utils/fsh-util';
+import { Token } from '@angular/compiler';
 
 @IonicPage()
 @Component({
@@ -74,32 +78,27 @@ export class Login {
 
     this.msgError = [];
 
-    let erro: boolean = false;
-
     this.showLoading('aguarde...');
     
     try {
 
-      await this.loginProvider.login(this.loginModel)
-        .then(data => {
-          if (data !== null){
-            this.usuarioModel = data;
-          }
-        })
-        .catch((erro) => {
-          console.log(erro);
-          erro = true;
-          throw new Error('Login Error');
-        });
+        let tokenResponse: TokenResponseModel;
+
+        await this.loginProvider.login(this.loginModel)
+          .then(data => tokenResponse = data)
+          .catch((erro) => {
+            throw new Error('Login Error');
+          });
+
+        await this.loginProvider.getUsuarioAtual(tokenResponse.access_token)
+          .then(data => this.usuarioModel = data);
 
         await this.loginProvider.setUsuarioSessao(this.usuarioModel)
-          .then(res => {
-            this.navCtrl.setRoot('HometabPage', {'usuarioModel': this.usuarioModel});    
-          })
-          .catch(() => {
-            erro = true;
+          .catch((erro) => {
             throw new Error('Login Error');
-          });          
+          });   
+          
+        this.redirectPage();
 
     } catch (error) {
 
@@ -111,9 +110,18 @@ export class Login {
 
   }
 
+  public loginSuccess(res: TokenResponseModel) {
+    this.loginProvider.getUsuarioAtual(res.access_token)
+      .then(res => this.redirectPage());
+  }
+
+  public redirectPage() {
+    this.navCtrl.setRoot('HometabPage', {'usuarioModel': this.usuarioModel});
+  }  
+
   ionViewWillEnter(){
     if (this.usuarioModel.id != undefined){
-      this.navCtrl.push('HometabPage',{'usuarioModel': this.usuarioModel})
+      this.redirectPage();
     }
   }
 
