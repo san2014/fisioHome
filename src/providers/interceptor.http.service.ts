@@ -15,8 +15,7 @@ export class InterceptorHttpService implements HttpInterceptor {
 
     private loginProvider: LoginProvider;
 
-    constructor(private injector: Injector) { 
-    }
+    constructor(private injector: Injector) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpSentEvent | HttpHeaderResponse |
@@ -30,7 +29,7 @@ export class InterceptorHttpService implements HttpInterceptor {
            return next.handle(
             req.clone({
                 setHeaders:
-                    { Authorization: 'Bearer ' + this.loginProvider.accessToken }
+                    { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
             })).catch(error => {
                 if (error instanceof HttpErrorResponse) {
                     switch ((<HttpErrorResponse>error).status) {
@@ -49,12 +48,12 @@ export class InterceptorHttpService implements HttpInterceptor {
     }
 
     getAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-        return this.loginProvider.getAccessToken(this.loginProvider.refreshToken).switchMap(
+        return this.loginProvider.refreshToken(this.loginProvider.getRefreshToken()).switchMap(
             resp => {
-                this.loginProvider.accessToken = resp.access_token;
+                this.loginProvider.setAccessToken(resp.access_token)
                 return next.handle(req.clone({
                     setHeaders:
-                        { Authorization: 'Bearer ' + this.loginProvider.accessToken  }
+                        { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
                 }));
             }
         )

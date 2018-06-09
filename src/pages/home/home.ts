@@ -27,23 +27,16 @@ export class HomePage {
 
     this.showLoading('aguarde...');
 
-     await this.loginProvider.getUsuarioSessao()
-      .then((usuarioLogado) => {
+    const usuarioCookie = this.loginProvider.getUsuarioLogado();
 
-        this.hideLoading();
+    if (usuarioCookie !== null){
+      this.usuarioLogado = usuarioCookie;
+      this.handleHomePage();
+    }     
 
-        if (usuarioLogado !== null){
-          
-          this.usuarioLogado = usuarioLogado;
-          
-          this.handleHomePage();
-          
-        }  
+    this.hideLoading();
 
-      }).catch(()=> this.hideLoading()); 
-    
   }
-
 
   ionViewCanEnter(){
 

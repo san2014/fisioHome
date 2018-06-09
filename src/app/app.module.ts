@@ -15,6 +15,8 @@ import { Facebook } from "@ionic-native/facebook";
 import { OneSignal } from '@ionic-native/onesignal';
 import { Badge } from '@ionic-native/badge';
 
+import { CookieService } from 'angular2-cookie/core';
+
 import { LoginProvider } from "../providers/login/login.provider";
 import { FshUtils } from '../utils/fsh-util';
 import { NotificacaoProvider } from '../providers/notificacao/notificacao.provider';
@@ -49,6 +51,7 @@ import { InterceptorHttpService } from '../providers/interceptor.http.service';
     OneSignal,
     Badge,
     NotificacaoProvider,
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorHttpService, multi: true
     }    

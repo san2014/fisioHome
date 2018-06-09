@@ -1,12 +1,14 @@
-
-import { Subscription } from 'rxjs/Subscription';
-import { UserProvider } from './../../providers/user/user.provider';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs/Subscription';
 import { NavController, NavParams, IonicPage, LoadingController, Loading } from "ionic-angular";
-import { Storage } from '@ionic/storage';
+import { CookieService } from 'angular2-cookie/core';
+import { Token } from '@angular/compiler';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+
+import { UserProvider } from './../../providers/user/user.provider';
+
 
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
@@ -14,7 +16,7 @@ import { LoginProvider } from "../../providers/login/login.provider";
 import { TokenResponseModel } from './../../model/token-response.model';
 
 import { FshUtils } from '../../utils/fsh-util';
-import { Token } from '@angular/compiler';
+
 
 @IonicPage()
 @Component({
@@ -46,7 +48,7 @@ export class Login {
     private fb: FormBuilder,
     private loginProvider: LoginProvider,
     private userProvider: UserProvider,
-    private storage: Storage,
+    private cookieService: CookieService,
     public navParams: NavParams,
     public facebook: Facebook,
     private googlePlus: GooglePlus,
@@ -98,11 +100,7 @@ export class Login {
             throw new Error('Login Error');
           });          
 
-        await this.loginProvider.setUsuarioSessao(this.usuarioModel)
-          .catch((erro) => {
-            console.log(erro);
-            throw new Error('Login Error');
-          });   
+        this.loginProvider.setUsuarioSessao(this.usuarioModel);
           
         this.redirectPage();
 
@@ -185,10 +183,7 @@ export class Login {
       }else{
         this.usuarioModel = this.utils.convertUserAPI(userFind);
 
-        await this.setUserSession(this.usuarioModel)
-          .catch(() => {
-            throw new Error(this.msgThrow);          
-          });             
+        this.setUserSession(this.usuarioModel);
 
         this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
       }     
@@ -215,13 +210,7 @@ export class Login {
   
   setUserSession(usuario: UsuarioModel){
     if (usuario != null){
-      return new Promise((resolve, reject) => {
-        this.storage.set('usuarioLogado', usuario)
-          .then(() => resolve(usuario))
-          .catch((erro) => {
-            reject('Erro');
-          });
-      })
+      this.cookieService.putObject('usuarioLogado', usuario);
     }
   }  
 

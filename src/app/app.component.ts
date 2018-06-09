@@ -50,12 +50,6 @@ export class MyApp {
           {title: 'Avalie-nos', component: 'IniciarPage'},
         ];
 
-      })
-      .then(() => {
-        this.showLoading('obtendo token...');
-        this.loginProvider.initTokenRequest()
-          .then(()=>{this.hideLoading()})
-          .catch(()=>{this.hideLoading()});
       });
 
   }
@@ -100,13 +94,9 @@ export class MyApp {
   }
 
   logout(){
-    this.loginProvider.logout()
-      .then((response)=> {
-        this.presentToast(response.msg);
-        this.nav.setRoot("HomePage");
-      }).catch((erro) => {
-        this.presentToast(erro.msg);
-      })
+    this.loginProvider.logout();
+    this.presentToast("Até logo...");
+    this.nav.setRoot("HomePage");
   }
 
   pushRegister(){

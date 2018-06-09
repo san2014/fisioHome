@@ -1,12 +1,12 @@
+import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgIfContext } from '@angular/common';
-import { Storage } from '@ionic/storage';
 import { Badge } from '@ionic-native/badge';
+import { CookieService } from 'angular2-cookie/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-
 
 import { OneSignal } from '@ionic-native/onesignal';
 
@@ -20,19 +20,17 @@ import { TokenResponseModel } from './../../model/token-response.model';
 
 import { SafeHttp } from "./../../utils/safe-http";
 import { FshUtils } from './../../utils/fsh-util';
-import { RequestOptions } from '@angular/http';
-
 
 @Injectable()
 export class LoginProvider {
 
   usuarioLogado: UsuarioModel;
 
-  token: string;
+/*   token: string;
 
   refreshToken: string;
 
-  accessToken: string;
+  accessToken: string; */
 
   oneSignalId: string;
 
@@ -43,7 +41,7 @@ export class LoginProvider {
   loginUrl: string;  
 
   constructor(
-    private storage: Storage,
+    private cookieService: CookieService,
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
     private badge: Badge,
@@ -69,33 +67,6 @@ export class LoginProvider {
 
   }
 
-  getToken(){
-    return this.token;
-  }
-
-  initTokenRequest(): Promise<string>{
-    
-    return new Promise<string>((resolve, reject) => { 
-      this.storage.get('accessToken')
-        .then(token => {
-          
-          this.accessToken = token.accessToken;
-
-          this.storage.get('refreshToken')
-            .then(token => {
-              
-              this.accessToken = token.rereshToken;
-              
-              resolve (token.accessToken);
-              
-            });
-
-        })
-        .catch(erro => reject('erro')) 
-    });
-
-  }
-
   login(login: LoginModel): Promise<TokenResponseModel>{
 
     return new Promise((resolve, reject) => {
@@ -109,8 +80,8 @@ export class LoginProvider {
       this.http.post<TokenResponseModel>(loginAuth, {}, {headers: headers})
         .toPromise()
           .then(data => {
-            this.accessToken = data.access_token;
-            this.refreshToken = data.refresh_token;
+            this.setAccessToken(data.access_token);
+            this.setRefreshToken(data.refresh_token);
             resolve(data);
           })
           .catch( erro => {
@@ -135,6 +106,7 @@ export class LoginProvider {
         .toPromise()
           .then(data => {
             this.usuarioLogado = data;
+            this.cookieService.putObject('usuarioLogado', data);
             resolve(data);
           })
           .catch( erro => {
@@ -146,13 +118,11 @@ export class LoginProvider {
   }
 
   getUsuarioLogado() : UsuarioModel{
-
     if (this.usuarioLogado != undefined){
       this.usuarioLogado.onesignal_id = this.oneSignalId;
     }
-    
+
     return this.usuarioLogado;
-    
   } 
 
   setOneSignalId(id: string){
@@ -163,78 +133,19 @@ export class LoginProvider {
     return this.oneSignalId;
   }
   
-  getUsuarioSessao() : Promise<UsuarioModel>{
-
-    return new Promise( (resolve, reject) => {
-      this.storage.get('usuarioLogado')
-        .then(data => {
-
-          if (Array.isArray(data)){
-
-            this.usuarioLogado = data[0];
-            
-            resolve(data[0]);
-
-          }else{
-
-            this.usuarioLogado = data;
-
-            resolve(data);
-
-          }
-
-        })
-        .catch(() => {
-          reject('Erro')
-        });
-    });
-
+  getUsuarioSessao() : UsuarioModel{
+    return <UsuarioModel> this.cookieService.getObject('usuarioLogado');
   }   
   
-  setUsuarioSessao(usuario: UsuarioModel): Promise<boolean>{
-
-    return new Promise ( (resolve, reject) => {
-
-      this.storage.set('usuarioLogado', usuario)
-        .then(() => {
-            this.usuarioLogado = usuario;
-            resolve(true);
-            error => { 
-              reject('Ocorreu um erro ao inserir dados na sessao');
-            }
-        })
-        .catch(() => {
-          reject('Ocorreu um erro ao inserir dados na sessao');
-        })
-      }
-
-    );    
-
+  setUsuarioSessao(usuario: UsuarioModel){
+    this.cookieService.putObject('usuarioLogado', usuario)
   }
   
-  logout(): Promise<ResponseModel>{
-    
-    let response: ResponseModel;
-
-    return new Promise( (resolve, reject) => {
-      this.storage.clear()
-        .then(() => {
-            this.usuarioLogado = undefined;
-            this.accessToken = undefined;
-            this.token = undefined;
-            this.refreshToken = undefined;
-            response = {msg: 'Desconectado com sucesso', type: 1}
-            resolve(response);
-        })
-        .catch(() => {
-          response = {msg: 'Desculpe, ocorreu um erro ao desconectar. Tente nvamente.', type: 0}
-          reject(response);
-        })
-    });
-
+  logout(){
+    this.cookieService.removeAll();
   }
 
-  public getAccessToken(refreshToken){
+  public refreshToken(refreshToken): Observable<any>{
   
     let headers = new HttpHeaders();
 
@@ -244,6 +155,22 @@ export class LoginProvider {
 
     return this.http.post<any>(urlCall, {headers: headers});
 
-  }   
+  }
+  
+  public setAccessToken(valor: string){
+    this.cookieService.put('accessToken', valor)
+  }
+  
+  public getAccessToken(): string{
+    return this.cookieService.get('accessToken');
+  }
+
+  public setRefreshToken(valor: string){
+    this.cookieService.put('refreshToken', valor)
+  }
+
+  public getRefreshToken(): string{
+    return this.cookieService.get('refreshToken');
+  }  
 
 }
