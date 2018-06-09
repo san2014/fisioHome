@@ -4,4 +4,6 @@
 
 export const ENDPOINT_API = 'https://fisio-home.herokuapp.com';
 export const CEP_API = 'https://viacep.com.br/ws';
+export const USER_API = "fisio_mobile";
+export const PASS_API = "ha$hdev48";
 //export const ENDPOINT_API = 'http://localhost:5000';

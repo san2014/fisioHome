@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from "@angular/common/http";
+import { Injectable, Injector } from "@angular/core";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -13,17 +13,24 @@ import { LoginProvider } from './login/login.provider';
 @Injectable()
 export class InterceptorHttpService implements HttpInterceptor {
 
-    constructor(
-        private loginProvider: LoginProvider
-    ) { }
+    private loginProvider: LoginProvider;
+
+    constructor(private injector: Injector) { 
+    }
 
     intercept(req: HttpRequest<any>, next: HttpHandler):
-        Observable<HttpSentEvent | HttpHeaderResponse | 
-        HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
-        return next.handle(
+        Observable<HttpSentEvent | HttpHeaderResponse |
+        HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>>{
+        this.loginProvider = this.injector.get(LoginProvider);
+        
+            if (this.loginProvider.usuarioLogado == undefined){
+                return next.handle(req);
+            }
+       
+           return next.handle(
             req.clone({
                 setHeaders:
-                    { Authorization: 'Bearer ' + this.loginProvider.getToken }
+                    { Authorization: 'Bearer ' + this.loginProvider.accessToken }
             })).catch(error => {
                 if (error instanceof HttpErrorResponse) {
                     switch ((<HttpErrorResponse>error).status) {
@@ -38,10 +45,10 @@ export class InterceptorHttpService implements HttpInterceptor {
                 }
             }
 
-            );
+            );   
     }
 
-    async getAccessToken(req: HttpRequest<any>, next: HttpHandler): Promise<any> {
+    getAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
         return this.loginProvider.getAccessToken(this.loginProvider.refreshToken).switchMap(
             resp => {
                 this.loginProvider.accessToken = resp.access_token;

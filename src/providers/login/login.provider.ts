@@ -10,6 +10,8 @@ import 'rxjs/add/operator/toPromise';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
+import { ENDPOINT_API, USER_API, PASS_API } from './../../app/app-constantes';
+
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { ResponseModel } from "../../model/response-model";
@@ -18,6 +20,7 @@ import { TokenResponseModel } from './../../model/token-response.model';
 
 import { SafeHttp } from "./../../utils/safe-http";
 import { FshUtils } from './../../utils/fsh-util';
+import { RequestOptions } from '@angular/http';
 
 
 @Injectable()
@@ -33,11 +36,9 @@ export class LoginProvider {
 
   oneSignalId: string;
 
-  client_api: string;
-
-  pass_api: string; 
-  
   refreshUrl: string;
+
+  userUrl: string;
     
   loginUrl: string;  
 
@@ -48,8 +49,9 @@ export class LoginProvider {
     private badge: Badge,
     private http: HttpClient
   ){
-    this.loginUrl = "/oauth/token?grant_type=password&username=";
-    this.refreshUrl = "/oauth/token?grant_type=refresh_token&refresh_token=";    
+    this.loginUrl = "http://localhost:8080/oauth/token?grant_type=password&username=";
+    this.refreshUrl = "http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=";   
+    this.userUrl  = "http://localhost:8080/usuario/logado"; 
   }
 
 
@@ -98,18 +100,21 @@ export class LoginProvider {
 
     return new Promise((resolve, reject) => {
 
-      this.loginUrl + login.email + "&password=" + encodeURIComponent(login.senha);
+      const loginAuth = this.loginUrl + login.email + "&password=" + encodeURIComponent(login.senha);
 
       let headers = new HttpHeaders();
 
-      headers = headers.set('Authorization', 'Basic' + btoa(`${this.client_api} : ${this.pass_api}`));
-  
-      this.http.post<any>(this.loginUrl, {headers: headers})
+      headers = headers.set('Authorization', 'Basic ' + btoa(`${USER_API}:${PASS_API}`));
+       
+      this.http.post<TokenResponseModel>(loginAuth, {}, {headers: headers})
         .toPromise()
           .then(data => {
+            this.accessToken = data.access_token;
+            this.refreshToken = data.refresh_token;
             resolve(data);
           })
           .catch( erro => {
+            console.log(erro);
             this.safeHttp.notResponse();
             reject(erro);  
           });
@@ -122,9 +127,14 @@ export class LoginProvider {
 
     return new Promise((resolve, reject) => {
 
-      this.safeHttp.post(this.loginUrl, null, token)
+      let headers = new HttpHeaders();
+
+      headers = headers.set('Authorization', `Bearer ${token}`);
+
+      this.http.get<UsuarioModel>(this.userUrl, {headers: headers})
         .toPromise()
           .then(data => {
+            this.usuarioLogado = data;
             resolve(data);
           })
           .catch( erro => {
@@ -210,6 +220,9 @@ export class LoginProvider {
       this.storage.clear()
         .then(() => {
             this.usuarioLogado = undefined;
+            this.accessToken = undefined;
+            this.token = undefined;
+            this.refreshToken = undefined;
             response = {msg: 'Desconectado com sucesso', type: 1}
             resolve(response);
         })
@@ -225,9 +238,9 @@ export class LoginProvider {
   
     let headers = new HttpHeaders();
 
-    headers = headers.set('Authorization', 'Basic' + btoa(`${this.client_api} : ${this.pass_api}`));  
+    headers = headers.set('Authorization', 'Basic' + btoa(`${USER_API}:${PASS_API}`));  
     
-    let urlCall: string = this.safeHttp.basepath + this.refreshUrl + refreshToken;
+    let urlCall: string = this.refreshUrl + refreshToken;
 
     return this.http.post<any>(urlCall, {headers: headers});
 

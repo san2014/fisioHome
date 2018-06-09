@@ -87,14 +87,20 @@ export class Login {
         await this.loginProvider.login(this.loginModel)
           .then(data => tokenResponse = data)
           .catch((erro) => {
+            console.log(erro);
             throw new Error('Login Error');
           });
 
         await this.loginProvider.getUsuarioAtual(tokenResponse.access_token)
-          .then(data => this.usuarioModel = data);
+          .then(data => this.usuarioModel = data)
+          .catch((erro) => {
+            console.log(erro);
+            throw new Error('Login Error');
+          });          
 
         await this.loginProvider.setUsuarioSessao(this.usuarioModel)
           .catch((erro) => {
+            console.log(erro);
             throw new Error('Login Error');
           });   
           

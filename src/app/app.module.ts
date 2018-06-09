@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
@@ -18,6 +18,8 @@ import { Badge } from '@ionic-native/badge';
 import { LoginProvider } from "../providers/login/login.provider";
 import { FshUtils } from '../utils/fsh-util';
 import { NotificacaoProvider } from '../providers/notificacao/notificacao.provider';
+
+import { InterceptorHttpService } from '../providers/interceptor.http.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,10 @@ import { NotificacaoProvider } from '../providers/notificacao/notificacao.provid
     FshUtils,
     OneSignal,
     Badge,
-    NotificacaoProvider
+    NotificacaoProvider,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: InterceptorHttpService, multi: true
+    }    
   ]
 })
 export class AppModule {}
