@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Loading, LoadingController, AlertController } from 'ionic-angular';
 
 import { UsuarioModel } from '../model/usuario-model';
+import { isArray } from 'ionic-angular/umd/util/util';
 
 @Injectable()
 export class FshUtils{
@@ -131,5 +132,6 @@ export class FshUtils{
 
         }
     }
+
     
 }

@@ -110,14 +110,10 @@ export class IniciarPage {
   }  
 
   initOneSignalId(){
-    
     this.oneSignal.getIds()
       .then(ids => {
-
         this.loginProvider.setOneSignalId(ids.userId);
-        
       });
-
   }  
 
   receivePush(msg: OSNotificationPayload){

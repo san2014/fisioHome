@@ -23,7 +23,7 @@ export class UserProvider {
   usuarios(): Promise<UsuarioModel>{
   
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`/usuario`, this.getToken())
+      this.safeHttp.get(`/usuario`)
         .map(res => res.json())
           .toPromise()
             .then(data => {
@@ -40,7 +40,7 @@ export class UserProvider {
   getUserByEmail(email: string): Promise<UsuarioModel>{
 
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`/usuario/search/email=${email}`, this.getToken())
+      this.safeHttp.get(`/usuario/search/email=${email}`)
         .map(res => res.json())
           .toPromise()
             .then(data => {
@@ -63,7 +63,7 @@ export class UserProvider {
 
     return new Promise( (resolve, reject) => {
       this.safeHttp
-        .post(`/usuario`, params, this.getToken())
+        .post(`/usuario`, params)
           .toPromise()
             .then((data) =>{
               resolve(data);
@@ -81,7 +81,7 @@ export class UserProvider {
 
     return new Promise( (resolve, reject) => {
       this.safeHttp
-        .put(`/usuario`, params, this.getToken())
+        .put(`/usuario`, params)
           .toPromise()
             .then((data) =>{
               resolve(data.statusText);
@@ -91,10 +91,6 @@ export class UserProvider {
             });
     });    
 
-  }
-
-  getToken(): string{
-    return this.loginProvider.getToken();
   }
 
 }

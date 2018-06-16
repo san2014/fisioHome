@@ -4,6 +4,7 @@ import { LoadingController, Loading } from 'ionic-angular';
 
 import { LoginProvider } from './../../providers/login/login.provider';
 import { UsuarioModel } from '../../model/usuario-model';
+import { isUndefined } from 'ionic-angular/umd/util/util';
 
 @IonicPage()
 @Component({
@@ -29,7 +30,7 @@ export class HomePage {
 
     const usuarioCookie = this.loginProvider.getUsuarioLogado();
 
-    if (usuarioCookie !== null){
+    if (usuarioCookie != undefined && usuarioCookie != null){
       this.usuarioLogado = usuarioCookie;
       this.handleHomePage();
     }     

@@ -33,8 +33,6 @@ export class Login {
 
   msgError: string[];
 
-  postUser: Subscription;
-
   loading: Loading;
 
   titleAlert: string = 'Desculpe...';
@@ -93,10 +91,9 @@ export class Login {
             throw new Error('Login Error');
           });
 
-        await this.loginProvider.getUsuarioAtual(tokenResponse.access_token)
+        await this.loginProvider.getUsuarioAtual(tokenResponse.token)
           .then(data => this.usuarioModel = data)
           .catch((erro) => {
-            console.log(erro);
             throw new Error('Login Error');
           });          
 
@@ -115,7 +112,7 @@ export class Login {
   }
 
   public loginSuccess(res: TokenResponseModel) {
-    this.loginProvider.getUsuarioAtual(res.access_token)
+    this.loginProvider.getUsuarioAtual(res.token)
       .then(res => this.redirectPage());
   }
 
@@ -129,11 +126,7 @@ export class Login {
     }
   }
 
-  ionViewDidLeave(){
-    if (this.postUser != undefined){
-      this.postUser.unsubscribe();
-    }
-  }
+  ionViewDidLeave(){}
 
   showLoading(msg: string){
     this.loading = this.loadingCtrl.create({

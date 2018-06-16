@@ -24,15 +24,10 @@ import { FshUtils } from './../../utils/fsh-util';
 @Injectable()
 export class LoginProvider {
 
-  usuarioLogado: UsuarioModel;
 
-/*   token: string;
+/*   usuarioLogado: UsuarioModel;
 
-  refreshToken: string;
-
-  accessToken: string; */
-
-  oneSignalId: string;
+  oneSignalId: string; */
 
   refreshUrl: string;
 
@@ -45,13 +40,11 @@ export class LoginProvider {
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
     private badge: Badge,
-    private http: HttpClient
   ){
-    this.loginUrl = "http://localhost:8080/oauth/token?grant_type=password&username=";
-    this.refreshUrl = "http://localhost:8080/oauth/token?grant_type=refresh_token&refresh_token=";   
-    this.userUrl  = "http://localhost:8080/usuario/logado"; 
+    this.loginUrl = "/auth";
+    this.refreshUrl = "/auth/refresh";   
+    this.userUrl  = "/usuario/logado";     
   }
-
 
   getAdmin(): UsuarioModel{
 
@@ -67,26 +60,17 @@ export class LoginProvider {
 
   }
 
-  login(login: LoginModel): Promise<TokenResponseModel>{
+  public login(login: LoginModel): Promise<TokenResponseModel>{
 
     return new Promise((resolve, reject) => {
-
-      const loginAuth = this.loginUrl + login.email + "&password=" + encodeURIComponent(login.senha);
-
-      let headers = new HttpHeaders();
-
-      headers = headers.set('Authorization', 'Basic ' + btoa(`${USER_API}:${PASS_API}`));
-       
-      this.http.post<TokenResponseModel>(loginAuth, {}, {headers: headers})
+      
+      this.safeHttp.post(this.loginUrl, login)
         .toPromise()
           .then(data => {
-            this.setAccessToken(data.access_token);
-            this.setRefreshToken(data.refresh_token);
+            this.setAccessToken(data.data.token);
             resolve(data);
           })
           .catch( erro => {
-            console.log(erro);
-            this.safeHttp.notResponse();
             reject(erro);  
           });
 
@@ -94,43 +78,44 @@ export class LoginProvider {
         
   }
 
+  public refreshToken(refreshToken): Observable<any>{
+    return this.safeHttp.post(this.refreshUrl, {})
+  }  
+
   getUsuarioAtual(token: string): Promise<UsuarioModel>{
 
     return new Promise((resolve, reject) => {
-
-      let headers = new HttpHeaders();
-
-      headers = headers.set('Authorization', `Bearer ${token}`);
-
-      this.http.get<UsuarioModel>(this.userUrl, {headers: headers})
+      this.safeHttp.get(this.userUrl)
         .toPromise()
           .then(data => {
-            this.usuarioLogado = data;
             this.cookieService.putObject('usuarioLogado', data);
             resolve(data);
           })
           .catch( erro => {
             reject(erro);  
           });      
-
     });
 
   }
 
   getUsuarioLogado() : UsuarioModel{
-    if (this.usuarioLogado != undefined){
-      this.usuarioLogado.onesignal_id = this.oneSignalId;
+    
+    let usuarioLogado: UsuarioModel = <UsuarioModel> this.cookieService.getObject('usuarioLogado');
+    
+    if (usuarioLogado != undefined){
+      usuarioLogado.onesignal_id = this.getOneSignalId();
     }
 
-    return this.usuarioLogado;
+    return usuarioLogado;
+
   } 
 
   setOneSignalId(id: string){
-    this.oneSignalId = id;
+    this.cookieService.put('oneSignalId', id);
   }
 
   getOneSignalId(): string{
-    return this.oneSignalId;
+    return this.cookieService.get('oneSignalId');
   }
   
   getUsuarioSessao() : UsuarioModel{
@@ -145,17 +130,7 @@ export class LoginProvider {
     this.cookieService.removeAll();
   }
 
-  public refreshToken(refreshToken): Observable<any>{
-  
-    let headers = new HttpHeaders();
 
-    headers = headers.set('Authorization', 'Basic' + btoa(`${USER_API}:${PASS_API}`));  
-    
-    let urlCall: string = this.refreshUrl + refreshToken;
-
-    return this.http.post<any>(urlCall, {headers: headers});
-
-  }
   
   public setAccessToken(valor: string){
     this.cookieService.put('accessToken', valor)
@@ -165,12 +140,9 @@ export class LoginProvider {
     return this.cookieService.get('accessToken');
   }
 
-  public setRefreshToken(valor: string){
-    this.cookieService.put('refreshToken', valor)
-  }
-
-  public getRefreshToken(): string{
-    return this.cookieService.get('refreshToken');
-  }  
+  clearCookie(): any {
+    this.cookieService.removeAll();
+}  
 
 }
+

@@ -54,7 +54,6 @@ export class UserPicturePage {
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto(imageData);
-      //this.uploadFake();
     }, error => {
       this.error = JSON.stringify(error);
     });
@@ -69,7 +68,6 @@ export class UserPicturePage {
     }).then(imageData => {
       this.myPhoto = imageData;
       this.uploadPhoto(imageData);
-      //this.uploadFake();
     }, error => {
       this.error = JSON.stringify(error);
     });
@@ -99,9 +97,9 @@ export class UserPicturePage {
     reader.readAsArrayBuffer(file);
   }
 
-  //substituir pela url da nossa API
+  //TO DO: substituir pela url da nossa API
   private postData(formData: FormData) {
-    this.safeHttp.post("http://192.168.0.8/upload.php", formData, this.loginProvider.getToken())
+    this.safeHttp.post("http://192.168.0.8/upload.php", formData)
       .toPromise()
       .catch((e) => this.handleError(e))
       .then((ok) => {

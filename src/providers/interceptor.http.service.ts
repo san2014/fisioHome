@@ -17,22 +17,29 @@ export class InterceptorHttpService implements HttpInterceptor {
 
     constructor(private injector: Injector) {}
 
-    intercept(req: HttpRequest<any>, next: HttpHandler):
+    intercept(req: HttpRequest<any>, next: HttpHandler): 
         Observable<HttpSentEvent | HttpHeaderResponse |
-        HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>>{
+        HttpProgressEvent| HttpResponse<any> | HttpUserEvent<any>>{
+
         this.loginProvider = this.injector.get(LoginProvider);
         
-            if (this.loginProvider.usuarioLogado == undefined){
-                return next.handle(req);
-            }
-       
-           return next.handle(
+        let token = this.loginProvider.getAccessToken();
+
+        if (token == undefined){
+            return next.handle(req);
+        }
+        
+        return next.handle(
             req.clone({
                 setHeaders:
-                    { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
-            })).catch(error => {
+                    { Authorization: 'Bearer ' + token }
+            }))
+            .catch(error => {
+                
                 if (error instanceof HttpErrorResponse) {
                     switch ((<HttpErrorResponse>error).status) {
+                        case 400:
+                            return next.handle(req);                        
                         case 401:
                             return this.getAccessToken(req, next);
                         case 0:
@@ -42,21 +49,21 @@ export class InterceptorHttpService implements HttpInterceptor {
                 }else{
                     Observable.throw(error);
                 }
-            }
-
-            );   
+            });   
     }
 
     getAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-        return this.loginProvider.refreshToken(this.loginProvider.getRefreshToken()).switchMap(
+        
+        return this.loginProvider.refreshToken(this.loginProvider.getAccessToken()).switchMap(
             resp => {
-                this.loginProvider.setAccessToken(resp.access_token)
+                this.loginProvider.setAccessToken(resp.token);
+                console.log(this.loginProvider.getAccessToken());
                 return next.handle(req.clone({
                     setHeaders:
                         { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
                 }));
             }
-        )
+        ).catch( err => this.loginProvider.clearCookie() )
     }
 
 }
