@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class SafeHttp {
 
-    basepath: string = "/fsh_api/";
+    basepath: string = "/fsh_api";
 
     basePathCEP: string = CEP_API;
 
@@ -47,7 +47,6 @@ export class SafeHttp {
         this.networkService.showNetworkAlert();
       } else {
         let urlCall : string = this.basepath + url;
-        console.log(urlCall);
         return this.http.post<any>(urlCall, body, {headers: headers});
       }
     }

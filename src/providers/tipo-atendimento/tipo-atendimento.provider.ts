@@ -19,8 +19,7 @@ export class TipoAtendimentoProvider {
           resolve(data.data);
         })
         .catch(erro => {
-          this.safeHttp.notResponse();
-          reject('');
+          reject(erro);
         });
     });
          

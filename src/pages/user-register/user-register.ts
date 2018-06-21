@@ -74,13 +74,13 @@ export class UserRegister {
       'numero_local': ['',Validators.required],
       'flag_ativo' : [''],
       'onesignal_id':null,
-      'tipo': null
+      'perfil': null
     });
 
     this.usuario = new UsuarioModel();
 
     this.usuario.flag_ativo = 1;
-    this.usuario.tipo = 1;
+    this.usuario.perfil = PerfilEnum.CLIENTE;
     this.usuario.onesignal_id = this.loginProvider.getOneSignalId();
     
     this.getUsuarioLogado();

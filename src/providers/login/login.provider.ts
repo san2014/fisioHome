@@ -1,33 +1,19 @@
+import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgIfContext } from '@angular/common';
-import { Badge } from '@ionic-native/badge';
 import { CookieService } from 'angular2-cookie/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-import { OneSignal } from '@ionic-native/onesignal';
-
-import { ENDPOINT_API, USER_API, PASS_API } from './../../app/app-constantes';
-
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
-import { ResponseModel } from "../../model/response-model";
-import { NotificacaoModel } from './../../model/notificacao-model';
 import { TokenResponseModel } from './../../model/token-response.model';
 
 import { SafeHttp } from "./../../utils/safe-http";
-import { FshUtils } from './../../utils/fsh-util';
 
 @Injectable()
 export class LoginProvider {
-
-
-/*   usuarioLogado: UsuarioModel;
-
-  oneSignalId: string; */
 
   refreshUrl: string;
 
@@ -37,11 +23,9 @@ export class LoginProvider {
 
   constructor(
     private cookieService: CookieService,
-    private safeHttp: SafeHttp,
-    private fshUtils: FshUtils,
-    private badge: Badge,
+    private safeHttp: SafeHttp
   ){
-    this.loginUrl = "/auth";
+    this.loginUrl = "/auth/";
     this.refreshUrl = "/auth/refresh";   
     this.userUrl  = "/usuario/logado";     
   }
@@ -54,7 +38,7 @@ export class LoginProvider {
     admin.login = "admin";
     admin.nome = "Administrador do Sistema";
     admin.flag_ativo = 1;
-    admin.tipo = 1;
+    admin.perfil = 'ROLE_PROFISSIONAL';
 
     return admin;
 
@@ -142,7 +126,7 @@ export class LoginProvider {
 
   clearCookie(): any {
     this.cookieService.removeAll();
-}  
+  }  
 
 }
 

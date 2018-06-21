@@ -31,7 +31,7 @@ export class MyApp {
     private loginProvider: LoginProvider,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
     ) {
 
       this.initialize();
@@ -56,7 +56,7 @@ export class MyApp {
 
   initialize(){
     this.usuario = new UsuarioModel();
-    
+
   }
 
   presentToast(msg: string) {

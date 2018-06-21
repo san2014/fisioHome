@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
 import { NavController, NavParams, IonicPage, LoadingController, Loading } from "ionic-angular";
 import { CookieService } from 'angular2-cookie/core';
-import { Token } from '@angular/compiler';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import { UserProvider } from './../../providers/user/user.provider';
-
 
 import { LoginModel } from './../../model/login.model';
 import { UsuarioModel } from './../../model/usuario-model';
@@ -87,7 +84,6 @@ export class Login {
         await this.loginProvider.login(this.loginModel)
           .then(data => tokenResponse = data)
           .catch((erro) => {
-            console.log(erro);
             throw new Error('Login Error');
           });
 
@@ -96,7 +92,7 @@ export class Login {
           .catch((erro) => {
             throw new Error('Login Error');
           });          
-
+        
         this.loginProvider.setUsuarioSessao(this.usuarioModel);
           
         this.redirectPage();
@@ -169,7 +165,7 @@ export class Login {
         this.usuarioModel.dt_nasc = userFace.birthday;
         this.usuarioModel.imgperfil = userFace.picture.data.url;
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
-        this.usuarioModel.tipo = 1;
+        this.usuarioModel.perfil = PerfilEnum.CLIENTE;
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
@@ -254,7 +250,7 @@ export class Login {
         this.usuarioModel.email = userGoogle.email;
         this.usuarioModel.imgperfil = userGoogle.imageUrl;  
         this.usuarioModel.google_id = userGoogle.id;
-        this.usuarioModel.tipo = 1; 
+        this.usuarioModel.perfil = PerfilEnum.CLIENTE; 
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
@@ -291,6 +287,8 @@ export class Login {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
-  }  
+  }
+  
+
 
 }

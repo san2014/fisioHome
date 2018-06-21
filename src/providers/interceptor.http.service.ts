@@ -1,5 +1,5 @@
 import { Injectable, Injector } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent } from "@angular/common/http";
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -9,20 +9,24 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
 
 import { LoginProvider } from './login/login.provider';
+import { Events, App } from "ionic-angular";
 
 @Injectable()
 export class InterceptorHttpService implements HttpInterceptor {
 
     private loginProvider: LoginProvider;
-
-    constructor(private injector: Injector) {}
+    
+    constructor(
+        private injector: Injector,
+        public appCtrl: App
+    ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): 
         Observable<HttpSentEvent | HttpHeaderResponse |
         HttpProgressEvent| HttpResponse<any> | HttpUserEvent<any>>{
 
         this.loginProvider = this.injector.get(LoginProvider);
-        
+
         let token = this.loginProvider.getAccessToken();
 
         if (token == undefined){
@@ -39,6 +43,8 @@ export class InterceptorHttpService implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse) {
                     switch ((<HttpErrorResponse>error).status) {
                         case 400:
+                            console.log('token ja invalido');
+                            this.appCtrl.getRootNavs()[0].setRoot('Login');
                             return next.handle(req);                        
                         case 401:
                             return this.getAccessToken(req, next);
@@ -63,7 +69,7 @@ export class InterceptorHttpService implements HttpInterceptor {
                         { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
                 }));
             }
-        ).catch( err => this.loginProvider.clearCookie() )
+        )/*.catch( err => this.loginProvider.clearCookie() )*/
     }
 
 }

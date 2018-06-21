@@ -4,7 +4,6 @@ import { LoadingController, Loading } from 'ionic-angular';
 
 import { LoginProvider } from './../../providers/login/login.provider';
 import { UsuarioModel } from '../../model/usuario-model';
-import { isUndefined } from 'ionic-angular/umd/util/util';
 
 @IonicPage()
 @Component({

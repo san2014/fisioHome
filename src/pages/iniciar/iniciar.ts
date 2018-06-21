@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { DetalheNotificacao } from './../../model/detalhe-notificacao-model';
 import { NotificacaoProvider } from './../../providers/notificacao/notificacao.provider';
 import { Component } from '@angular/core';
@@ -47,6 +48,7 @@ export class IniciarPage {
 
     platform.ready()
       .then(() => {
+        
         if (platform.is('cordova')){
           this.prepareNotifications();
         }   
@@ -66,21 +68,21 @@ export class IniciarPage {
 
         this.notificacaoProvider.initNotificacoes();
 
-        await setTimeout(() => {
-
-          this.tpAtdProvider.tiposAtendimentos()
-            .then(data =>{
-              this.tpsAtds = data;
-            })
-            .catch((error) => {
-              throw new Error(error)
-            });   
-
-        }, 3000);
+        await this.tpAtdProvider.tiposAtendimentos()
+          .then(data =>{
+            this.tpsAtds = data;
+          })
+          .catch((error) => {
+            throw new HttpErrorResponse(error)
+          });   
 
       } catch (error) {
-
-        this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...")
+        
+        if (error instanceof HttpErrorResponse && error.status == 400){
+          this.showAlert("Sessão expirada...Favor faça o login novamente")
+        }else{
+          this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
+        }
 
       }
         
@@ -371,5 +373,13 @@ export class IniciarPage {
   public clearNots(){
     this.notificacaoProvider.limparNotificacoes();
   }
+
+  isCliente(){
+    return this.usuarioLogado.perfil == 'ROLE_CLIENTE';
+  }
+
+  isProfissional(){
+    return this.usuarioLogado.perfil == 'ROLE_PROFISSIONAL';
+  }  
   
 }

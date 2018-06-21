@@ -28,7 +28,7 @@ export class UsuarioModel{
 
     imgperfil?: string;
 
-    tipo?: number;
+    perfil: string;
 
     sexo: number;
 

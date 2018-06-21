@@ -1,0 +1,5 @@
+enum PerfilEnum {
+    ADMIN = "ROLE_ADMIN",
+    CLIENTE = "ROLE_CLIENTE",
+    PROFISSIONAL = "ROLE_PROFISSIONAL"
+}

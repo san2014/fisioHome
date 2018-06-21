@@ -53,7 +53,7 @@ export class FshUtils{
         usuarioModel.onesignal_id = api_user.oneSignal_id;
         usuarioModel.facebook_id = api_user.facebook_id;
         usuarioModel.google_id = api_user.google_id;
-        usuarioModel.tipo = api_user.usua_tipo;
+        usuarioModel.perfil = api_user.usua_tipo;
 
         return usuarioModel;
     }  
@@ -76,7 +76,7 @@ export class FshUtils{
         api_user.facebook_id = usuarioModel.facebook_id ? usuarioModel.facebook_id : '';
         api_user.google_id = usuarioModel.google_id ? usuarioModel.google_id : '';
         api_user.flag_ativo = usuarioModel.flag_ativo ? 1 : 0;
-        api_user.tipo = usuarioModel.tipo ? 1 : 0;
+        api_user.tipo = usuarioModel.perfil;
 
         return api_user;
     }   
