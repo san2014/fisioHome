@@ -46,21 +46,24 @@ export class IniciarPage {
     private notificacaoProvider: NotificacaoProvider
   ) {
 
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+    
     platform.ready()
       .then(() => {
         
         if (platform.is('cordova')){
           this.prepareNotifications();
         }   
-
-        this.initialize();
+        
     });
     
   }
 
-  async initialize() {
+  ionViewDidEnter(){
+    this.initialize();
+  }
 
-    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+  async initialize() {
 
     if (this.usuarioLogado !== undefined){
 
@@ -79,7 +82,7 @@ export class IniciarPage {
       } catch (error) {
         
         if (error instanceof HttpErrorResponse && error.status == 400){
-          this.showAlert("Sessão expirada...Favor faça o login novamente")
+          this.showAlert("Sessão expirada...Por favor faça o login novamente")
         }else{
           this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
         }
@@ -374,12 +377,20 @@ export class IniciarPage {
     this.notificacaoProvider.limparNotificacoes();
   }
 
-  isCliente(){
-    return this.usuarioLogado.perfil == 'ROLE_CLIENTE';
+  isCliente(): boolean{
+    try {
+      return this.usuarioLogado.perfil == 'ROLE_CLIENTE';
+    } catch (error) {
+      return false;      
+    }
   }
 
-  isProfissional(){
-    return this.usuarioLogado.perfil == 'ROLE_PROFISSIONAL';
+  isProfissional(): boolean{
+    try {
+      return this.usuarioLogado.perfil == 'ROLE_PROFISSIONAL';
+    } catch (error) {
+      return false;      
+    }
   }  
   
 }
