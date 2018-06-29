@@ -36,51 +36,6 @@ export class FshUtils{
         alert.present();
     }     
 
-    convertUserAPI(api_user: any): UsuarioModel{
-        let usuarioModel = new UsuarioModel();
-
-        usuarioModel.id = api_user.usua_id;
-        usuarioModel.bairro = api_user.usua_bairro;
-        usuarioModel.nome = api_user.usua_nome;
-        usuarioModel.cpf = api_user.usua_cpf;
-        usuarioModel.rg = api_user.usua_rg;
-        usuarioModel.email = api_user.usua_email;
-        usuarioModel.cep = api_user.usua_cep;
-        usuarioModel.cidade = api_user.cidade;
-        usuarioModel.dt_nasc = api_user.usua_dt_nasc;
-        usuarioModel.numero_local = api_user.numero_local;
-        usuarioModel.onesignal_id = api_user.oneSignal_id;
-        usuarioModel.facebook_id = api_user.facebook_id;
-        usuarioModel.google_id = api_user.google_id;
-        usuarioModel.tipo = api_user.usua_tipo;
-
-        return usuarioModel;
-    }  
-    
-    convertAPIUser(usuarioModel: UsuarioModel): any{
-        let api_user: any = {};
-
-        api_user.cpf = usuarioModel.cpf ? usuarioModel.cpf : '';
-        api_user.rg = usuarioModel.rg ? usuarioModel.rg : '';
-        api_user.nome = usuarioModel.nome ? usuarioModel.nome : '';
-        api_user.senha = usuarioModel.senha ? usuarioModel.senha : '';
-        api_user.email = usuarioModel.email ? usuarioModel.email : '';
-        api_user.dt_nasc = usuarioModel.dt_nasc ? usuarioModel.dt_nasc : '';
-        api_user.cep = usuarioModel.cep ? usuarioModel.cep : '';
-        api_user.cidade = usuarioModel.cidade ? usuarioModel.cidade : '';
-        api_user.logradouro = usuarioModel.logradouro ? usuarioModel.logradouro : '';
-        api_user.bairro = usuarioModel.bairro ? usuarioModel.bairro : '';
-        api_user.numero_local = usuarioModel.numero_local ? usuarioModel.numero_local : '';
-        api_user.onesignal_id = usuarioModel.onesignal_id ? usuarioModel.onesignal_id : '';
-        api_user.facebook_id = usuarioModel.facebook_id ? usuarioModel.facebook_id : '';
-        api_user.google_id = usuarioModel.google_id ? usuarioModel.google_id : '';
-        api_user.flag_ativo = usuarioModel.flag_ativo ? 1 : 0;
-        api_user.tipo = usuarioModel.tipo ? 1 : 0;
-
-        return api_user;
-    }   
-    
-    
     validaCPF(cpf): boolean {
 
         cpf = cpf.replace(/[\.-]/g, '');

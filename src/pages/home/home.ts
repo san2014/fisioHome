@@ -29,7 +29,9 @@ export class HomePage {
 
     const usuarioCookie = this.loginProvider.getUsuarioLogado();
 
-    if (usuarioCookie !== null){
+    console.log(usuarioCookie);
+
+    if (usuarioCookie){
       this.usuarioLogado = usuarioCookie;
       this.handleHomePage();
     }     

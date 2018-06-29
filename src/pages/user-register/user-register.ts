@@ -80,7 +80,6 @@ export class UserRegister {
     this.usuario = new UsuarioModel();
 
     this.usuario.flag_ativo = 1;
-    this.usuario.tipo = 1;
     this.usuario.onesignal_id = this.loginProvider.getOneSignalId();
     
     this.getUsuarioLogado();
@@ -186,11 +185,8 @@ export class UserRegister {
     this.fshUtils.hideLoading();
 
     if (erro === false){
-      this.loginProvider.setUsuarioSessao(this.usuario)
-        .then(res => {
-          console.log(this.usuario);
-          this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario});
-        });
+      this.loginProvider.setUsuarioSessao(this.usuario);
+      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario});
     }
 
   }

@@ -176,13 +176,10 @@ export class Login {
         this.usuarioModel.dt_nasc = userFace.birthday;
         this.usuarioModel.imgperfil = userFace.picture.data.url;
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
-        this.usuarioModel.tipo = 1;
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-        this.usuarioModel = this.utils.convertUserAPI(userFind);
-
         this.setUserSession(this.usuarioModel);
 
         this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
@@ -261,14 +258,11 @@ export class Login {
         this.usuarioModel.email = userGoogle.email;
         this.usuarioModel.imgperfil = userGoogle.imageUrl;  
         this.usuarioModel.google_id = userGoogle.id;
-        this.usuarioModel.tipo = 1; 
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-
-        this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel);
 
