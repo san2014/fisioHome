@@ -4,6 +4,10 @@ import { UsuarioModel } from "./usuario-model";
 
 export class ProfissionalModel extends UsuarioModel {
     
+    id: number;
+
+    usuario: UsuarioModel;
+
     credenciamento: string;
 
     vencimento: string;

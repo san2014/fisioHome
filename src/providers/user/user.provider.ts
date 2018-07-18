@@ -9,6 +9,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 
 import { UsuarioModel } from './../../model/usuario-model';
 import { SafeHttp } from './../../utils/safe-http';
+import { ErrorHandler } from '../../app/app-error-handler';
 
 @Injectable()
 export class UserProvider {
@@ -69,7 +70,7 @@ export class UserProvider {
               resolve(data);
             })
             .catch(error => {
-              reject('Erro');
+              reject(ErrorHandler.handlerError(error));
             });
     });
 

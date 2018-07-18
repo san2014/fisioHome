@@ -23,24 +23,6 @@
 
 <ion-content class="card-background-page">
 
-  <ion-item>
-    <ion-col>
-      <button ion-button color="secondary" (click)="increaseBadges()">
-        Push
-      </button>    
-    </ion-col>
-    <ion-col>
-      <button ion-button color="danger" (click)="clearBadges()">
-        Clear
-      </button>
-    </ion-col>
-    <ion-col>
-      <button ion-button color="primary" (click)="clearNots()">
-        Clear Nots
-      </button>
-    </ion-col>    
-  </ion-item>
-
   <ion-grid  *ngIf="isCliente()">
     <init-cli *ngIf="tpsAtds" [tpsAtds]="tpsAtds" (tpAtdSelect)="initProposta($event)"></init-cli>
 

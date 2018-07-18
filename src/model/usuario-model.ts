@@ -1,3 +1,5 @@
+import { Perfil } from "./perfil.model";
+
 export class UsuarioModel{
     
     id: number;
@@ -12,7 +14,7 @@ export class UsuarioModel{
 
     nome: string;
 
-    dt_nasc: Date;
+    nascimento: Date;
 
     cep: number;
 
@@ -22,13 +24,13 @@ export class UsuarioModel{
 
     cidade: string;
 
-    numero_local: string;
+    porta: string;
 
     email: string;
 
-    imgperfil?: string;
+    imgPerfil?: string;
 
-    perfil: string;
+    perfil: Perfil;
 
     sexo: number;
 
@@ -38,6 +40,6 @@ export class UsuarioModel{
 
     onesignal_id: string;
 
-    flag_ativo: number;
+    ativo: boolean;
 
 }

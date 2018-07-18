@@ -42,7 +42,7 @@ export class NotificacaoProvider {
     profissional.conta = "3456678";
     profissional.agencia =  "3467";
     profissional.flagDisponivel = 1;
-    profissional.imgperfil = `https://scontent.fssa12-1.fna.fbcdn.net/v/t1.0-1/
+    profissional.usuario.imgPerfil = `https://scontent.fssa12-1.fna.fbcdn.net/v/t1.0-1/
       p160x160/26112133_1518383701608925_6429823499577017490_n.jpg?_nc_cat=0
       &oh=4c970e8de70896c21d77d515705703d0&oe=5B2A13DA`;
     profissional.onesignal_id = "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d";
@@ -51,7 +51,7 @@ export class NotificacaoProvider {
 
     let cliente : UsuarioModel = this.loginProvider.getUsuarioLogado();
 
-    cliente.imgperfil = `https://scontent.fssa13-1.fna.fbcdn.net/v/t1.0-1/p160x160/15203273_1079078582204799_9114949728011796718_n.jpg?_nc_cat=0&oh=0e613d9c3c61978a6d0213418fb745aa&oe=5B60F9B5`;
+    cliente.imgPerfil = `https://scontent.fssa13-1.fna.fbcdn.net/v/t1.0-1/p160x160/15203273_1079078582204799_9114949728011796718_n.jpg?_nc_cat=0&oh=0e613d9c3c61978a6d0213418fb745aa&oe=5B60F9B5`;
 
     proposta.cliente = cliente;
 

@@ -1,5 +1,5 @@
-enum PerfilEnum {
-    ADMIN = "ROLE_ADMIN",
-    CLIENTE = "ROLE_CLIENTE",
-    PROFISSIONAL = "ROLE_PROFISSIONAL"
+export enum PerfilEnum {
+    ROLE_ADMIN = 1,
+    ROLE_CLIENTE = 2,
+    ROLE_PROFISSIONAL = 3
 }

@@ -379,7 +379,7 @@ export class IniciarPage {
 
   isCliente(): boolean{
     try {
-      return this.usuarioLogado.perfil == 'ROLE_CLIENTE';
+      return this.usuarioLogado.perfil.descricao == 'ROLE_CLIENTE';
     } catch (error) {
       return false;      
     }
@@ -387,7 +387,7 @@ export class IniciarPage {
 
   isProfissional(): boolean{
     try {
-      return this.usuarioLogado.perfil == 'ROLE_PROFISSIONAL';
+      return this.usuarioLogado.perfil.descricao == 'ROLE_PROFISSIONAL';
     } catch (error) {
       return false;      
     }

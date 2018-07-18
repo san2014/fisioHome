@@ -13,6 +13,8 @@ export class PropostaProvider {
 
   findProfDisponiveis(tipo: TipoAtendimentoModel): Promise<any>{
 
+    
+
 
     let list =[
       {

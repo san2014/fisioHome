@@ -9,6 +9,7 @@ import { FshUtils } from './../../utils/fsh-util';
 import { CepProvider } from './../../providers/cep/cep.provider';
 
 import { UsuarioModel } from './../../model/usuario-model';
+import { PerfilEnum } from '../../enum/perfil-enum';
 
 @IonicPage()
 @Component({
@@ -17,9 +18,7 @@ import { UsuarioModel } from './../../model/usuario-model';
 })
 export class UserRegister {
 
-  usuario: UsuarioModel;
-
-  tipoUsuario: string;
+  usuarioSessao: UsuarioModel;
 
   formUser: FormGroup;
 
@@ -29,20 +28,17 @@ export class UserRegister {
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
-    private cepProvider: CepProvider) {
+    private cepProvider: CepProvider) { }
 
-      this.initialize();
-
-  }
-
-  initialize() {
+  ionViewDidLoad() {
 
     this.formUser = this.fb.group({
-      'cpf': ['', Validators.required],
-      'rg': ['', Validators.required],
-      'nome': ['',Validators.required],
-      'sexo': ['',Validators.required],
-      'senha': ['',Validators.compose
+      'id': [null],
+      'cpf': [null, Validators.required],
+      'rg': [null, Validators.required],
+      'nome': [null, Validators.required],
+      'sexo': [null, Validators.required],
+      'senha': [null, Validators.compose
         (
           [
             Validators.required, 
@@ -51,8 +47,8 @@ export class UserRegister {
           ]
         )
       ],
-      'email': ['',Validators.compose([Validators.required, Validators.email])],
-      'dt_nasc': ['',Validators.compose(
+      'email': [null, Validators.compose([Validators.required, Validators.email])],
+      'nascimento': [null, Validators.compose(
           [
             Validators.required,
             Validators.pattern(/^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/)
@@ -60,7 +56,7 @@ export class UserRegister {
           ]
         )
       ],
-      'cep': ['',Validators.compose
+      'cep': [null, Validators.compose
         (
           [
             Validators.required,
@@ -68,30 +64,22 @@ export class UserRegister {
           ]
         )
       ],
-      'cidade': ['',Validators.required],
-      'logradouro': ['',Validators.required],
-      'bairro': ['',Validators.required],
-      'numero_local': ['',Validators.required],
-      'flag_ativo' : [''],
-      'onesignal_id':null,
-      'perfil': null
+      'cidade': [null, Validators.required],
+      'logradouro': [null, Validators.required],
+      'bairro': [null, Validators.required],
+      'numero_local': [null,Validators.required],
+      'ativo' : [null],
+      'onesignal_id':[null],
+      'perfil': this.fb.group({
+        'id': [null, Validators.required]
+      })
     });
 
-    this.usuario = new UsuarioModel();
-
-    this.usuario.flag_ativo = 1;
-    this.usuario.perfil = PerfilEnum.CLIENTE;
-    this.usuario.onesignal_id = this.loginProvider.getOneSignalId();
-    
-    this.getUsuarioLogado();
+    this.formUser.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
+    this.formUser.get('ativo').setValue(true);
+    this.formUser.get('onesignal_id').setValue(this.loginProvider.getOneSignalId());
 
   }
-
-  getUsuarioLogado(){
-    if (this.usuario == null){
-      this.usuario = new UsuarioModel();
-    }
-  } 
 
   aplicaCssErro(campo: string) {
     return {
@@ -137,14 +125,22 @@ export class UserRegister {
 
     this.cepProvider.getAddressByCep(cep.value)
       .then((address) =>{
+
         this.fshUtils.hideLoading();
-        this.usuario.logradouro = address.logradouro;
-        this.usuario.bairro = address.bairro;
-        this.usuario.cidade = address.localidade;
+
+        this.formUser.patchValue({
+          logradouro : address.logradouro,
+          bairro : address.bairro,
+          cidade : address.localidade          
+        })
+
       })
       .catch((erro) => {
+
         this.fshUtils.hideLoading();
+
         this.fshUtils.showAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+
       });
 
   }
@@ -164,7 +160,7 @@ export class UserRegister {
       await this.userProvider.postData(this.formUser.value)
         .then((res) => {
 
-          this.usuario.id = res.insert_id;
+          this.usuarioSessao = res;
 
         })
         .catch((error) => {
@@ -186,8 +182,11 @@ export class UserRegister {
     this.fshUtils.hideLoading();
 
     if (erro === false){
-      this.loginProvider.setUsuarioSessao(this.usuario);
-      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuario});
+      
+      this.loginProvider.setUsuarioSessao(this.usuarioSessao);
+
+      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioSessao});
+
     }
 
   }

@@ -9,6 +9,8 @@ import 'rxjs/add/operator/toPromise';
 import { UsuarioModel } from "../../model/usuario-model";
 import { LoginModel } from './../../model/login.model';
 import { TokenResponseModel } from './../../model/token-response.model';
+import { Perfil } from '../../model/perfil.model';
+import { PerfilEnum } from '../../enum/perfil-enum';
 
 import { SafeHttp } from "./../../utils/safe-http";
 
@@ -37,8 +39,9 @@ export class LoginProvider {
     admin.id = 1;
     admin.login = "admin";
     admin.nome = "Administrador do Sistema";
-    admin.flag_ativo = 1;
-    admin.perfil = 'ROLE_PROFISSIONAL';
+    admin.ativo = true;
+    admin.perfil = new Perfil();
+    admin.perfil.id = PerfilEnum.ROLE_ADMIN
 
     return admin;
 

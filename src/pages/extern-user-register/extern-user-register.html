@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{usuario.nome}}</ion-title>
+    <ion-title>{{usuarioSessao.nome}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -12,57 +12,52 @@
         <ion-grid>  
           <ion-row>
               <ion-col text-center>
-                  <img style="border-radius: 50%;" height="150" width="150" src="{{usuario.imgperfil}}">
+                  <img style="border-radius: 50%;" height="150" width="150" [src]="usuarioSessao.imgPerfil">
               </ion-col>
           </ion-row>   
           <ion-row>
             <ion-col>
-                <ion-datetime placeholder="Data Nasc" outline class="box-register" name="dt_nasc" formControlName="dt_nasc" 
+                <ion-datetime placeholder="Data Nasc" outline class="box-register" formControlName="nascimento" 
                   displayFormat="DD/MM/YYYY"
                   cancelText="cancelar"
                   doneText="ok"
-                  [(ngModel)]="usuario.dt_nasc"
-                  [ngClass]="aplicaCssErro('dt_nasc')">
+                  [ngClass]="aplicaCssErro('nascimento')">
                 </ion-datetime>
             </ion-col>
           </ion-row>                 
           <ion-row>
             <ion-col>
-                <ion-input type="number" placeholder="CEP" outline class="box-register" name="cep" formControlName="cep" 
+                <ion-input type="number" placeholder="CEP" outline class="box-register" formControlName="cep" 
                   (ionBlur)="getAddresByCep()"
-                  [(ngModel)]="usuario.cep"
                   [ngClass]="aplicaCssErro('cep')">
                 </ion-input>
             </ion-col>
           </ion-row> 
           <ion-row>
             <ion-col>
-                <ion-input placeholder="Logradouro" outline class="box-register" name="logradouro" formControlName="logradouro" 
-                  [(ngModel)]="usuario.logradouro"
+                <ion-input placeholder="Logradouro" outline class="box-register" formControlName="logradouro" 
                   [ngClass]="aplicaCssErro('logradouro')">
                 </ion-input>
             </ion-col>
           </ion-row>  
           <ion-row>
             <ion-col>
-                <ion-input placeholder="Bairro" outline class="box-register" name="bairro" formControlName="bairro" 
-                  [(ngModel)]="usuario.bairro"
+                <ion-input placeholder="Bairro" outline class="box-register" formControlName="bairro" 
                   [ngClass]="aplicaCssErro('bairro')">
                 </ion-input>
             </ion-col>
           </ion-row>   
           <ion-row>
             <ion-col>
-                <ion-input placeholder="Número" outline class="box-register" name="numero_local" formControlName="numero_local" 
-                  [(ngModel)]="usuario.numero_local"
-                  [ngClass]="aplicaCssErro('numero_local')">
+                <ion-input placeholder="Número" outline class="box-register" formControlName="porta" 
+                  [ngClass]="aplicaCssErro('porta')">
                 </ion-input>
             </ion-col>
           </ion-row>          
 
           <ion-row>
             <ion-col>
-              <ion-list [(ngModel)]="usuario.sexo" formControlName="sexo" radio-group>
+              <ion-list formControlName="sexo" radio-group>
                 <ion-list-header>
                   Sexo
                 </ion-list-header>

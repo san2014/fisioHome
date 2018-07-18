@@ -13,6 +13,8 @@ import { LoginProvider } from "../../providers/login/login.provider";
 import { TokenResponseModel } from './../../model/token-response.model';
 
 import { FshUtils } from '../../utils/fsh-util';
+import { PerfilEnum } from '../../enum/perfil-enum';
+import { Perfil } from '../../model/perfil.model';
 
 
 @IonicPage()
@@ -122,8 +124,6 @@ export class Login {
     }
   }
 
-  ionViewDidLeave(){}
-
   showLoading(msg: string){
     this.loading = this.loadingCtrl.create({
       content: msg
@@ -162,10 +162,11 @@ export class Login {
         this.usuarioModel = new UsuarioModel();
         this.usuarioModel.nome = userFace.name;
         this.usuarioModel.email = userFace.email;
-        this.usuarioModel.dt_nasc = userFace.birthday;
-        this.usuarioModel.imgperfil = userFace.picture.data.url;
+        this.usuarioModel.nascimento = userFace.birthday;
+        this.usuarioModel.imgPerfil = userFace.picture.data.url;
         this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
-        this.usuarioModel.perfil = PerfilEnum.CLIENTE;
+        this.usuarioModel.perfil = new Perfil();
+        this.usuarioModel.perfil.id = PerfilEnum.ROLE_CLIENTE;
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
@@ -248,9 +249,10 @@ export class Login {
         this.usuarioModel = new UsuarioModel();
         this.usuarioModel.nome = userGoogle.displayName;
         this.usuarioModel.email = userGoogle.email;
-        this.usuarioModel.imgperfil = userGoogle.imageUrl;  
+        this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
         this.usuarioModel.google_id = userGoogle.id;
-        this.usuarioModel.perfil = PerfilEnum.CLIENTE; 
+        this.usuarioModel.perfil = new Perfil();
+        this.usuarioModel.perfil.id = PerfilEnum.ROLE_CLIENTE;
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
 
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
