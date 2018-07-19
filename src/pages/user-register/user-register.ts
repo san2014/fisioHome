@@ -1,5 +1,5 @@
 
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, Platform } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
@@ -25,12 +25,22 @@ export class UserRegister {
   constructor(
     private navCtrl: NavController,
     private fb: FormBuilder,
+    private platform: Platform,
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
     private cepProvider: CepProvider) { 
 
       this.configurarForm();
+
+      platform.ready()
+      .then(() => {
+        
+        if (!platform.is('cordova')){
+          this.formUser.get('onesignalId').setValue('test-teste-test-teste-hard');
+        }   
+        
+    })      
       
   }
 
@@ -42,6 +52,7 @@ export class UserRegister {
       'cpf': [null, Validators.required],
       'rg': [null, Validators.required],
       'nome': [null, Validators.required],
+      'apelido': [null, Validators.required],
       'sexo': [null, Validators.required],
       'senha': [null, Validators.compose
         (
@@ -74,7 +85,7 @@ export class UserRegister {
       'bairro': [null, Validators.required],
       'porta': [null,Validators.required],
       'ativo' : [null],
-      'onesignal_id':[null],
+      'onesignalId':[null],
       'perfil': this.fb.group({
         'id': [null, Validators.required]
       })
@@ -82,7 +93,7 @@ export class UserRegister {
 
     this.formUser.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
     this.formUser.get('ativo').setValue(true);
-    this.formUser.get('onesignal_id').setValue(this.loginProvider.getOneSignalId());
+    this.formUser.get('onesignalId').setValue(this.loginProvider.getOneSignalId());
 
   }
 

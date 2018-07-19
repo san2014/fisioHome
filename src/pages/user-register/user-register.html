@@ -28,12 +28,19 @@
         </ion-col>
       </ion-row>      
       <ion-row>
-      <ion-col>
+        <ion-col>
           <ion-input placeholder="Nome" outline class="box-register" formControlName="nome" 
             [ngClass]="aplicaCssErro('nome')">
           </ion-input>
-      </ion-col>
+        </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input placeholder="Apelido" outline class="box-register" formControlName="apelido" 
+            [ngClass]="aplicaCssErro('apelido')">
+          </ion-input>
+        </ion-col>
+      </ion-row>      
       <ion-row>
         <ion-col>
           <ion-list formControlName="sexo" radio-group>
@@ -122,7 +129,7 @@
         <ion-input [hidden]="true" type="text" formControlName="id"></ion-input>        
       </div>
 
-      <ion-input [hidden]="true" type="text" name="onesignal_id" formControlName="onesignal_id"></ion-input>     
+      <ion-input [hidden]="true" type="text" name="onesignalId" formControlName="onesignalId"></ion-input>     
 
     </ion-grid>
   
