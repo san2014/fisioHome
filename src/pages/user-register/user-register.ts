@@ -28,10 +28,15 @@ export class UserRegister {
     private userProvider: UserProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
-    private cepProvider: CepProvider) { }
+    private cepProvider: CepProvider) { 
 
-  ionViewDidLoad() {
+      this.configurarForm();
+      
+  }
 
+
+  configurarForm(){
+   
     this.formUser = this.fb.group({
       'id': [null],
       'cpf': [null, Validators.required],
@@ -67,7 +72,7 @@ export class UserRegister {
       'cidade': [null, Validators.required],
       'logradouro': [null, Validators.required],
       'bairro': [null, Validators.required],
-      'numero_local': [null,Validators.required],
+      'porta': [null,Validators.required],
       'ativo' : [null],
       'onesignal_id':[null],
       'perfil': this.fb.group({
@@ -167,7 +172,7 @@ export class UserRegister {
 
           msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
 
-          throw new Error('erro');
+          throw new Error(error);
 
         });
 

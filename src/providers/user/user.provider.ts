@@ -60,8 +60,6 @@ export class UserProvider {
   
   postData(params): Promise<any> {
 
-    params = this.fshUtils.convertAPIUser(params);
-
     return new Promise( (resolve, reject) => {
       this.safeHttp
         .post(`/usuario`, params)
@@ -77,8 +75,6 @@ export class UserProvider {
   } 
   
   update(params) : Promise<string>{
-
-    params = this.fshUtils.convertAPIUser(params);
 
     return new Promise( (resolve, reject) => {
       this.safeHttp

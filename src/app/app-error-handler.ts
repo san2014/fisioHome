@@ -17,7 +17,7 @@ export class ErrorHandler{
 
         }
 
-        console.log(errorMessage);
+        console.log(JSON.stringify(errorMessage));
 
         return Observable.throw(errorMessage);
     }

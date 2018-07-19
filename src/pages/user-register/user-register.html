@@ -27,12 +27,12 @@
             </ion-input>
         </ion-col>
       </ion-row>      
-       <ion-row>
-        <ion-col>
-            <ion-input placeholder="Nome" outline class="box-register" formControlName="nome" 
-              [ngClass]="aplicaCssErro('nome')">
-            </ion-input>
-        </ion-col>
+      <ion-row>
+      <ion-col>
+          <ion-input placeholder="Nome" outline class="box-register" formControlName="nome" 
+            [ngClass]="aplicaCssErro('nome')">
+          </ion-input>
+      </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
@@ -91,8 +91,8 @@
       </ion-row>   
       <ion-row>
         <ion-col>
-            <ion-input placeholder="Número" outline class="box-register" formControlName="numero_local" 
-              [ngClass]="aplicaCssErro('numero_local')">
+            <ion-input placeholder="Número" outline class="box-register" formControlName="porta" 
+              [ngClass]="aplicaCssErro('porta')">
             </ion-input>
         </ion-col>
       </ion-row> 
@@ -116,7 +116,7 @@
             [ngClass]="aplicaCssErro('senha')">
           </ion-input>
         </ion-col>
-      </ion-row>  
+      </ion-row> 
       
       <div formGroupName="perfil">
         <ion-input [hidden]="true" type="text" formControlName="id"></ion-input>        

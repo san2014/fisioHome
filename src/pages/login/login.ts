@@ -171,7 +171,6 @@ export class Login {
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-        this.usuarioModel = this.utils.convertUserAPI(userFind);
 
         this.setUserSession(this.usuarioModel);
 
@@ -258,8 +257,6 @@ export class Login {
         this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
         
       }else{
-
-        this.usuarioModel = this.utils.convertUserAPI(userFind[0]);
 
         await this.setUserSession(this.usuarioModel);
 
