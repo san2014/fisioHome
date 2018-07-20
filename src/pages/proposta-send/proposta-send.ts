@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, Loading } from 'ionic-angular';
 
 import { OneSignal } from '@ionic-native/onesignal';
-import { OSNotificationPayload } from '@ionic-native/onesignal';
-import { OSNotification } from '@ionic-native/onesignal';
 
-import { PropostaModel } from './../../model/proposta-model';
+import { PropostaModel } from '../../model/proposta-model';
 
 @IonicPage()
 @Component({
@@ -43,14 +41,14 @@ export class PropostaSendPage {
 
       let body = {
         tipo: "proposta",
-        oneSignalId: this.proposta.cliente.onesignal_id,
+        oneSignalId: this.proposta.cliente.onesignalId,
         msg: `O Paciente ${this.proposta.cliente.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`,
         proposta: this.proposta
       }
 
       let notificationOBJ: any = {
         contents: {en: `Tem uma nova solicitação de atendimento para você!`},
-        include_player_ids: [this.proposta.profissional.onesignal_id],
+        include_player_ids: [this.proposta.profissional.onesignalId],
         data: body
       };        
 

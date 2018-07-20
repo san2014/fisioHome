@@ -1,14 +1,13 @@
-import { LoginProvider } from './../login/login.provider';
-import { FshUtils } from './../../utils/fsh-util';
+import { LoginProvider } from '../login/login.provider';
+import { FshUtils } from '../../utils/fsh-util';
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
-import { UsuarioModel } from './../../model/usuario-model';
-import { SafeHttp } from './../../utils/safe-http';
+import { UsuarioModel } from '../../model/usuario-model';
+import { SafeHttp } from '../../utils/safe-http';
 import { ErrorHandler } from '../../app/app-error-handler';
 
 @Injectable()
@@ -17,7 +16,6 @@ export class UserProvider {
   constructor(
     private safeHttp: SafeHttp,
     private fshUtils: FshUtils,
-    private platform: Platform,
     private loginProvider: LoginProvider
   ) {}
 
@@ -30,9 +28,8 @@ export class UserProvider {
             .then(data => {
               resolve(data);
             })
-            .catch(
-              err => {
-                reject('Erro');
+            .catch(error => {
+              ErrorHandler.handlerError(error);
             });
     })
        
@@ -41,20 +38,15 @@ export class UserProvider {
   getUserByEmail(email: string): Promise<UsuarioModel>{
 
     return new Promise( (resolve, reject) => {
-      this.safeHttp.get(`/usuario/search/email=${email}`)
-        .map(res => res.json())
+      this.safeHttp.get(`/usuario/obterPorEmail/${email}`)
           .toPromise()
             .then(data => {
-                try{
-                  resolve(data[0]);
-                }catch(notFound){
-                  resolve(null);
-                }
+              resolve(data);
             })
-            .catch(err => {
-                reject('Erro ao obter usuario por email'); 
+            .catch(error => {
+              ErrorHandler.handlerError(error);
             })
-    })    
+    });   
 
   }
   
@@ -84,7 +76,7 @@ export class UserProvider {
               resolve(data.statusText);
             })
             .catch(error => {
-              reject('Erro');
+              reject(ErrorHandler.handlerError(error));
             });
     });    
 

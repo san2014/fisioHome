@@ -4,7 +4,7 @@ import 'rxjs/add/operator/map';
 
 import { SafeHttp } from '../../utils/safe-http';
 
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
+import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 
 @Injectable()
 export class PropostaProvider {
@@ -31,8 +31,8 @@ export class PropostaProvider {
           {"id": "2", "descricao" :"Pediatria"},
           {"id": "3", "descricao" :"Neurologia"}
         ],
-        "onesignal_id": "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d"
-        //"onesignal_id": "4185dc34-d33f-48a4-bd13-092266a8c6d9"
+        "onesignalId": "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d"
+        //"onesignalId": "4185dc34-d33f-48a4-bd13-092266a8c6d9"
       }
     ];
     

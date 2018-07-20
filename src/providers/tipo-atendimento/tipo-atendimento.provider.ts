@@ -1,5 +1,5 @@
-import { SafeHttp } from './../../utils/safe-http';
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
+import { SafeHttp } from '../../utils/safe-http';
+import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 

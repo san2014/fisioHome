@@ -1,8 +1,8 @@
-import { DetalheNotificacao } from './../../model/detalhe-notificacao-model';
+import { DetalheNotificacao } from '../../model/detalhe-notificacao-model';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { NotificacaoModel } from './../../model/notificacao-model';
+import { NotificacaoModel } from '../../model/notificacao-model';
 import { NotificacaoProvider } from '../../providers/notificacao/notificacao.provider';
 
 @IonicPage()

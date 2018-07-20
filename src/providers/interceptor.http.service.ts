@@ -9,13 +9,15 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
 
 import { LoginProvider } from './login/login.provider';
-import { Events, App } from "ionic-angular";
+import { StorageProvider } from "./storage/storage.provider";
+import { App } from "ionic-angular";
 
 @Injectable()
 export class InterceptorHttpService implements HttpInterceptor {
 
     private loginProvider: LoginProvider;
-    
+    private storageProvider: StorageProvider;
+
     constructor(
         private injector: Injector,
         public appCtrl: App
@@ -27,20 +29,25 @@ export class InterceptorHttpService implements HttpInterceptor {
 
         this.loginProvider = this.injector.get(LoginProvider);
 
-        let token = this.loginProvider.getAccessToken();
+        this.storageProvider = this.injector.get(StorageProvider);
+
+        let token = this.storageProvider.getAccessToken();
 
         if (token == undefined){
             return next.handle(req);
         }
         
         return next.handle(
+            
             req.clone({
                 setHeaders:
                     { Authorization: 'Bearer ' + token }
+                    
             }))
             .catch(error => {
                 
                 if (error instanceof HttpErrorResponse) {
+
                     switch ((<HttpErrorResponse>error).status) {
                         case 400:
                             console.log('token ja invalido');
@@ -51,25 +58,31 @@ export class InterceptorHttpService implements HttpInterceptor {
                         case 0:
                             return this.getAccessToken(req, next);    
                     }
+
                     Observable.throw(error);
+
                 }else{
+
                     Observable.throw(error);
+
                 }
+
             });   
     }
 
     getAccessToken(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
         
-        return this.loginProvider.refreshToken(this.loginProvider.getAccessToken()).switchMap(
+        return this.loginProvider.refreshToken(this.storageProvider.getAccessToken()).switchMap(
             resp => {
-                this.loginProvider.setAccessToken(resp.token);
-                console.log(this.loginProvider.getAccessToken());
+                
+                this.storageProvider.setAccessToken(resp.token);
+                
                 return next.handle(req.clone({
                     setHeaders:
-                        { Authorization: 'Bearer ' + this.loginProvider.getAccessToken() }
+                        { Authorization: 'Bearer ' + this.storageProvider.getAccessToken() }
                 }));
             }
-        )/*.catch( err => this.loginProvider.clearCookie() )*/
+        );
     }
 
 }

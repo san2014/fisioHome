@@ -3,13 +3,13 @@ import { NavController, IonicPage, Platform } from 'ionic-angular';
 import { Component} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
-import { LoginProvider } from './../../providers/login/login.provider';
-import { UserProvider } from './../../providers/user/user.provider';
-import { FshUtils } from './../../utils/fsh-util';
-import { CepProvider } from './../../providers/cep/cep.provider';
+import { UserProvider } from '../../providers/user/user.provider';
+import { FshUtils } from '../../utils/fsh-util';
+import { CepProvider } from '../../providers/cep/cep.provider';
 
-import { UsuarioModel } from './../../model/usuario-model';
+import { UsuarioModel } from '../../model/usuario-model';
 import { PerfilEnum } from '../../enum/perfil-enum';
+import { StorageProvider } from '../../providers/storage/storage.provider';
 
 @IonicPage()
 @Component({
@@ -27,7 +27,7 @@ export class UserRegister {
     private fb: FormBuilder,
     private platform: Platform,
     private userProvider: UserProvider,
-    private loginProvider: LoginProvider,
+    private storageProvider: StorageProvider,
     private fshUtils: FshUtils,
     private cepProvider: CepProvider) { 
 
@@ -93,7 +93,7 @@ export class UserRegister {
 
     this.formUser.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
     this.formUser.get('ativo').setValue(true);
-    this.formUser.get('onesignalId').setValue(this.loginProvider.getOneSignalId());
+    this.formUser.get('onesignalId').setValue(this.storageProvider.getOneSignalId());
 
   }
 
@@ -176,7 +176,7 @@ export class UserRegister {
       await this.userProvider.postData(this.formUser.value)
         .then((res) => {
 
-          this.usuarioSessao = res;
+          this.usuarioSessao = res.data;
 
         })
         .catch((error) => {
@@ -199,9 +199,9 @@ export class UserRegister {
 
     if (erro === false){
       
-      this.loginProvider.setUsuarioSessao(this.usuarioSessao);
+      this.storageProvider.setUsuarioSessao(this.usuarioSessao);
 
-      this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioSessao});
+      this.navCtrl.push('WelcomePage');
 
     }
 

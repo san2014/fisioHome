@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
-import { ENDPOINT_API, CEP_API } from './../app/app-constantes';
+import { ENDPOINT_API, CEP_API } from '../app/app-constantes';
 
 import { NetworkService } from './network-service'
 import { Observable } from 'rxjs/Observable';

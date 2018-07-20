@@ -6,8 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
-import { SafeHttp } from './../utils/safe-http';
-import { NetworkService } from './../utils/network-service';
+import { SafeHttp } from '../utils/safe-http';
+import { NetworkService } from '../utils/network-service';
 import { Network } from '@ionic-native/network';
 import { MyApp } from './app.component';
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -22,6 +22,7 @@ import { FshUtils } from '../utils/fsh-util';
 import { NotificacaoProvider } from '../providers/notificacao/notificacao.provider';
 
 import { InterceptorHttpService } from '../providers/interceptor.http.service';
+import { StorageProvider } from '../providers/storage/storage.provider';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { InterceptorHttpService } from '../providers/interceptor.http.service';
     CookieService,
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorHttpService, multi: true
-    }    
+    },
+    StorageProvider    
   ]
 })
 export class AppModule {}

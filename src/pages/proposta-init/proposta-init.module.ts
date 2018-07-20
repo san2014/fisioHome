@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PropostaInitPage } from './proposta-init';
 
-import { PropostaProvider } from './../../providers/proposta/proposta.provider';
+import { PropostaProvider } from '../../providers/proposta/proposta.provider';
 
 @NgModule({
   declarations: [

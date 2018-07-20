@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoadingController, Loading } from 'ionic-angular';
 
-import { LoginProvider } from './../../providers/login/login.provider';
+import { LoginProvider } from '../../providers/login/login.provider';
 import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()

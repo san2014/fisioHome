@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { DetalheNotificacao } from './../../model/detalhe-notificacao-model';
-import { NotificacaoProvider } from './../../providers/notificacao/notificacao.provider';
+import { DetalheNotificacao } from '../../model/detalhe-notificacao-model';
+import { NotificacaoProvider } from '../../providers/notificacao/notificacao.provider';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AlertController, ToastController } from 'ionic-angular';
@@ -9,12 +9,14 @@ import { Badge } from '@ionic-native/badge';
 
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
 
-import { UsuarioModel } from './../../model/usuario-model';
-import { LoginProvider } from './../../providers/login/login.provider';
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
+import { UsuarioModel } from '../../model/usuario-model';
+import { LoginProvider } from '../../providers/login/login.provider';
+import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 import { TipoAtendimentoProvider } from "../../providers/tipo-atendimento/tipo-atendimento.provider";
+import { StorageProvider } from '../../providers/storage/storage.provider';
 import { PropostaModel } from '../../model/proposta-model';
 import { NotificacaoModel } from '../../model/notificacao-model';
+import { ErrorHandler } from '../../app/app-error-handler';
 
 
 
@@ -38,6 +40,7 @@ export class IniciarPage {
     public navParams: NavParams,
     public tpAtdProvider: TipoAtendimentoProvider,
     private loginProvider: LoginProvider,
+    private storageProvider: StorageProvider,
     private alertCtrl: AlertController,
     private badge: Badge,
     private platform: Platform,
@@ -117,7 +120,7 @@ export class IniciarPage {
   initOneSignalId(){
     this.oneSignal.getIds()
       .then(ids => {
-        this.loginProvider.setOneSignalId(ids.userId);
+        this.storageProvider.setOneSignalId(ids.userId);
       });
   }  
 
@@ -187,7 +190,7 @@ export class IniciarPage {
 
           let notificationOBJ: any = {
             contents: {en: `Olá! Encontramos um Fisioterapeuta para lhe atender!`},
-            include_player_ids: [proposta.cliente.onesignal_id],
+            include_player_ids: [proposta.cliente.onesignalId],
             data: body
           };  
 
@@ -228,7 +231,7 @@ export class IniciarPage {
 
           let notificationOBJ: any = {
             contents: {en: `Desculpe... Fisioterapeuta indisponível no momento!`},
-            include_player_ids: [proposta.cliente.onesignal_id],
+            include_player_ids: [proposta.cliente.onesignalId],
             data: body
           };  
           
@@ -320,7 +323,7 @@ export class IniciarPage {
 
     } 
     catch (error) {
-      console.log(error);
+      ErrorHandler.handlerError(error);
     }
 
   }

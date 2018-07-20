@@ -1,11 +1,11 @@
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
-import { ProfissionalModel } from './../../model/profissional-model';
+import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
+import { ProfissionalModel } from '../../model/profissional-model';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { UsuarioModel } from './../../model/usuario-model';
-import { LoginProvider } from './../../providers/login/login.provider';
+import { UsuarioModel } from '../../model/usuario-model';
+import { LoginProvider } from '../../providers/login/login.provider';
 import { TipoAtendimentoProvider } from "../../providers/tipo-atendimento/tipo-atendimento.provider";
 
 @IonicPage()

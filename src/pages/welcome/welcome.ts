@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { UsuarioModel } from './../../model/usuario-model';
+import { UsuarioModel } from '../../model/usuario-model';
+
+import { LoginProvider } from '../../providers/login/login.provider';
 
 @IonicPage()
 @Component({
@@ -14,13 +16,15 @@ export class WelcomePage {
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public loginProvider: LoginProvider
+  ) {
       this.initialize();
   }
 
   initialize() {
-    this.usuario = this.navParams.get('usuarioModel');
-    //this.usuario = {"id": 10, "sexo": 1,"cpf":82765760950,"rg":"12343444","nome":"Luana Costa","senha":"123456","email":"costa.luana@gmail.com","dt_nasc":"1973-03-10","cep":40430200,"cidade":"","logradouro":"Rua Almirante Tamandaré","bairro":"Vila Ruy Barbosa","numero_local":"59","onesignal_id":"","facebook_id": null,"google_id":null,"flag_ativo":true};
+    this.usuario = this.loginProvider.getUsuarioLogado();
+    console.log(this.usuario);
   }
 
   next(){

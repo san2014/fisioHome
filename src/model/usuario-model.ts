@@ -34,11 +34,11 @@ export class UsuarioModel{
 
     sexo: number;
 
-    facebook_id: number;
+    facebookId: string;
 
-    google_id: number;
+    googleId: string;
 
-    onesignal_id: string;
+    onesignalId: string;
 
     ativo: boolean;
 

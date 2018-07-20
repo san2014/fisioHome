@@ -5,9 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
-import { LoginProvider } from './../providers/login/login.provider';
+import { LoginProvider } from '../providers/login/login.provider';
 import { UsuarioModel } from "../model/usuario-model";
-import { PropostaModel } from './../model/proposta-model';
+import { PropostaModel } from '../model/proposta-model';
 
 @Component({
   templateUrl: 'app.html'

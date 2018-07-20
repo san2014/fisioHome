@@ -1,9 +1,9 @@
-import { UsuarioModel } from './../../model/usuario-model';
-import { PropostaModel } from './../../model/proposta-model';
+import { UsuarioModel } from '../../model/usuario-model';
+import { PropostaModel } from '../../model/proposta-model';
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 
-import { NotificacaoModel } from './../../model/notificacao-model';
+import { NotificacaoModel } from '../../model/notificacao-model';
 import { DetalheNotificacao } from '../../model/detalhe-notificacao-model';
 import { ProfissionalModel } from '../../model/profissional-model';
 import { LoginProvider } from '../login/login.provider';
@@ -45,7 +45,7 @@ export class NotificacaoProvider {
     profissional.usuario.imgPerfil = `https://scontent.fssa12-1.fna.fbcdn.net/v/t1.0-1/
       p160x160/26112133_1518383701608925_6429823499577017490_n.jpg?_nc_cat=0
       &oh=4c970e8de70896c21d77d515705703d0&oe=5B2A13DA`;
-    profissional.onesignal_id = "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d";
+    profissional.onesignalId = "c82acfa1-6c2f-45d4-b2fa-be45f261cc3d";
 
     proposta.profissional = profissional;
 

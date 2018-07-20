@@ -4,12 +4,12 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { ToastController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';         
 
-import { PropostaProvider } from './../../providers/proposta/proposta.provider';         
+import { PropostaProvider } from '../../providers/proposta/proposta.provider';         
 import { LoginProvider } from '../../providers/login/login.provider';
 
-import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
+import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 import { PropostaModel } from "../../model/proposta-model";
-import { UsuarioModel } from './../../model/usuario-model';
+import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()
 @Component({

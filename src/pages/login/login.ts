@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NavController, NavParams, IonicPage, LoadingController, Loading } from "ionic-angular";
-import { CookieService } from 'angular2-cookie/core';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 
-import { UserProvider } from './../../providers/user/user.provider';
+import { UserProvider } from '../../providers/user/user.provider';
+import { StorageProvider } from '../../providers/storage/storage.provider';
 
-import { LoginModel } from './../../model/login.model';
-import { UsuarioModel } from './../../model/usuario-model';
+import { LoginModel } from '../../model/login.model';
+import { UsuarioModel } from '../../model/usuario-model';
 import { LoginProvider } from "../../providers/login/login.provider";
-import { TokenResponseModel } from './../../model/token-response.model';
+import { TokenResponseModel } from '../../model/token-response.model';
 
 import { FshUtils } from '../../utils/fsh-util';
 import { PerfilEnum } from '../../enum/perfil-enum';
@@ -45,7 +45,7 @@ export class Login {
     private fb: FormBuilder,
     private loginProvider: LoginProvider,
     private userProvider: UserProvider,
-    private cookieService: CookieService,
+    private storageProvider: StorageProvider,
     public navParams: NavParams,
     public facebook: Facebook,
     private googlePlus: GooglePlus,
@@ -95,7 +95,7 @@ export class Login {
             throw new Error('Login Error');
           });          
         
-        this.loginProvider.setUsuarioSessao(this.usuarioModel);
+        this.storageProvider.setUsuarioSessao(this.usuarioModel);
           
         this.redirectPage();
 
@@ -172,9 +172,10 @@ export class Login {
         
       }else{
 
-        this.setUserSession(this.usuarioModel);
+        this.storageProvider.setUsuarioSessao(this.usuarioModel);
 
         this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
+        
       }     
     
     } catch (error) {
@@ -196,12 +197,6 @@ export class Login {
         });
     });
   } 
-  
-  setUserSession(usuario: UsuarioModel){
-    if (usuario != null){
-      this.cookieService.putObject('usuarioLogado', usuario);
-    }
-  }  
 
   getDataGoogle(){
     return new Promise((resolve) => { 
@@ -249,7 +244,7 @@ export class Login {
         this.usuarioModel.nome = userGoogle.displayName;
         this.usuarioModel.email = userGoogle.email;
         this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
-        this.usuarioModel.google_id = userGoogle.id;
+        this.usuarioModel.googleId = userGoogle.id;
         this.usuarioModel.perfil = new Perfil();
         this.usuarioModel.perfil.id = PerfilEnum.ROLE_CLIENTE;
         this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
@@ -258,7 +253,7 @@ export class Login {
         
       }else{
 
-        await this.setUserSession(this.usuarioModel);
+        this.storageProvider.setUsuarioSessao(this.usuarioModel);
 
         this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
 

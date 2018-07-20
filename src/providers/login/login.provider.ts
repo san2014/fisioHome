@@ -1,18 +1,17 @@
-import { NavController } from 'ionic-angular';
+import { StorageProvider } from './../storage/storage.provider';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'angular2-cookie/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 import { UsuarioModel } from "../../model/usuario-model";
-import { LoginModel } from './../../model/login.model';
-import { TokenResponseModel } from './../../model/token-response.model';
+import { LoginModel } from '../../model/login.model';
+import { TokenResponseModel } from '../../model/token-response.model';
 import { Perfil } from '../../model/perfil.model';
 import { PerfilEnum } from '../../enum/perfil-enum';
 
-import { SafeHttp } from "./../../utils/safe-http";
+import { SafeHttp } from "../../utils/safe-http";
 
 @Injectable()
 export class LoginProvider {
@@ -24,7 +23,7 @@ export class LoginProvider {
   loginUrl: string;  
 
   constructor(
-    private cookieService: CookieService,
+    private storageProvider: StorageProvider,
     private safeHttp: SafeHttp
   ){
     this.loginUrl = "/auth/";
@@ -54,7 +53,7 @@ export class LoginProvider {
       this.safeHttp.post(this.loginUrl, login)
         .toPromise()
           .then(data => {
-            this.setAccessToken(data.data.token);
+            this.storageProvider.setAccessToken(data.data.token);
             resolve(data);
           })
           .catch( erro => {
@@ -74,9 +73,9 @@ export class LoginProvider {
     return new Promise((resolve, reject) => {
       this.safeHttp.get(this.userUrl)
         .toPromise()
-          .then(data => {
-            this.cookieService.putObject('usuarioLogado', data);
-            resolve(data);
+          .then(resp => {
+            this.storageProvider.setUsuarioSessao(resp.data)
+            resolve(resp.data);
           })
           .catch( erro => {
             reject(erro);  
@@ -87,49 +86,19 @@ export class LoginProvider {
 
   getUsuarioLogado() : UsuarioModel{
     
-    let usuarioLogado: UsuarioModel = <UsuarioModel> this.cookieService.getObject('usuarioLogado');
-    
+    let usuarioLogado: UsuarioModel = this.storageProvider.getUsuarioSessao();
+
     if (usuarioLogado != undefined){
-      usuarioLogado.onesignal_id = this.getOneSignalId();
+      usuarioLogado.onesignalId = this.storageProvider.getOneSignalId();
     }
 
     return usuarioLogado;
 
   } 
 
-  setOneSignalId(id: string){
-    this.cookieService.put('oneSignalId', id);
-  }
-
-  getOneSignalId(): string{
-    return this.cookieService.get('oneSignalId');
-  }
-  
-  getUsuarioSessao() : UsuarioModel{
-    return <UsuarioModel> this.cookieService.getObject('usuarioLogado');
-  }   
-  
-  setUsuarioSessao(usuario: UsuarioModel){
-    this.cookieService.putObject('usuarioLogado', usuario)
-  }
-  
   logout(){
-    this.cookieService.removeAll();
+    this.storageProvider.clearCookies();
   }
-
-
-  
-  public setAccessToken(valor: string){
-    this.cookieService.put('accessToken', valor)
-  }
-  
-  public getAccessToken(): string{
-    return this.cookieService.get('accessToken');
-  }
-
-  clearCookie(): any {
-    this.cookieService.removeAll();
-  }  
 
 }
 

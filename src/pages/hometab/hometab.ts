@@ -1,9 +1,9 @@
-import { LoginProvider } from './../../providers/login/login.provider';
+import { LoginProvider } from '../../providers/login/login.provider';
 import { NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-import { UsuarioModel } from './../../model/usuario-model';
+import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()
 @Component({

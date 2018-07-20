@@ -7,10 +7,10 @@ import { Observable } from 'rxjs/Observable';
 import {Camera} from '@ionic-native/camera';
 import {File, FileEntry} from "@ionic-native/file";
 
-import { SafeHttp } from './../../utils/safe-http';
-import { LoginProvider } from './../../providers/login/login.provider';
+import { SafeHttp } from '../../utils/safe-http';
+import { LoginProvider } from '../../providers/login/login.provider';
 
-import { UsuarioModel } from './../../model/usuario-model';
+import { UsuarioModel } from '../../model/usuario-model';
 
 @IonicPage()
 @Component({
