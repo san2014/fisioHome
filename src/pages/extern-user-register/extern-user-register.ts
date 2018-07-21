@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 import { FshUtils } from '../../utils/fsh-util';
 import { UserProvider } from '../../providers/user/user.provider';
 import { CepProvider } from '../../providers/cep/cep.provider';
-import { StorageProvider } from './../../providers/storage/storage.provider';
+import { StorageProvider } from '../../providers/storage/storage.provider';
 
 import { UsuarioModel } from '../../model/usuario-model';
 import { PerfilEnum } from '../../enum/perfil-enum';
@@ -24,14 +24,26 @@ export class ExternUserRegisterPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    private platform: Platform,
     private fb: FormBuilder,
     private fshUtils: FshUtils,
     private userProvider: UserProvider,
     private cepProvider: CepProvider,
     private storageProvider: StorageProvider
-  ) { }
+  ) { 
+    
+    this.configurarForm();
 
-  ionViewDidLoad(){
+    platform.ready()
+    .then(() => {
+      if (!platform.is('cordova')){
+        this.formUser.get('onesignalId').setValue('test-teste-test-teste-hard');
+      }   
+    });     
+
+  }
+
+  configurarForm(){
    
     this.formUser = this.fb.group({
       'nome': [null],

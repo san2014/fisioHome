@@ -31,11 +31,13 @@ export class HometabPage {
   }
 
   initialize(){
+
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
     
     if (this.usuarioLogado == null){
       this.navCtrl.push('Login');
     }
+    
   }
 
   ionViewDidEnter(){

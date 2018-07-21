@@ -35,12 +35,10 @@ export class UserRegister {
 
       platform.ready()
       .then(() => {
-        
         if (!platform.is('cordova')){
           this.formUser.get('onesignalId').setValue('test-teste-test-teste-hard');
         }   
-        
-    })      
+      });      
       
   }
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NavController, NavParams, IonicPage, LoadingController, Loading } from "ionic-angular";
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
-import { GooglePlus } from '@ionic-native/google-plus';
 
 import { UserProvider } from '../../providers/user/user.provider';
 import { StorageProvider } from '../../providers/storage/storage.provider';
+import { GoogleProvider } from './../../providers/google/google.provider';
+import { FacebookProvider } from './../../providers/facebook/facebook.provider';
 
 import { LoginModel } from '../../model/login.model';
 import { UsuarioModel } from '../../model/usuario-model';
@@ -13,9 +13,6 @@ import { LoginProvider } from "../../providers/login/login.provider";
 import { TokenResponseModel } from '../../model/token-response.model';
 
 import { FshUtils } from '../../utils/fsh-util';
-import { PerfilEnum } from '../../enum/perfil-enum';
-import { Perfil } from '../../model/perfil.model';
-
 
 @IonicPage()
 @Component({
@@ -47,8 +44,8 @@ export class Login {
     private userProvider: UserProvider,
     private storageProvider: StorageProvider,
     public navParams: NavParams,
-    public facebook: Facebook,
-    private googlePlus: GooglePlus,
+    public facebookProvider: FacebookProvider,
+    private googleProvider: GoogleProvider,
     private loadingCtrl: LoadingController,
     private utils: FshUtils
   ) {
@@ -140,87 +137,38 @@ export class Login {
     try {
 
       this.showLoading('aguarde...');
-    
-      const credentials = await this.authFace()
-        .catch(() => {
-          throw new Error(this.msgThrow);  
-        });
         
-      const userFace: any = await this.getUserFace(credentials.authResponse.userID)
-        .catch(() => {
-          throw new Error(this.msgThrow);          
-        });    
+      let userFace: UsuarioModel = await this.facebookProvider.login()
+        .catch((error) => {
+          throw new FacebookFalhaValidacaoError();          
+        });
       
       const userFind = await this.userProvider.getUserByEmail(userFace.email)
         .catch((error) => {
-          //throw new Error(this.msgThrow);   
-          throw new Error(JSON.stringify(error));
+          throw new ErroServidorError();   
         });    
 
-      if ((userFind == null || userFind == undefined ) && userFace != null){
+      if (userFind){
 
-        this.usuarioModel = new UsuarioModel();
-        this.usuarioModel.nome = userFace.name;
-        this.usuarioModel.email = userFace.email;
-        this.usuarioModel.nascimento = userFace.birthday;
-        this.usuarioModel.imgPerfil = userFace.picture.data.url;
-        this.usuarioModel.sexo = userFace.gender == 'male' ? 1 : 0;
-        this.usuarioModel.perfil = new Perfil();
-        this.usuarioModel.perfil.id = PerfilEnum.ROLE_CLIENTE;
+        this.storageProvider.setUsuarioSessao(userFind);
 
-        this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
+        this.navCtrl.setRoot('HometabPage');
         
-      }else{
-
-        this.storageProvider.setUsuarioSessao(this.usuarioModel);
-
-        this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
+      }else if(userFace){
+        
+        this.navCtrl.push('ExternUserRegisterPage', {usuarioModel: userFace})
         
       }     
     
     } catch (error) {
+
       this.utils.showAlert(this.titleAlert, error);
+
     }  
     
     this.hideLoading();
 
   }
-
-  getUserFace(userid) {
-    return new Promise ((resolve) => {
-      this.facebook.api("/"+userid+"/?fields=id,email,name,picture,gender",["public_profile"])
-        .then(profile => {
-          resolve(profile);
-        })
-        .catch(()=> {
-          resolve(null);
-        });
-    });
-  } 
-
-  getDataGoogle(){
-    return new Promise((resolve) => { 
-      this.googlePlus.login({})
-        .then(res => {
-          resolve(res);
-        })
-        .catch(() => {
-          resolve(null)
-        });
-    })
-  }
-
-  authFace(){
-    return new Promise<FacebookLoginResponse>((resolve) => { 
-      this.facebook.login(['public_profile', 'user_friends', 'email'])
-        .then((res: FacebookLoginResponse) => {
-          resolve(res);
-        })
-        .catch( () => {
-          resolve(null);
-        });
-    });         
-  }  
 
   async loginGoogle(){
 
@@ -228,61 +176,36 @@ export class Login {
 
       this.showLoading('aguarde...');
 
-      let userGoogle: any = await this.getDataGoogle()
-        .catch(() => {
-          throw new Error(this.msgThrow);          
+      let userGoogle: UsuarioModel = await this.googleProvider.login()
+        .catch((error) => {
+          throw new GoogleFalhaValidacaoError();          
         });
 
       const userFind = await this.userProvider.getUserByEmail(userGoogle.email)
         .catch((erro) => {
-          throw new Error(this.msgThrow);
+          throw new ErroServidorError();
         });
 
-      if ((userFind == null || userFind == undefined ) && userGoogle != null){
+      if (userFind){
 
-        this.usuarioModel = new UsuarioModel();
-        this.usuarioModel.nome = userGoogle.displayName;
-        this.usuarioModel.email = userGoogle.email;
-        this.usuarioModel.imgPerfil = userGoogle.imageUrl;  
-        this.usuarioModel.googleId = userGoogle.id;
-        this.usuarioModel.perfil = new Perfil();
-        this.usuarioModel.perfil.id = PerfilEnum.ROLE_CLIENTE;
-        this.usuarioModel.senha = this.generatePass(this.usuarioModel.nome);
+        this.storageProvider.setUsuarioSessao(userFind);
 
-        this.navCtrl.push('ExternUserRegisterPage',{'usuario': this.usuarioModel})
+        this.navCtrl.setRoot('HometabPage');
         
-      }else{
+      }else if(userGoogle){ 
+        
+        this.navCtrl.push('ExternUserRegisterPage', {usuarioModel: userGoogle})
 
-        this.storageProvider.setUsuarioSessao(this.usuarioModel);
-
-        this.navCtrl.setRoot('HometabPage',{'usuarioModel': this.usuarioModel});
-
-      }    
+      }
 
     } catch (error) {
       
-      this.utils.showAlert(this.titleAlert, this.msgAlert);
+      this.utils.showAlert(this.titleAlert, error);
 
     }    
 
     this.hideLoading();
 
   }
-
-  generatePass(value: string): string{
-    value = value.substring(0,3);
-    for (let index = 0; index <= 4; index++) {
-      value = value + this.getRandomInt(1,9);
-    }
-    return value;
-  }
-
-  getRandomInt(min, max): number {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-  
-
 
 }

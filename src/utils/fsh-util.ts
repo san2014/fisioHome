@@ -88,5 +88,18 @@ export class FshUtils{
         }
     }
 
+    generatePass(value: string): string{
+        value = value.substring(0,3);
+        for (let index = 0; index <= 4; index++) {
+          value = value + this.getRandomInt(1,9);
+        }
+        return value;
+    }
+    
+    getRandomInt(min, max): number {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }    
     
 }

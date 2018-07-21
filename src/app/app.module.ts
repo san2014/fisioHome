@@ -16,13 +16,16 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { Badge } from '@ionic-native/badge';
 
 import { CookieService } from 'angular2-cookie/core';
+import { InterceptorHttpService } from '../providers/interceptor.http.service';
+
+import { FshUtils } from '../utils/fsh-util';
 
 import { LoginProvider } from "../providers/login/login.provider";
-import { FshUtils } from '../utils/fsh-util';
 import { NotificacaoProvider } from '../providers/notificacao/notificacao.provider';
-
-import { InterceptorHttpService } from '../providers/interceptor.http.service';
 import { StorageProvider } from '../providers/storage/storage.provider';
+import { FacebookProvider } from '../providers/facebook/facebook.provider';
+import { GoogleProvider } from '../providers/google/google.provider';
+
 
 @NgModule({
   declarations: [
@@ -56,7 +59,9 @@ import { StorageProvider } from '../providers/storage/storage.provider';
     {
       provide: HTTP_INTERCEPTORS, useClass: InterceptorHttpService, multi: true
     },
-    StorageProvider    
+    StorageProvider,
+    FacebookProvider,
+    GoogleProvider    
   ]
 })
 export class AppModule {}

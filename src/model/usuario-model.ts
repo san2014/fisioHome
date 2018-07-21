@@ -32,7 +32,7 @@ export class UsuarioModel{
 
     perfil: Perfil;
 
-    sexo: number;
+    sexo: boolean;
 
     facebookId: string;
 
