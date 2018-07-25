@@ -1,6 +1,6 @@
+import { StorageProvider } from './../storage/storage.provider';
 import { UsuarioModel } from '../../model/usuario-model';
 import { PropostaModel } from '../../model/proposta-model';
-import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 
 import { NotificacaoModel } from '../../model/notificacao-model';
@@ -11,8 +11,9 @@ import { LoginProvider } from '../login/login.provider';
 @Injectable()
 export class NotificacaoProvider {
 
-  constructor(private storage: Storage, private loginProvider: LoginProvider) {
-    this.initNotificacoes();
+  constructor(
+    private storage: StorageProvider,
+    private loginProvider: LoginProvider){
   }
 
   testNotifica(): Array<NotificacaoModel>{
@@ -67,72 +68,20 @@ export class NotificacaoProvider {
 
   }
 
-  async initNotificacoes(): Promise<boolean>{
-
-    let callBack: boolean = false;
-
-    await this.storage.get('notificacoes')
-      .then((dados)=>{
-
-          let aux: Array<NotificacaoModel> = dados;
-
-          if (aux == null || aux.length == 0 ){
-            //this.storage.set('notificacoes', new Array<NotificacaoModel>());
-            this.storage.set('notificacoes', this.testNotifica());
-          }
-
-          callBack = true;
-      }); 
-
-    return callBack;
-
-  } 
-  
-  public getNotificacoes(): Promise<Array<NotificacaoModel>>{
-
-    return new Promise((resolve, reject) => {
-      this.storage.get('notificacoes')
-        .then((dados)=> {
-          resolve(dados);
-        })
-        .catch((error)=> {
-          reject(error);
-        })
-    });
-
-  }
-
-  async salvarNotificacaoSessao(notificacao: NotificacaoModel): Promise<boolean>{
+  salvarNotificacaoSessao(notificacao: NotificacaoModel){
 
     let notificacoes: Array<NotificacaoModel>;
 
-    let callBack: boolean = false;
-
-    await this.storage.get('notificacoes')
-      .then((dados)=>{
-        notificacoes = dados;
-      });
+    notificacoes = this.storage.getNotificacoes();
 
     notificacoes.unshift(notificacao);
 
-    await this.storage.set('notificacoes', notificacoes)
-    .then(()=>{
-      callBack = true;
-    })   
-    console.log(notificacoes);
-    return callBack;
+    this.storage.setNotificacoes(notificacoes);
 
   }
   
-  async limparNotificacoes(): Promise<boolean>{
-
-    let callBack: boolean;
-
-    await this.storage.set('notificacoes', new Array<NotificacaoModel>())
-      .then(() => callBack = true);
-
-    return callBack;
-
+  public limparNotificacoes(){
+    this.storage.clearNotificacoes();
   }
 
 }

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
+
 import { CookieService } from 'angular2-cookie/core';
+
 import { UsuarioModel } from '../../model/usuario-model';
+import { NotificacaoModel } from './../../model/notificacao-model';
 
 
 @Injectable()
@@ -9,19 +12,19 @@ export class StorageProvider {
   constructor(private cookieService: CookieService) {
   }
 
-  setOneSignalId(id: string){
+  public setOneSignalId(id: string){
     this.cookieService.put('oneSignalId', id);
   }
 
-  getOneSignalId(): string{
+  public getOneSignalId(): string{
     return this.cookieService.get('oneSignalId');
   }
   
-  getUsuarioSessao(): UsuarioModel{
+  public getUsuarioSessao(): UsuarioModel{
     return <UsuarioModel> this.cookieService.getObject('usuarioLogado');
   }  
 
-  setUsuarioSessao(usuario: UsuarioModel){
+  public setUsuarioSessao(usuario: UsuarioModel){
     this.cookieService.putObject('usuarioLogado', usuario)
   }  
   
@@ -32,8 +35,20 @@ export class StorageProvider {
   public getAccessToken(): string{
     return this.cookieService.get('accessToken');
   }  
+
+  public getNotificacoes(): Array<NotificacaoModel> {
+    return <Array<NotificacaoModel>> this.cookieService.getObject('notificacoes');
+  }
+
+  public setNotificacoes(notificacoes: Array<NotificacaoModel>) {
+    this.cookieService.putObject('notificacoes', notificacoes);
+  }  
+
+  public clearNotificacoes(){
+    this.cookieService.putObject('notificacoes', new Array<NotificacaoModel>());
+  }    
   
-  clearCookies(){
+  public clearCookies(){
     this.cookieService.removeAll();
   }  
 

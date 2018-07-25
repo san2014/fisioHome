@@ -22,27 +22,29 @@ export class HomePage {
     public navParams: NavParams,
     private loadingCtrl: LoadingController
   ) { }
+  
+  ionViewCanEnter(){
+    this.initialize();
+  }
 
-  async initialize(){
+  initialize(){
 
     this.showLoading('aguarde...');
 
     const usuarioCookie = this.loginProvider.getUsuarioLogado();
 
     if (usuarioCookie != undefined && usuarioCookie != null){
+      
       this.usuarioLogado = usuarioCookie;
+
       this.handleHomePage();
+
     }     
 
     this.hideLoading();
 
   }
 
-  ionViewCanEnter(){
-
-    this.initialize();
-
-  }
    
   login(){
     this.navCtrl.push('Login');
@@ -53,16 +55,17 @@ export class HomePage {
   }
 
   handleHomePage(){
-    
-    this.navCtrl.push('HometabPage', {'usuarioLogado': this.usuarioLogado});
-    
+    this.navCtrl.push('HometabPage');
   }
 
   showLoading(msg: string){
+
     this.loading = this.loadingCtrl.create({
       content: msg
     });
-    this.loading.present();     
+
+    this.loading.present();
+
   }
 
   hideLoading(){

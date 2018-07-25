@@ -72,8 +72,6 @@ export class IniciarPage {
 
       try {
 
-        this.notificacaoProvider.initNotificacoes();
-
         await this.tpAtdProvider.tiposAtendimentos()
           .then(data =>{
             this.tpsAtds = data;
