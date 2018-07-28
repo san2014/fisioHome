@@ -8,11 +8,14 @@ import { DetalheNotificacao } from '../../model/detalhe-notificacao-model';
 import { ProfissionalModel } from '../../model/profissional-model';
 import { LoginProvider } from '../login/login.provider';
 
+import { OneSignal } from '@ionic-native/onesignal';
+
 @Injectable()
 export class NotificacaoProvider {
 
   constructor(
     private storage: StorageProvider,
+    public oneSignal : OneSignal,
     private loginProvider: LoginProvider){
   }
 
@@ -78,6 +81,10 @@ export class NotificacaoProvider {
 
     this.storage.setNotificacoes(notificacoes);
 
+  }
+
+  getNotificacoes(): Array<NotificacaoModel>{
+    return this.storage.getNotificacoes();
   }
   
   public limparNotificacoes(){

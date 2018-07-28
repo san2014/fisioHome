@@ -44,20 +44,27 @@ export class ProfRegisterPage {
   }
 
   initialize() {
+
     this.usuario = new UsuarioModel();
+
     this.profissional = new ProfissionalModel();
+    
     this.listEspecialidades = new Array<any>();
 
     this.initEspecialidade();
+    
     this.initForm();
+
     this.loadTpsAtds();
+
     this.setUserLogado();
+
   }
 
   initEspecialidade(){
     this.especialidade = new TipoAtendimentoModel();
     this.especialidade.id = 0;
-    this.especialidade.descricao = 'Selecione...';
+    this.especialidade.especialidade.descricao = 'Selecione...';
     this.especialidade.valor = null;
   }
 

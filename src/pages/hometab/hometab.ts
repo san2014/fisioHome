@@ -34,7 +34,7 @@ export class HometabPage {
 
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
     
-    if (this.usuarioLogado == null){
+    if (!this.usuarioLogado){
       this.navCtrl.push('Login');
     }
     

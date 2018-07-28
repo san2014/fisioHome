@@ -63,12 +63,14 @@ export class IniciarPage {
   }
 
   ionViewDidEnter(){
+
     this.initialize();
+
   }
 
   async initialize() {
 
-    if (this.usuarioLogado !== undefined){
+    if (this.usuarioLogado){
 
       try {
 
@@ -105,7 +107,7 @@ export class IniciarPage {
     this.initOneSignalId();
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
-    
+
     this.oneSignal.handleNotificationOpened()
       .subscribe(data => { 
         this.receivePush(data.notification.payload);
@@ -288,7 +290,9 @@ export class IniciarPage {
       this.qtdNotificacoes = qtdBadges;
 
     } catch (error) {
-      console.log(error);
+      
+      ErrorHandler.handlerError(error);
+      
     }
 
   }

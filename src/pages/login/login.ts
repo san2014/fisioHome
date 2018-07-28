@@ -81,11 +81,15 @@ export class Login {
         let tokenResponse: TokenResponseModel;
 
         await this.loginProvider.login(this.loginModel)
-          .then(data => tokenResponse = data)
+          .then(data => {
+            tokenResponse = data;
+            this.storageProvider.setAccessToken(tokenResponse.token);
+          })
           .catch((erro) => {
+            alert('auth');
             throw new Error('Login Error');
           });
-
+          
         await this.loginProvider.getUsuarioAtual(tokenResponse.token)
           .then(data => this.usuarioModel = data)
           .catch((erro) => {

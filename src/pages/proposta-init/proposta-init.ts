@@ -1,8 +1,9 @@
-
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ToastController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';         
+
+import { FshUtils } from './../../utils/fsh-util';
 
 import { PropostaProvider } from '../../providers/proposta/proposta.provider';         
 import { LoginProvider } from '../../providers/login/login.provider';
@@ -33,6 +34,7 @@ export class PropostaInitPage {
     private toastCtrl: ToastController,
     private propostaProvider: PropostaProvider,
     private loginProvider: LoginProvider,
+    private fshUtils: FshUtils,
     public modalCtrl: ModalController,
     public navParams: NavParams
   ){
@@ -120,19 +122,38 @@ export class PropostaInitPage {
   }
 
   findProfDisponiveis(alert){
-    this.propostaProvider.findProfDisponiveis(this.tipoAtendimento)
+    
+    const cidade = this.usuarioLogado.cidade;
+    
+    const idEspecialidade = this.tipoAtendimento.especialidade.id;
+
+    this.propostaProvider.findProfDisponiveis(idEspecialidade, cidade)
       .then((data) => {
-        this.proposta.profissional = data[0];
+
+        this.proposta.profissional = data;
+        
         alert.dismiss();
+        
         this.showProfModal()
+
+      })
+      .catch((erro) => {
+        
+        let msg = "Não localizamos nenhum profissional disponível no momento...tente mais tarde";
+        
+        this.fshUtils.showAlert("Desculpe", msg);
+
       });
+
   }
 
   showProfModal() {
+
     let profileModal = this.modalCtrl
       .create('PropostaSendPage', {'proposta': this.proposta});
     
     profileModal.present();
+
   }  
 
 }

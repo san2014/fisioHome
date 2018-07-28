@@ -1,8 +1,10 @@
+import { Especialidade } from "./especialidade.model";
+
 export class TipoAtendimentoModel{
 
     id: number;
 
-    descricao: string;
+    especialidade: Especialidade;
 
     valor: number;
 

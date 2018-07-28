@@ -8,7 +8,7 @@
       <button ion-item no-lines (click)="initProposta(tpAtendimento)"> 
         <ion-card>
             <ion-card-header>
-                {{tpAtendimento.descricao}}
+                {{tpAtendimento.especialidade.descricao}}
               </ion-card-header>          
           <img [src]="tpAtendimento.imgUrl"/>
         </ion-card>

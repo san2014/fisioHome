@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams, ViewController, ToastController, L
 import { OneSignal } from '@ionic-native/onesignal';
 
 import { PropostaModel } from '../../model/proposta-model';
+import { UsuarioModel } from '../../model/usuario-model';
+import { ProfissionalModel } from '../../model/profissional-model';
 
 @IonicPage()
 @Component({
@@ -24,11 +26,12 @@ export class PropostaSendPage {
     private oneSignal : OneSignal,
     private loadingCtrl: LoadingController,
   ){
-      this.initialize();
+    this.initialize();
   }
 
   initialize(){
     this.proposta = this.navParams.get('proposta');
+    console.log(JSON.stringify(this.proposta));
   }
 
   async aceitar() {
@@ -42,7 +45,9 @@ export class PropostaSendPage {
       let body = {
         tipo: "proposta",
         oneSignalId: this.proposta.cliente.onesignalId,
-        msg: `O Paciente ${this.proposta.cliente.nome} solicita ${this.proposta.qtd} atendimentos do tipo ${this.proposta.tipoAtendimento.descricao}`,
+        msg: `O Paciente ${this.proposta.cliente.nome} 
+        solicita ${this.proposta.qtd} atendimentos do tipo 
+        ${this.proposta.tipoAtendimento.especialidade.descricao}`,
         proposta: this.proposta
       }
 

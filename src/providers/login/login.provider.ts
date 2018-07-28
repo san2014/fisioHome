@@ -53,8 +53,7 @@ export class LoginProvider {
       this.safeHttp.post(this.loginUrl, login)
         .toPromise()
           .then(data => {
-            this.storageProvider.setAccessToken(data.data.token);
-            resolve(data);
+            resolve(data.data);
           })
           .catch( erro => {
             reject(erro);  
@@ -70,7 +69,7 @@ export class LoginProvider {
 
   getUsuarioAtual(token: string): Promise<UsuarioModel>{
 
-    return new Promise((resolve, reject) => {
+    return new Promise<UsuarioModel>((resolve, reject) => {
       this.safeHttp.get(this.userUrl)
         .toPromise()
           .then(resp => {

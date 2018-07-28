@@ -14,10 +14,10 @@
         <ion-list>
           <ion-item>
             <ion-thumbnail item-start>
-              <img style="border-radius: 50%;" height="150" width="150" src={{proposta.profissional.imgperfil}}>
+              <img style="border-radius: 50%;" height="150" width="150" [src]="proposta?.profissional?.usuario?.imgPerfil">
             </ion-thumbnail>
             <br/>
-            <h2>{{proposta.profissional.nome}}</h2>
+            <h2>{{proposta?.profissional?.usuario?.nome}}</h2>
             <p>4.7</p>
           </ion-item>
         </ion-list> 
