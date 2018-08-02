@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding (feedback)="checkFeedback($event)">
   <form [formGroup]="formProposta">
     <ion-grid>
       <ion-row>

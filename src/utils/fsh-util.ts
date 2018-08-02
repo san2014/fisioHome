@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Loading, LoadingController, AlertController } from 'ionic-angular';
+import { Loading, LoadingController, AlertController, ToastController } from 'ionic-angular';
 
 import { UsuarioModel } from '../model/usuario-model';
 import { isArray } from 'ionic-angular/util/util';
@@ -11,7 +11,8 @@ export class FshUtils{
 
     constructor(
         private loadingCtrl: LoadingController,
-        private alert: AlertController
+        private alert: AlertController,
+        private toastCtrl: ToastController
     ){}
     
     showLoading(msg: string){
@@ -36,6 +37,18 @@ export class FshUtils{
         
         alert.present();
     }     
+
+    presentToast(msg: string) {
+        let toast = this.toastCtrl.create({
+          message: msg,
+          duration: 3000,
+          position: 'middle'
+        });
+      
+        toast.onDidDismiss(() => {});
+      
+        toast.present();
+      }      
     
     validaCPF(cpf): boolean {
 

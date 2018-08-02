@@ -35,6 +35,8 @@ export class IniciarPage {
 
   fakeItems: Array<any> = new Array(4);
 
+  showFake: boolean = true;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -90,6 +92,10 @@ export class IniciarPage {
           this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
         }
 
+      } finally {
+        
+        this.showFake = false;
+        
       }
         
     }else{

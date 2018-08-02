@@ -1,3 +1,4 @@
+import { ProfissionalModel } from './../../model/profissional-model';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ToastController, ModalController } from 'ionic-angular';
@@ -27,11 +28,12 @@ export class PropostaInitPage {
 
   formProposta: FormGroup;
 
+  listaProfissionais: ProfissionalModel[] = [];
+
   constructor(
     public navCtrl: NavController, 
     private fb: FormBuilder,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController,
     private propostaProvider: PropostaProvider,
     private loginProvider: LoginProvider,
     private fshUtils: FshUtils,
@@ -68,17 +70,54 @@ export class PropostaInitPage {
 
   }
 
-  presentToast(msg: string) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'middle'
+  checkFeedback(event) {
+
+    if(event === true){
+
+      let msg = "Sua solicitação foi encaminhada...";
+
+      this.fshUtils.presentToast(msg);
+
+    }else if (event === false){
+
+      if (this.listaProfissionais.length > 1) {
+        
+        this.listaProfissionais.slice(0, 0);
+        
+      }else{
+        
+        this.confirmRecusa();
+
+      }
+
+    }
+
+  }
+
+  private confirmRecusa() {
+
+    let alert = this.alertCtrl.create({
+      title: 'Logout',
+      message: 'Deseja deslogar do nosso aplicativo?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel'
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.listaProfissionais.slice(0, 0);
+          }
+        }
+      ]
     });
-  
-    toast.onDidDismiss(() => {});
-  
-    toast.present();
-  }   
+
+    alert.present();
+        
+  }
+
+ 
 
   aplicaCssErro(campo: string) {
     return {
@@ -110,7 +149,7 @@ export class PropostaInitPage {
         {
           text: 'Cancelar',
           handler: () => {
-            this.presentToast('Busca cancelada...');
+            this.fshUtils.presentToast('Busca cancelada...');
           }          
         }
       ]
@@ -130,7 +169,9 @@ export class PropostaInitPage {
     this.propostaProvider.findProfDisponiveis(idEspecialidade, cidade)
       .then((data) => {
 
-        this.proposta.profissional = data;
+        this.listaProfissionais = data;
+
+        this.proposta.profissional = data[0];
         
         alert.dismiss();
         

@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ToastController, LoadingController, Loading } from 'ionic-angular';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
 import { PropostaModel } from '../../model/proposta-model';
-import { UsuarioModel } from '../../model/usuario-model';
-import { ProfissionalModel } from '../../model/profissional-model';
 
 @IonicPage()
 @Component({
@@ -15,6 +13,9 @@ import { ProfissionalModel } from '../../model/profissional-model';
 export class PropostaSendPage {
 
   proposta: PropostaModel;
+
+  @Output()
+  feedback = new EventEmitter<boolean>();
 
   loading: Loading;
 
@@ -30,8 +31,9 @@ export class PropostaSendPage {
   }
 
   initialize(){
+
     this.proposta = this.navParams.get('proposta');
-    console.log(JSON.stringify(this.proposta));
+
   }
 
   async aceitar() {
@@ -58,8 +60,10 @@ export class PropostaSendPage {
       };        
 
       let postNotification = await this.oneSignal.postNotification(notificationOBJ);
-      
+
       this.hideLoading();
+
+      this.feedback.emit(true);
 
       this.view.dismiss();
 
@@ -76,7 +80,11 @@ export class PropostaSendPage {
   }
 
   recusar(){
+    
+    this.feedback.emit(false);
+    
     this.view.dismiss();
+
   }
 
   getValorPacote(){
@@ -84,6 +92,7 @@ export class PropostaSendPage {
   }
 
   presentToast(msg: string) {
+
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
@@ -91,17 +100,22 @@ export class PropostaSendPage {
     });
   
     toast.present();
+
   }   
 
   showLoading(msg: string){
+
     this.loading = this.loadingCtrl.create({
       content: msg
     });
     this.loading.present();     
+
   }
 
   hideLoading(){
+
     this.loading.dismiss();
+
   }  
 
 }

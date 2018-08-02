@@ -12,9 +12,9 @@ export class PropostaProvider {
 
   constructor(public safeHttp: SafeHttp) {}
 
-  findProfDisponiveis(idEspecialidade: number, cidade: string): Promise<ProfissionalModel>{
+  findProfDisponiveis(idEspecialidade: number, cidade: string): Promise<Array<ProfissionalModel>>{
     
-    return new Promise<ProfissionalModel>((resolve, reject) => {
+    return new Promise<Array<ProfissionalModel>>((resolve, reject) => {
 
       this.safeHttp.get(`/profissional/disponiveisEspecialidade/${idEspecialidade}/${cidade}`)
         .toPromise()
