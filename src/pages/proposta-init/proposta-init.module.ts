@@ -4,6 +4,8 @@ import { PropostaInitPage } from './proposta-init';
 
 import { PropostaProvider } from '../../providers/proposta/proposta.provider';
 
+import { SharedModule } from '../../shared/shared.module';
+
 @NgModule({
   declarations: [
     PropostaInitPage,
@@ -11,7 +13,8 @@ import { PropostaProvider } from '../../providers/proposta/proposta.provider';
   ],
   entryComponents: [],
   imports: [
-    IonicPageModule.forChild(PropostaInitPage)
+    IonicPageModule.forChild(PropostaInitPage),
+    SharedModule
   ],
   providers:[
     PropostaProvider

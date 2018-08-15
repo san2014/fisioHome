@@ -5,6 +5,9 @@ import { OneSignal } from '@ionic-native/onesignal';
 
 import { PropostaModel } from '../../model/proposta-model';
 
+import { ToastService } from '../../utils/toast.service';
+import { LoadingService } from '../../utils/loading.service';
+
 @IonicPage()
 @Component({
   selector: 'page-proposta-send',
@@ -17,15 +20,15 @@ export class PropostaSendPage {
   @Output()
   feedback = new EventEmitter<boolean>();
 
-  loading: Loading;
+  erros: string[] = [];
 
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
     private view: ViewController,
-    private toastCtrl: ToastController,
     private oneSignal : OneSignal,
-    private loadingCtrl: LoadingController,
+    private loadingService: LoadingService,
+    private toastService: ToastService
   ){
     this.initialize();
   }
@@ -40,7 +43,7 @@ export class PropostaSendPage {
 
     try{
 
-      this.showLoading('aguarde...');
+      this.loadingService.showDefault('aguarde...');
 
       let oneSignalIds = await this.oneSignal.getIds();
 
@@ -61,7 +64,7 @@ export class PropostaSendPage {
 
       let postNotification = await this.oneSignal.postNotification(notificationOBJ);
 
-      this.hideLoading();
+      this.loadingService.hideLoading();
 
       this.feedback.emit(true);
 
@@ -69,11 +72,12 @@ export class PropostaSendPage {
 
     }catch(error){
 
-      this.hideLoading();
+      this.loadingService.hideLoading();
     
-      this.presentToast("Ocorreu um erro, por favor tente mais tarde...");
+      //this.toastService.toastOnTop("Ocorreu um erro, por favor tente mais tarde...");
+      alert(JSON.stringify(this.proposta.profissional));
 
-      this.view.dismiss();
+      this.erros.unshift(error.message);
 
     }       
     
@@ -90,32 +94,5 @@ export class PropostaSendPage {
   getValorPacote(){
     return this.proposta.qtd * this.proposta.tipoAtendimento.valor;
   }
-
-  presentToast(msg: string) {
-
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'top'
-    });
-  
-    toast.present();
-
-  }   
-
-  showLoading(msg: string){
-
-    this.loading = this.loadingCtrl.create({
-      content: msg
-    });
-    this.loading.present();     
-
-  }
-
-  hideLoading(){
-
-    this.loading.dismiss();
-
-  }  
 
 }

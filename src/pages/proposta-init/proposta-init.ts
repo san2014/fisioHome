@@ -1,24 +1,27 @@
-import { ProfissionalModel } from './../../model/profissional-model';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { ToastController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';         
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ModalController } from 'ionic-angular';
 
-import { FshUtils } from './../../utils/fsh-util';
+import { ToastService } from './../../utils/toast.service';
+import { AlertService } from '../../utils/alert.service';
 
 import { PropostaProvider } from '../../providers/proposta/proposta.provider';         
 import { LoginProvider } from '../../providers/login/login.provider';
 
+import { ProfissionalModel } from './../../model/profissional-model';
 import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 import { PropostaModel } from "../../model/proposta-model";
 import { UsuarioModel } from '../../model/usuario-model';
+
+import { FormBase } from '../../shared/form-base';
 
 @IonicPage()
 @Component({
   selector: 'page-proposta-init',
   templateUrl: 'proposta-init.html',
 })
-export class PropostaInitPage {
+export class PropostaInitPage extends FormBase {
 
   tipoAtendimento: TipoAtendimentoModel;
 
@@ -26,29 +29,28 @@ export class PropostaInitPage {
 
   usuarioLogado: UsuarioModel;
 
-  formProposta: FormGroup;
+  //formProposta: FormGroup;
 
   listaProfissionais: ProfissionalModel[] = [];
 
   constructor(
     public navCtrl: NavController, 
     private fb: FormBuilder,
-    private alertCtrl: AlertController,
     private propostaProvider: PropostaProvider,
     private loginProvider: LoginProvider,
-    private fshUtils: FshUtils,
+    private toastService: ToastService,
+    private alertService: AlertService,
     public modalCtrl: ModalController,
     public navParams: NavParams
   ){
-
+    super();
     this.initialize();
-    
   }
 
   initialize(){
     this.tipoAtendimento = this.navParams.get('tipoAtendimento');
     
-    this.formProposta = this.fb.group({
+    this.formulario = this.fb.group({
       'qtd': ['', Validators.compose
         (
           [
@@ -76,7 +78,7 @@ export class PropostaInitPage {
 
       let msg = "Sua solicitação foi encaminhada...";
 
-      this.fshUtils.presentToast(msg);
+      this.toastService.toastOnMiddle(msg);
 
     }else if (event === false){
 
@@ -96,68 +98,33 @@ export class PropostaInitPage {
 
   private confirmRecusa() {
 
-    let alert = this.alertCtrl.create({
-      title: 'Logout',
-      message: 'Deseja deslogar do nosso aplicativo?',
-      buttons: [
-        {
-          text: 'Não',
-          role: 'cancel'
-        },
-        {
-          text: 'Sim',
-          handler: () => {
-            this.listaProfissionais.slice(0, 0);
-          }
-        }
-      ]
-    });
+    const title = 'Atendimento';
+    const msg = 'Solicitar atendimento(s) ao Profissional?';
 
-    alert.present();
+    this.alertService.simpleBoolean(msg, title);
+
+    this.alertService.callBack
+      .subscribe((ok)=> {
+        if (ok) {
+          this.alertService.simpleAlert('NOTIFICA-LO DO ATENDIMENTO...');
+        }else{
+          this.listaProfissionais.slice(0, 0);
+        }
+      });
         
   }
 
- 
-
-  aplicaCssErro(campo: string) {
-    return {
-      'box-register-error': this.hasError(campo),
-      'box-register': this.hasSuccess(campo) || this.notUsed(campo)
-    };
-  }   
-
-  notUsed(campo){
-    return this.formProposta.get(campo).pristine;
-  }  
-
-  hasSuccess(campo): boolean{
-    return this.formProposta.get(campo).valid;
-  }  
-  
-  hasError(campo): boolean{
-    return (
-      !this.formProposta.get(campo).valid &&
-      (this.formProposta.get(campo).touched || this.formProposta.get(campo).dirty)
-    );
-  }  
-
   request(){
-    let alert = this.alertCtrl.create({
-      title: 'Pesquisando',
-      message: `requisitando profissional para ${this.proposta.qtd} atendimentos...`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {
-            this.fshUtils.presentToast('Busca cancelada...');
-          }          
-        }
-      ]
-    });
-
-    alert.present(); 
     
+    const title = 'Pesquisando';
+    const msg = `requisitando profissional para ${this.proposta.qtd} atendimentos...`;
+    const toastMsg = 'busca cancelada...';
+    const labelButton = 'cancelar';
+
+    const alert = this.alertService.withToastMessage(title, msg, toastMsg, labelButton);
+
     this.findProfDisponiveis(alert);
+
   }
 
   findProfDisponiveis(alert){
@@ -182,7 +149,7 @@ export class PropostaInitPage {
         
         let msg = "Não localizamos nenhum profissional disponível no momento...tente mais tarde";
         
-        this.fshUtils.showAlert("Desculpe", msg);
+        this.alertService.simpleAlert(erro.message, "Desculpe");
 
       });
 

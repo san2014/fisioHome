@@ -24,3 +24,17 @@
 body, span, ion-navbar, ion-content, ion-button, ion-title, h1, h2, h3, h4, h5, h6, ion-card, ion-header{
     font-family: Comfortaa-Bold !important;
 }
+
+.box-register{
+    border-left: 6px solid springgreen;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-bottom: 0px solid !important;
+}
+
+.box-register-error{
+    border-left: 6px solid red;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-bottom: 0px solid !important;        
+}

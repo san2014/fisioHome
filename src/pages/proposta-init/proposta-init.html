@@ -8,7 +8,7 @@
 
 
 <ion-content padding (feedback)="checkFeedback($event)">
-  <form [formGroup]="formProposta">
+  <form [formGroup]="formulario">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -44,7 +44,7 @@
       </ion-row>
     </ion-grid>
 
-    <button ion-button round block round color="secondary"(click)="request()" [disabled]="formProposta.invalid">
+    <button ion-button round block round color="secondary"(click)="request()" [disabled]="formulario.invalid">
         Requisitar Profissional
     </button>    
   </form>

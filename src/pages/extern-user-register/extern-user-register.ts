@@ -9,6 +9,7 @@ import { StorageProvider } from '../../providers/storage/storage.provider';
 
 import { UsuarioModel } from '../../model/usuario-model';
 import { PerfilEnum } from '../../enum/perfil-enum';
+import { AlertService } from '../../utils/alert.service';
 
 
 @IonicPage()
@@ -29,7 +30,8 @@ export class ExternUserRegisterPage {
     private fshUtils: FshUtils,
     private userProvider: UserProvider,
     private cepProvider: CepProvider,
-    private storageProvider: StorageProvider
+    private storageProvider: StorageProvider,
+    private alertService: AlertService
   ) { 
     
     this.configurarForm();
@@ -108,7 +110,7 @@ export class ExternUserRegisterPage {
         
         const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
         
-        this.fshUtils.showAlert(titulo, msg);  
+        this.alertService.simpleAlert(titulo, msg);  
 
       });
 
@@ -161,7 +163,7 @@ export class ExternUserRegisterPage {
 
         this.fshUtils.hideLoading();
 
-        this.fshUtils.showAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+        this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
 
       });
       

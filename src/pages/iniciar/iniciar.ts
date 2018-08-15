@@ -4,7 +4,7 @@ import { NotificacaoProvider } from '../../providers/notificacao/notificacao.pro
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { AlertController, ToastController } from 'ionic-angular';
-import { Platform, Nav, Alert } from 'ionic-angular';
+import { Platform, Alert } from 'ionic-angular';
 import { Badge } from '@ionic-native/badge';
 
 import { OneSignal, OSNotificationPayload } from '@ionic-native/onesignal';
@@ -17,6 +17,7 @@ import { StorageProvider } from '../../providers/storage/storage.provider';
 import { PropostaModel } from '../../model/proposta-model';
 import { NotificacaoModel } from '../../model/notificacao-model';
 import { ErrorHandler } from '../../app/app-error-handler';
+import { AlertService } from '../../utils/alert.service';
 
 
 
@@ -48,11 +49,12 @@ export class IniciarPage {
     private platform: Platform,
     public oneSignal : OneSignal,
     private toastCtrl: ToastController,
-    private notificacaoProvider: NotificacaoProvider
+    private notificacaoProvider: NotificacaoProvider,
+    private alertService: AlertService
   ) {
 
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
-    
+
     platform.ready()
       .then(() => {
         
@@ -76,13 +78,7 @@ export class IniciarPage {
 
       try {
 
-        await this.tpAtdProvider.tiposAtendimentos()
-          .then(data =>{
-            this.tpsAtds = data;
-          })
-          .catch((error) => {
-            throw new HttpErrorResponse(error)
-          });   
+        this.tpsAtds = await this.tpAtdProvider.tiposAtendimentos();
 
       } catch (error) {
         
@@ -91,6 +87,8 @@ export class IniciarPage {
         }else{
           this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
         }
+
+        this.tpsAtds = [];
 
       } finally {
         
@@ -310,7 +308,7 @@ export class IniciarPage {
       let hasPermission = await this.badge.hasPermission();
 
       if (!hasPermission) {
-        let permission = await this.badge.registerPermission();
+        await this.badge.registerPermission();
       }
 
     } catch (e) {
@@ -323,9 +321,9 @@ export class IniciarPage {
     
     try {
       
-      let askPermission = await this.requestPermission();
+      await this.requestPermission();
 
-      let badge = await this.badge.clear();
+      await this.badge.clear();
 
       this.qtdNotificacoes = await this.badge.get();
 
@@ -340,9 +338,9 @@ export class IniciarPage {
 
     try {
 
-      let askPermission = await this.requestPermission();
+      await this.requestPermission();
 
-      let badge = await this.badge.increase(Number("1"))
+      await this.badge.increase(Number("1"))
 
       this.qtdNotificacoes = await this.badge.get();
 
@@ -357,9 +355,9 @@ export class IniciarPage {
 
     try {
       
-      let askPermission = await this.requestPermission();
+      await this.requestPermission();
 
-      let badge = await this.badge.decrease(Number("1"));
+      await this.badge.decrease(Number("1"));
 
       this.qtdNotificacoes = await this.badge.get();
 

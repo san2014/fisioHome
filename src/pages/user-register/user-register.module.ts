@@ -4,7 +4,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 
 import { UserRegister } from './user-register';
-import { SharedModule } from '../../modules/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { UserProvider } from '../../providers/user/user.provider';
 import { FshUtils } from '../../utils/fsh-util';
 import { CepProvider } from '../../providers/cep/cep.provider';

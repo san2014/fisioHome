@@ -13,6 +13,7 @@ import { LoginProvider } from "../../providers/login/login.provider";
 import { TokenResponseModel } from '../../model/token-response.model';
 
 import { FshUtils } from '../../utils/fsh-util';
+import { AlertService } from '../../utils/alert.service';
 
 @IonicPage()
 @Component({
@@ -47,7 +48,8 @@ export class Login {
     public facebookProvider: FacebookProvider,
     private googleProvider: GoogleProvider,
     private loadingCtrl: LoadingController,
-    private utils: FshUtils
+    private utils: FshUtils,
+    private alertService: AlertService
   ) {
       this.initialize();
   }
@@ -166,7 +168,7 @@ export class Login {
     
     } catch (error) {
 
-      this.utils.showAlert(this.titleAlert, error);
+      this.alertService.simpleAlert(this.titleAlert, error);
 
     }  
     
@@ -204,7 +206,7 @@ export class Login {
 
     } catch (error) {
       
-      this.utils.showAlert(this.titleAlert, error);
+      this.alertService.simpleAlert(this.titleAlert, error);
 
     }    
 

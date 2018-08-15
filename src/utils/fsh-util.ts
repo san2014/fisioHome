@@ -10,9 +10,7 @@ export class FshUtils{
     loading: Loading
 
     constructor(
-        private loadingCtrl: LoadingController,
-        private alert: AlertController,
-        private toastCtrl: ToastController
+        private loadingCtrl: LoadingController
     ){}
     
     showLoading(msg: string){
@@ -25,30 +23,6 @@ export class FshUtils{
     hideLoading(){
         this.loading.dismiss();
     }
-    
-    showAlert(titulo: string, msg: string) {
-        let alert = this.alert.create({
-            title: titulo,
-            message: msg,
-            buttons: [
-                {text: 'Ok'}
-            ]
-        });
-        
-        alert.present();
-    }     
-
-    presentToast(msg: string) {
-        let toast = this.toastCtrl.create({
-          message: msg,
-          duration: 3000,
-          position: 'middle'
-        });
-      
-        toast.onDidDismiss(() => {});
-      
-        toast.present();
-      }      
     
     validaCPF(cpf): boolean {
 

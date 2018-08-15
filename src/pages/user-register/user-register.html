@@ -6,10 +6,9 @@
   
   </ion-header>
   
-  
   <ion-content padding>
   
-    <form [formGroup]="formUser">
+    <form [formGroup]="formulario">
     <ion-grid>  
       <ion-row>
         <ion-col>
@@ -133,7 +132,7 @@
 
     </ion-grid>
   
-    <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formUser.invalid">
+    <button ion-button block round color="secondary" (click)="incluir()" [disabled]="formulario.invalid">
       Enviar
     </button>
   

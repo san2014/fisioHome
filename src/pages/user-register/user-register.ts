@@ -6,21 +6,23 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UserProvider } from '../../providers/user/user.provider';
 import { FshUtils } from '../../utils/fsh-util';
 import { CepProvider } from '../../providers/cep/cep.provider';
+import { StorageProvider } from '../../providers/storage/storage.provider';
 
 import { UsuarioModel } from '../../model/usuario-model';
 import { PerfilEnum } from '../../enum/perfil-enum';
-import { StorageProvider } from '../../providers/storage/storage.provider';
+
+import { AlertService } from '../../utils/alert.service';
+
+import { FormBase } from '../../shared/form-base';
 
 @IonicPage()
 @Component({
   selector: 'page-user-register',
   templateUrl: 'user-register.html',
 })
-export class UserRegister {
+export class UserRegister extends FormBase {
 
   usuarioSessao: UsuarioModel;
-
-  formUser: FormGroup;
 
   constructor(
     private navCtrl: NavController,
@@ -29,23 +31,26 @@ export class UserRegister {
     private userProvider: UserProvider,
     private storageProvider: StorageProvider,
     private fshUtils: FshUtils,
-    private cepProvider: CepProvider) { 
+    private cepProvider: CepProvider,
+    private alertService: AlertService
+  ) { 
 
-      this.configurarForm();
+    super();
 
-      platform.ready()
-      .then(() => {
-        if (!platform.is('cordova')){
-          this.formUser.get('onesignalId').setValue('test-teste-test-teste-hard');
-        }   
-      });      
+    this.configurarForm();
+
+    platform.ready()
+    .then(() => {
+      if (!platform.is('cordova')){
+        this.formulario.get('onesignalId').setValue('test-teste-test-teste-hard');
+      }   
+    });      
       
   }
 
-
   configurarForm(){
    
-    this.formUser = this.fb.group({
+    this.formulario = this.fb.group({
       'id': [null],
       'cpf': [null, Validators.required],
       'rg': [null, Validators.required],
@@ -89,37 +94,15 @@ export class UserRegister {
       })
     });
 
-    this.formUser.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
-    this.formUser.get('ativo').setValue(true);
-    this.formUser.get('onesignalId').setValue(this.storageProvider.getOneSignalId());
+    this.formulario.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
+    this.formulario.get('ativo').setValue(true);
+    this.formulario.get('onesignalId').setValue(this.storageProvider.getOneSignalId());
 
-  }
-
-  aplicaCssErro(campo: string) {
-    return {
-      'box-register-error': this.hasError(campo),
-      'box-register': this.hasSuccess(campo) || this.notUsed(campo)
-    };
-  }  
-
-  notUsed(campo){
-    return this.formUser.get(campo).pristine;
-  }
-
-  hasSuccess(campo): boolean{
-     return this.formUser.get(campo).valid;
-   }  
-  
-  hasError(campo): boolean{
-    return (
-      !this.formUser.get(campo).valid &&
-      (this.formUser.get(campo).touched || this.formUser.get(campo).dirty)
-    );
   }
 
   validaCPF(){
     
-    const cpf = this.formUser.get('cpf');
+    const cpf = this.formulario.get('cpf');
 
     if (this.fshUtils.validaCPF(cpf.value) === false){
       cpf.setErrors({"required": "0"});
@@ -129,7 +112,7 @@ export class UserRegister {
 
   getAddresByCep(){
 
-    let cep = this.formUser.get('cep');
+    let cep = this.formulario.get('cep');
 
     if (!cep.valid){
       return false;
@@ -142,7 +125,7 @@ export class UserRegister {
 
         this.fshUtils.hideLoading();
 
-        this.formUser.patchValue({
+        this.formulario.patchValue({
           logradouro : address.logradouro,
           bairro : address.bairro,
           cidade : address.localidade          
@@ -153,7 +136,7 @@ export class UserRegister {
 
         this.fshUtils.hideLoading();
 
-        this.fshUtils.showAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+        this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
 
       });
 
@@ -171,7 +154,7 @@ export class UserRegister {
 
       this.fshUtils.showLoading('aguarde...');
 
-      await this.userProvider.postData(this.formUser.value)
+      await this.userProvider.postData(this.formulario.value)
         .then((res) => {
 
           this.usuarioSessao = res.data;
@@ -189,7 +172,7 @@ export class UserRegister {
 
       erro = true;
       
-      this.fshUtils.showAlert(titulo, msg); 
+      this.alertService.simpleAlert(titulo, msg); 
 
     }
 
