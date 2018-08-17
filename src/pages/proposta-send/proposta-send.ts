@@ -20,8 +20,6 @@ export class PropostaSendPage {
   @Output()
   feedback = new EventEmitter<boolean>();
 
-  erros: string[] = [];
-
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -58,13 +56,15 @@ export class PropostaSendPage {
 
       let notificationOBJ: any = {
         contents: {en: `Tem uma nova solicitação de atendimento para você!`},
-        include_player_ids: [this.proposta.profissional.onesignalId],
+        include_player_ids: [this.proposta.profissional.usuario.onesignalId],
         data: body
       };        
 
-      let postNotification = await this.oneSignal.postNotification(notificationOBJ);
+      await this.oneSignal.postNotification(notificationOBJ);
 
       this.loadingService.hideLoading();
+
+      this.toastService.toastOnBottom('Solicitação enviada, por favor aguarde...');
 
       this.feedback.emit(true);
 
@@ -74,10 +74,7 @@ export class PropostaSendPage {
 
       this.loadingService.hideLoading();
     
-      //this.toastService.toastOnTop("Ocorreu um erro, por favor tente mais tarde...");
-      alert(JSON.stringify(this.proposta.profissional));
-
-      this.erros.unshift(error.message);
+      this.toastService.toastOnTop("Ocorreu um erro, por favor tente mais tarde...");
 
     }       
     

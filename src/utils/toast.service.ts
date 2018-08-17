@@ -27,7 +27,7 @@ export class ToastService {
 
         let toast = this.toastCtrl.create({
             message: msg,
-            duration: duration,
+            duration: time,
             position: ToastPosition.MEIO
         });
         
@@ -41,7 +41,7 @@ export class ToastService {
 
         let toast = this.toastCtrl.create({
             message: msg,
-            duration: duration,
+            duration: time,
             position: ToastPosition.BAIXO
         });
         

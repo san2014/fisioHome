@@ -188,7 +188,7 @@ export class IniciarPage {
         
           let body = {
             tipo: "aceitaProposta",
-            msg: `O Profissional ${proposta.profissional.nome} está disponível para lhe atender! Clique Ok para continuar`,
+            msg: `O Profissional ${proposta.profissional.usuario.nome} está disponível para lhe atender! Clique Ok para continuar`,
             proposta: proposta
           }
 
@@ -230,7 +230,7 @@ export class IniciarPage {
         
           let body = {
             tipo: "recusaProposta",
-            msg: `O Fisioterapeuta ${proposta.profissional.nome} encontra-se indisponível no momento, deseja fazer nova requisição? `
+            msg: `O Fisioterapeuta ${proposta.profissional.usuario.nome} encontra-se indisponível no momento, deseja fazer nova requisição? `
           }
 
           let notificationOBJ: any = {

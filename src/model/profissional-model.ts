@@ -2,7 +2,7 @@ import { TipoAtendimentoModel } from './tipoatendimento-model';
 
 import { UsuarioModel } from "./usuario-model";
 
-export class ProfissionalModel extends UsuarioModel {
+export class ProfissionalModel {
     
     id: number;
 

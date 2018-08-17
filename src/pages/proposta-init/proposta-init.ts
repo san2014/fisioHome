@@ -123,12 +123,14 @@ export class PropostaInitPage extends FormBase {
 
     const alert = this.alertService.withToastMessage(title, msg, toastMsg, labelButton);
 
+    alert.present();
+
     this.findProfDisponiveis(alert);
 
   }
 
-  findProfDisponiveis(alert){
-    
+  findProfDisponiveis(modal){
+
     const cidade = this.usuarioLogado.cidade;
     
     const idEspecialidade = this.tipoAtendimento.especialidade.id;
@@ -139,13 +141,15 @@ export class PropostaInitPage extends FormBase {
         this.listaProfissionais = data;
 
         this.proposta.profissional = data[0];
-        
-        alert.dismiss();
+
+        modal.dismiss();
         
         this.showProfModal()
 
       })
       .catch((erro) => {
+
+        modal.dismiss();
         
         let msg = "Não localizamos nenhum profissional disponível no momento...tente mais tarde";
         
