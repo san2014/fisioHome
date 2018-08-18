@@ -56,7 +56,7 @@
           <ion-item>
             <ion-label floating>Especialidades</ion-label>
             <ion-select (ionChange)="addEsp()" [compareWith]="compareFn" name="especialidade" formControlName="especialidade" [(ngModel)]="especialidade">
-              <ion-option *ngFor="let option of tpsAtds" [value]="option">{{option.descricao}}</ion-option>
+              <ion-option *ngFor="let option of tpsAtds" [value]="option">{{option.especialidade.descricao}}</ion-option>
             </ion-select>
           </ion-item>        
         </ion-col>

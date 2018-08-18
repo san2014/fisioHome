@@ -68,17 +68,17 @@
       </ion-row>
       <ion-row>
         <ion-col>
-            <ion-input placeholder="E-mail" outline class="box-register" formControlName="email" 
-              [ngClass]="aplicaCssErro('email')">
-            </ion-input>
+          <ion-input placeholder="E-mail" outline class="box-register" formControlName="email" 
+            [ngClass]="aplicaCssErro('email')">
+          </ion-input>
         </ion-col>
       </ion-row>    
       <ion-row>
         <ion-col>
-            <ion-input type="number" placeholder="CEP" outline class="box-register" formControlName="cep" 
-              (ionBlur)="getAddresByCep()"
-              [ngClass]="aplicaCssErro('cep')">
-            </ion-input>
+          <ion-input type="number" placeholder="CEP" outline class="box-register" formControlName="cep" 
+            (ionBlur)="getAddresByCep()"
+            [ngClass]="aplicaCssErro('cep')">
+          </ion-input>
         </ion-col>
       </ion-row> 
       <ion-row>

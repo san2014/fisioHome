@@ -50,7 +50,6 @@ export class InterceptorHttpService implements HttpInterceptor {
 
                     switch ((<HttpErrorResponse>error).status) {
                         case 400:
-                            console.log('token ja invalido');
                             this.appCtrl.getRootNavs()[0].setRoot('Login');
                             return next.handle(req);                        
                         case 401:

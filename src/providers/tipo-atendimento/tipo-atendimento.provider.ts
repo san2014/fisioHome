@@ -1,3 +1,4 @@
+import { Especialidade } from './../../model/especialidade.model';
 import { SafeHttp } from '../../utils/safe-http';
 import { TipoAtendimentoModel } from '../../model/tipoatendimento-model';
 import { Injectable } from '@angular/core';
@@ -9,6 +10,15 @@ export class TipoAtendimentoProvider {
   constructor(
     private safeHttp: SafeHttp
   ) {}
+
+
+  listar(): any[] {
+
+    const tipo = {id: 1, nome: "TESTE"}
+
+    return [tipo];
+
+  }
 
   tiposAtendimentos(): Promise<TipoAtendimentoModel[]>{
 

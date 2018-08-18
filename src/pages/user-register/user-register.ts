@@ -1,7 +1,10 @@
+import { LoginProvider } from './../../providers/login/login.provider';
+import { TipoAtendimentoProvider } from './../../providers/tipo-atendimento/tipo-atendimento.provider';
+import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
 
 import { NavController, IonicPage, Platform } from 'ionic-angular';
 import { Component} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 
 import { UserProvider } from '../../providers/user/user.provider';
 import { FshUtils } from '../../utils/fsh-util';
@@ -15,6 +18,7 @@ import { AlertService } from '../../utils/alert.service';
 
 import { FormBase } from '../../shared/form-base';
 
+
 @IonicPage()
 @Component({
   selector: 'page-user-register',
@@ -23,6 +27,10 @@ import { FormBase } from '../../shared/form-base';
 export class UserRegister extends FormBase {
 
   usuarioSessao: UsuarioModel;
+
+  lista: any;
+
+  lista2: UsuarioModel = new UsuarioModel();
 
   constructor(
     private navCtrl: NavController,
@@ -37,18 +45,19 @@ export class UserRegister extends FormBase {
 
     super();
 
-    this.configurarForm();
+  }
 
-    platform.ready()
-    .then(() => {
-      if (!platform.is('cordova')){
-        this.formulario.get('onesignalId').setValue('test-teste-test-teste-hard');
-      }   
-    });      
+  protected async inicializar(){
+
+    await this.platform.ready();
+
+    if (!this.platform.is('cordova')){
+      this.formulario.get('onesignalId').setValue('test-teste-test-teste-hard');
+    }   
       
   }
 
-  configurarForm(){
+  protected configurarForm(){
    
     this.formulario = this.fb.group({
       'id': [null],
@@ -57,46 +66,28 @@ export class UserRegister extends FormBase {
       'nome': [null, Validators.required],
       'apelido': [null, Validators.required],
       'sexo': [null, Validators.required],
-      'senha': [null, Validators.compose
-        (
-          [
-            Validators.required, 
-            Validators.minLength(6),
-            Validators.maxLength(8)
-          ]
-        )
-      ],
-      'email': [null, Validators.compose([Validators.required, Validators.email])],
-      'nascimento': [null, Validators.compose(
-          [
-            Validators.required,
-            Validators.pattern(/^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/)
-
-          ]
-        )
-      ],
-      'cep': [null, Validators.compose
-        (
-          [
-            Validators.required,
-            Validators.pattern(/[0-9]{8}/)
-          ]
-        )
-      ],
+      'senha': [null, [Validators.required, Validators.minLength(6), Validators.maxLength(8)]],
+      'email': [null, [Validators.required, Validators.email]],
+      'nascimento': [null, [Validators.required,Validators.pattern(/^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/)]],
+      'cep': [null, [Validators.required,Validators.pattern(/[0-9]{8}/)]],
       'cidade': [null, Validators.required],
       'logradouro': [null, Validators.required],
       'bairro': [null, Validators.required],
       'porta': [null,Validators.required],
       'ativo' : [null],
       'onesignalId':[null],
+
       'perfil': this.fb.group({
         'id': [null, Validators.required]
       })
+
     });
 
-    this.formulario.get('perfil.id').setValue(PerfilEnum.ROLE_CLIENTE);
-    this.formulario.get('ativo').setValue(true);
-    this.formulario.get('onesignalId').setValue(this.storageProvider.getOneSignalId());
+    this.formulario.patchValue({
+      perfil : {id: PerfilEnum.ROLE_CLIENTE},
+      ativo: true,
+      onesignalId: this.storageProvider.getOneSignalId()
+    });
 
   }
 
@@ -110,79 +101,61 @@ export class UserRegister extends FormBase {
 
   }
 
-  getAddresByCep(){
-
+  async getAddresByCep(){
+    
     let cep = this.formulario.get('cep');
 
     if (!cep.valid){
       return false;
     }    
 
-    this.fshUtils.showLoading('obtendo informações....');
-
-    this.cepProvider.getAddressByCep(cep.value)
-      .then((address) =>{
-
-        this.fshUtils.hideLoading();
-
-        this.formulario.patchValue({
-          logradouro : address.logradouro,
-          bairro : address.bairro,
-          cidade : address.localidade          
-        })
-
-      })
-      .catch((erro) => {
-
-        this.fshUtils.hideLoading();
-
-        this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
-
+    try {
+      
+      this.fshUtils.showLoading('obtendo informações....');
+      
+      const address = await this.cepProvider.getAddressByCep(cep.value);
+      
+      this.formulario.patchValue({
+        logradouro : address.logradouro,
+        bairro : address.bairro,
+        cidade : address.localidade          
       });
+      
+    } catch (error) {
+      
+      this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+    
+    } finally {
+      
+      this.fshUtils.hideLoading();
+
+    }
 
   }
 
   async incluir(){
 
-    let erro: boolean = false;
-
-    let msg: string;
-
-    const titulo: string = 'Desculpe';
-
     try{
 
       this.fshUtils.showLoading('aguarde...');
 
-      await this.userProvider.postData(this.formulario.value)
-        .then((res) => {
+      this.usuarioSessao = await this.userProvider.postData(this.formulario.value)
 
-          this.usuarioSessao = res.data;
+      this.storageProvider.setUsuarioSessao(this.usuarioSessao);
+  
+      this.navCtrl.push('WelcomePage');
 
-        })
-        .catch((error) => {
+    } catch(error) {
 
-          msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
+      const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
 
-          throw new Error(error);
-
-        });
-
-    }catch(error){
-
-      erro = true;
-      
+      const titulo: string = 'Desculpe';
+        
       this.alertService.simpleAlert(titulo, msg); 
 
-    }
-
-    this.fshUtils.hideLoading();
-
-    if (erro === false){
+    } finally {
       
-      this.storageProvider.setUsuarioSessao(this.usuarioSessao);
-
-      this.navCtrl.push('WelcomePage');
+      this.fshUtils.hideLoading();
 
     }
 

@@ -18,6 +18,7 @@ import { PropostaModel } from '../../model/proposta-model';
 import { NotificacaoModel } from '../../model/notificacao-model';
 import { ErrorHandler } from '../../app/app-error-handler';
 import { AlertService } from '../../utils/alert.service';
+import { FormBase } from '../../shared/form-base';
 
 
 
@@ -26,7 +27,7 @@ import { AlertService } from '../../utils/alert.service';
   selector: 'page-iniciar',
   templateUrl: 'iniciar.html',
 })
-export class IniciarPage {
+export class IniciarPage extends FormBase{
 
   tpsAtds: TipoAtendimentoModel[];
   
@@ -37,6 +38,8 @@ export class IniciarPage {
   fakeItems: Array<any> = new Array(4);
 
   showFake: boolean = true;
+
+  falhaServidor = false;
 
   constructor(
     public navCtrl: NavController,
@@ -53,26 +56,28 @@ export class IniciarPage {
     private alertService: AlertService
   ) {
 
+    super();
+
+  }
+
+  async inicializar(){
+
     this.usuarioLogado = this.loginProvider.getUsuarioLogado();
 
-    platform.ready()
-      .then(() => {
-        
-        if (platform.is('cordova')){
-          this.prepareNotifications();
-        }   
-        
-    });
+    await this.platform.ready();
+    
+    if (this.platform.is('cordova')){
+      this.prepareNotifications();
+    }     
     
   }
+  
 
-  ionViewDidEnter(){
+  async carregarDependencias() {
 
-    this.initialize();
+    this.falhaServidor = false;
 
-  }
-
-  async initialize() {
+    this.tpsAtds = undefined;
 
     if (this.usuarioLogado){
 
@@ -81,19 +86,13 @@ export class IniciarPage {
         this.tpsAtds = await this.tpAtdProvider.tiposAtendimentos();
 
       } catch (error) {
+
+        this.falhaServidor = true;
         
-        if (error instanceof HttpErrorResponse && error.status == 400){
-          this.showAlert("Sessão expirada...Por favor faça o login novamente")
-        }else{
-          this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
-        }
+        this.showAlert("Ocorreu um erro inesperado, tente novamente mais tarde...");
 
         this.tpsAtds = [];
 
-      } finally {
-        
-        this.showFake = false;
-        
       }
         
     }else{

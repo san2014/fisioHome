@@ -1,32 +1,62 @@
+import { OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FshUtils } from './../utils/fsh-util';
-import { Injector } from '@angular/core';
+export abstract class FormBase{
+  
+  formulario: FormGroup;
+  
+  dependencias: any[] = [];
+  
+  async ionViewDidEnter() {
 
-export abstract class FormBase {
-
-    formulario: FormGroup;
-
-    aplicaCssErro(campo: string) {
-        return {
-          'box-register-error': this.hasError(campo),
-          'box-register': this.hasSuccess(campo) || this.notUsed(campo)
-        };
-      }   
+    this.configurarForm();
     
-      notUsed(campo){
-        return this.formulario.get(campo).pristine;
-      }  
+    await this.inicializar();
+
+    this.registrarDependencias();
+
+    await this.carregarDependencias();
+
+  }
+
+  protected abstract inicializar();
+
+  protected async registrarDependencias() {};
+
+  protected async carregarDependencias(){
+
+    for (let row of this.dependencias){
+
+      const dep = await eval(`row.provider.${row.metodo}`);
+
+      eval(`this.${row.prop} = ${JSON.stringify(dep)}`);
+
+    }
+
+  }
+
+  protected configurarForm(){};
     
-      hasSuccess(campo): boolean{
-        return this.formulario.get(campo).valid;
-      }  
-      
-      hasError(campo): boolean{
-        return (
-          !this.formulario.get(campo).valid &&
-          (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
-        );
-      }     
+  protected aplicaCssErro(campo: string) {
+    return {
+      'box-register-error': this.hasError(campo),
+      'box-register': this.hasSuccess(campo) || this.notUsed(campo)
+    };
+  }   
+
+  protected notUsed(campo){
+    return this.formulario.get(campo).pristine;
+  }  
+
+  protected hasSuccess(campo): boolean{
+    return this.formulario.get(campo).valid;
+  }  
+
+  protected hasError(campo): boolean{
+    return (
+      !this.formulario.get(campo).valid &&
+      (this.formulario.get(campo).touched || this.formulario.get(campo).dirty)
+    );
+  }     
 
 }

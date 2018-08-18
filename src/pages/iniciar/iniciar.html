@@ -13,7 +13,7 @@
     </button>
     <ion-title>
       <h6><ion-icon name="contact"></ion-icon>
-      <b>{{usuarioLogado.nome}}</b></h6>
+      <b>{{usuarioLogado?.nome}}</b></h6>
     </ion-title>
 
   </ion-navbar>
@@ -32,6 +32,15 @@
           <h1></h1>
         </button>
       </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col *ngIf="falhaServidor">
+        <button ion-button block color="primary" (click)="carregarDependencias()">
+          Tentar novamente
+        </button>        
+      </ion-col>
+
     </ion-row>
 
   </ion-grid>

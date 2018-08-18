@@ -44,11 +44,23 @@ export class PropostaInitPage extends FormBase {
     public navParams: NavParams
   ){
     super();
-    this.initialize();
   }
 
-  initialize(){
+  protected inicializar(){
+
     this.tipoAtendimento = this.navParams.get('tipoAtendimento');
+
+    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
+
+    this.proposta = new PropostaModel();
+    
+    this.proposta.tipoAtendimento = this.tipoAtendimento;
+    
+    this.proposta.cliente = this.usuarioLogado;
+
+  }
+
+  protected configurarForm() {
     
     this.formulario = this.fb.group({
       'qtd': ['', Validators.compose
@@ -61,14 +73,6 @@ export class PropostaInitPage extends FormBase {
       ],
       'dtInicio': ['', Validators.required]
     });
-
-    this.usuarioLogado = this.loginProvider.getUsuarioLogado();
-
-    this.proposta = new PropostaModel();
-    
-    this.proposta.tipoAtendimento = this.tipoAtendimento;
-    
-    this.proposta.cliente = this.usuarioLogado;
 
   }
 

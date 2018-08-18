@@ -1,3 +1,4 @@
+import { TipoAtendimentoProvider } from './../../providers/tipo-atendimento/tipo-atendimento.provider';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 
@@ -21,7 +22,8 @@ import { CepProvider } from '../../providers/cep/cep.provider';
   providers: [
     UserProvider,
     FshUtils,
-    CepProvider
+    CepProvider,
+    TipoAtendimentoProvider
   ]
 })
 export class UserRegisterModule {}
