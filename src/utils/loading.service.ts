@@ -10,7 +10,7 @@ export class LoadingService {
 
     constructor(public loadingCtrl: LoadingController){}
 
-    showDefault(msg: string) {
+    async show(msg: string) {
 
         this.loading = this.loadingCtrl.create({
             content: msg
@@ -19,7 +19,7 @@ export class LoadingService {
         this.loading.present();        
     }
 
-    hideLoading(){
+    hide(){
         this.loading.dismiss();
     }
 }

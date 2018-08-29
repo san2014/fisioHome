@@ -1,3 +1,4 @@
+import { LoadingService } from './../../utils/loading.service';
 import { LoginProvider } from './../../providers/login/login.provider';
 import { TipoAtendimentoProvider } from './../../providers/tipo-atendimento/tipo-atendimento.provider';
 import { TipoAtendimentoModel } from './../../model/tipoatendimento-model';
@@ -17,6 +18,7 @@ import { PerfilEnum } from '../../enum/perfil-enum';
 import { AlertService } from '../../utils/alert.service';
 
 import { FormBase } from '../../shared/form-base';
+import { AppMessages } from '../../app/app-messages';
 
 
 @IonicPage()
@@ -30,14 +32,13 @@ export class UserRegister extends FormBase {
 
   lista: any;
 
-  lista2: UsuarioModel = new UsuarioModel();
-
   constructor(
     private navCtrl: NavController,
     private fb: FormBuilder,
     private platform: Platform,
     private userProvider: UserProvider,
     private storageProvider: StorageProvider,
+    private loadingService: LoadingService,
     private fshUtils: FshUtils,
     private cepProvider: CepProvider,
     private alertService: AlertService
@@ -47,15 +48,7 @@ export class UserRegister extends FormBase {
 
   }
 
-  protected async inicializar(){
-
-    await this.platform.ready();
-
-    if (!this.platform.is('cordova')){
-      this.formulario.get('onesignalId').setValue('test-teste-test-teste-hard');
-    }   
-      
-  }
+  protected inicializar() { }  
 
   protected configurarForm(){
    
@@ -89,6 +82,10 @@ export class UserRegister extends FormBase {
       onesignalId: this.storageProvider.getOneSignalId()
     });
 
+    if (!this.platform.is('cordova')){
+      this.formulario.get('onesignalId').setValue('test-teste-test-teste-hard');
+    }      
+
   }
 
   validaCPF(){
@@ -111,7 +108,7 @@ export class UserRegister extends FormBase {
 
     try {
       
-      this.fshUtils.showLoading('obtendo informações....');
+      this.loadingService.show(AppMessages.CARREGANDO);
       
       const address = await this.cepProvider.getAddressByCep(cep.value);
       
@@ -123,11 +120,11 @@ export class UserRegister extends FormBase {
       
     } catch (error) {
       
-      this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+      this.alertService.simpleAlert(AppMessages.FALHA_CEP);
     
     } finally {
       
-      this.fshUtils.hideLoading();
+      this.loadingService.hide();
 
     }
 
@@ -137,7 +134,7 @@ export class UserRegister extends FormBase {
 
     try{
 
-      this.fshUtils.showLoading('aguarde...');
+      this.loadingService.show('aguarde...');
 
       this.usuarioSessao = await this.userProvider.postData(this.formulario.value)
 
@@ -147,15 +144,11 @@ export class UserRegister extends FormBase {
 
     } catch(error) {
 
-      const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
-
-      const titulo: string = 'Desculpe';
-        
-      this.alertService.simpleAlert(titulo, msg); 
+      this.alertService.simpleAlert(AppMessages.ERRO_OPERACAO); 
 
     } finally {
       
-      this.fshUtils.hideLoading();
+      this.loadingService.hide();
 
     }
 

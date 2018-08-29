@@ -7,22 +7,9 @@ import { isArray } from 'ionic-angular/util/util';
 @Injectable()
 export class FshUtils{
 
-    loading: Loading
-
     constructor(
         private loadingCtrl: LoadingController
     ){}
-    
-    showLoading(msg: string){
-        this.loading = this.loadingCtrl.create({
-            content: msg
-        });
-        this.loading.present();  
-    }
-
-    hideLoading(){
-        this.loading.dismiss();
-    }
     
     validaCPF(cpf): boolean {
 

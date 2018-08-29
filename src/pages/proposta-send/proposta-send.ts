@@ -41,7 +41,7 @@ export class PropostaSendPage {
 
     try{
 
-      this.loadingService.showDefault('aguarde...');
+      this.loadingService.show('aguarde...');
 
       let oneSignalIds = await this.oneSignal.getIds();
 
@@ -62,7 +62,7 @@ export class PropostaSendPage {
 
       await this.oneSignal.postNotification(notificationOBJ);
 
-      this.loadingService.hideLoading();
+      this.loadingService.hide();
 
       this.toastService.toastOnBottom('Solicitação enviada, por favor aguarde...');
 
@@ -72,7 +72,7 @@ export class PropostaSendPage {
 
     }catch(error){
 
-      this.loadingService.hideLoading();
+      this.loadingService.hide();
     
       this.toastService.toastOnTop("Ocorreu um erro, por favor tente mais tarde...");
 

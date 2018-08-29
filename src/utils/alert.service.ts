@@ -16,7 +16,7 @@ export class AlertService {
 
     public simpleAlert(msg: string, titulo?: string) {
 
-        titulo = titulo ? titulo : 'Alerta';
+        titulo = titulo ? titulo : 'Atenção';
 
         let alert = this.alert.create({
             title: titulo,
