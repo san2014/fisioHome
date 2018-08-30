@@ -24,7 +24,9 @@ export class HomePage {
   ) { }
   
   ionViewCanEnter(){
+
     this.initialize();
+
   }
 
   initialize(){

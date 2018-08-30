@@ -1,3 +1,5 @@
+import { AppMessages } from './../../app/app-messages';
+import { LoadingService } from './../../utils/loading.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -10,6 +12,7 @@ import { StorageProvider } from '../../providers/storage/storage.provider';
 import { UsuarioModel } from '../../model/usuario-model';
 import { PerfilEnum } from '../../enum/perfil-enum';
 import { AlertService } from '../../utils/alert.service';
+import { FormBase } from '../../shared/form-base';
 
 
 @IonicPage()
@@ -17,7 +20,7 @@ import { AlertService } from '../../utils/alert.service';
   selector: 'page-extern-user-register',
   templateUrl: 'extern-user-register.html',
 })
-export class ExternUserRegisterPage {
+export class ExternUserRegisterPage extends FormBase {
 
   usuarioSessao: UsuarioModel;
   formUser: FormGroup;
@@ -28,20 +31,32 @@ export class ExternUserRegisterPage {
     private platform: Platform,
     private fb: FormBuilder,
     private fshUtils: FshUtils,
+    private loadingService: LoadingService,
     private userProvider: UserProvider,
     private cepProvider: CepProvider,
     private storageProvider: StorageProvider,
     private alertService: AlertService
   ) { 
     
-    this.configurarForm();
+    super();
 
-    platform.ready()
-    .then(() => {
-      if (!platform.is('cordova')){
+  }
+
+  async inicializar() {
+
+    try {
+    
+      const platform = await this.platform.ready();
+
+      if (platform !== 'cordova') {
         this.formUser.get('onesignalId').setValue('test-teste-test-teste-hard');
       }   
-    });     
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
 
   }
 
@@ -88,57 +103,30 @@ export class ExternUserRegisterPage {
 
   }
 
-  incluir(){
+  async incluir(){
     
-    this.fshUtils.showLoading('aguarde...');
+    try {
+      
+      this.loadingService.show(AppMessages.CARREGANDO);
+
+      const postUser = await this.userProvider.postData(this.formUser.value);
+
+      this.navCtrl.setRoot('WelcomePage');
+
+    } catch (error) {
+
+      this.alertService.simpleAlert(AppMessages.ERRO_OPERACAO);
+      
+    } finally {
+
+      this.loadingService.hide();
+
+    }
     
-    this.userProvider.postData(this.formUser.value)
-      .then((res) => {
-
-        this.fshUtils.hideLoading();
-
-        this.usuarioSessao = res;
-        
-        this.navCtrl.push('WelcomePage',{'usuarioModel': this.usuarioSessao})
-
-      })
-      .catch((error) => {
-
-        this.fshUtils.hideLoading();
-        
-        const titulo = 'Desculpe';
-        
-        const msg = `Ocorreu um erro ao registrar as informações. \n Tente novamente mais tarde....` ;
-        
-        this.alertService.simpleAlert(titulo, msg);  
-
-      });
-
+    
   } 
   
-  aplicaCssErro(campo: string) {
-    return {
-      'box-register-error': this.hasError(campo),
-      'box-register': this.hasSuccess(campo) || this.notUsed(campo)
-    };
-  }  
-
-  notUsed(campo){
-    return this.formUser.get(campo).pristine;
-  }
-
-  hasSuccess(campo): boolean{
-     return this.formUser.get(campo).valid;
-   }  
-  
-  hasError(campo): boolean{
-    return (
-      !this.formUser.get(campo).valid &&
-      (this.formUser.get(campo).touched || this.formUser.get(campo).dirty)
-    );
-  }
-
-  getAddresByCep(): boolean{
+   getAddresByCep(): boolean{
 
     let cep = this.formUser.get('cep');
   
@@ -146,27 +134,33 @@ export class ExternUserRegisterPage {
       return false;
     }
 
-    this.fshUtils.showLoading('obtendo informações....');
+    try {
+      
+      this.loadingService.show(AppMessages.CARREGANDO);
     
-    this.cepProvider.getAddressByCep(cep.value)
-      .then((address) =>{
-        
-        this.fshUtils.hideLoading();
+      const endereco = this.cepProvider.getAddressByCep(cep.value);
 
-        this.formUser.patchValue({
-          logradouro : address.logradouro,
-          bairro : address.bairro
-        });
+      this.preencherEndereco(endereco);
 
-      })
-      .catch((erro) => {
+    } catch (error) {
 
-        this.fshUtils.hideLoading();
+      this.alertService.simpleAlert('Ocorreu um erro ao obter informações do CEP informado');
 
-        this.alertService.simpleAlert('Desculpe', 'Ocorreu um erro ao obter informações do CEP informado.');
+    } finally {
 
-      });
+      this.loadingService.hide();
+
+    }
       
   }  
+
+  private preencherEndereco(endereco) {
+
+    this.formUser.patchValue({
+      logradouro : endereco.logradouro,
+      bairro : endereco.bairro
+    });    
+
+  }
 
 }

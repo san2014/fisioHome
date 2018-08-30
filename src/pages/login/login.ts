@@ -1,3 +1,5 @@
+import { AppMessages } from './../../app/app-messages';
+import { LoadingService } from './../../utils/loading.service';
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NavController, NavParams, IonicPage, LoadingController, Loading } from "ionic-angular";
@@ -47,7 +49,7 @@ export class Login {
     public navParams: NavParams,
     public facebookProvider: FacebookProvider,
     private googleProvider: GoogleProvider,
-    private loadingCtrl: LoadingController,
+    private loadingService: LoadingService,
     private utils: FshUtils,
     private alertService: AlertService
   ) {
@@ -76,73 +78,58 @@ export class Login {
 
     this.msgError = [];
 
-    this.showLoading('aguarde...');
-    
     try {
+      
+      this.loadingService.show(AppMessages.AGUARDE);
 
-        let tokenResponse: TokenResponseModel;
+      const tokenResponse = await this.loginProvider.login(this.loginModel)
 
-        await this.loginProvider.login(this.loginModel)
-          .then(data => {
-            tokenResponse = data;
-            this.storageProvider.setAccessToken(tokenResponse.token);
-          })
-          .catch((erro) => {
-            alert('auth');
-            throw new Error('Login Error');
-          });
-          
-        await this.loginProvider.getUsuarioAtual(tokenResponse.token)
-          .then(data => this.usuarioModel = data)
-          .catch((erro) => {
-            throw new Error('Login Error');
-          });          
+      this.storageProvider.setAccessToken(tokenResponse.token);
         
-        this.storageProvider.setUsuarioSessao(this.usuarioModel);
-          
-        this.redirectPage();
+      this.usuarioModel = await this.loginProvider.getUsuarioAtual(tokenResponse.token)
+      
+      this.storageProvider.setUsuarioSessao(this.usuarioModel);
+        
+      this.redirectPage();
 
     } catch (error) {
 
       this.pushErroLogin();
 
-    }
+    } finally {
 
-    this.hideLoading();
+        this.loadingService.hide();
+
+    }
 
   }
 
-  public loginSuccess(res: TokenResponseModel) {
-    this.loginProvider.getUsuarioAtual(res.token)
+  public async loginSuccess(res: TokenResponseModel) {
+
+    await this.loginProvider.getUsuarioAtual(res.token)
       .then(res => this.redirectPage());
+
   }
 
   public redirectPage() {
+
     this.navCtrl.setRoot('HometabPage', {'usuarioModel': this.usuarioModel});
+
   }  
 
   ionViewWillEnter(){
-    if (this.usuarioModel.id != undefined){
+
+    if (!this.usuarioModel.id){
       this.redirectPage();
     }
-  }
 
-  showLoading(msg: string){
-    this.loading = this.loadingCtrl.create({
-      content: msg
-    });
-    this.loading.present();     
-  }
-
-  hideLoading(){
-    this.loading.dismiss();
   }
 
   async loginFace(){
 
     try {
 
-      this.showLoading('aguarde...');
+      this.loadingService.show(AppMessages.AGUARDE);
         
       let userFace: UsuarioModel = await this.facebookProvider.login()
         .catch((error) => {
@@ -170,9 +157,11 @@ export class Login {
 
       this.alertService.simpleAlert(this.titleAlert, error);
 
-    }  
-    
-    this.hideLoading();
+    } finally {
+
+      this.loadingService.hide();
+
+    }
 
   }
 
@@ -180,7 +169,7 @@ export class Login {
 
     try {
 
-      this.showLoading('aguarde...');
+      this.loadingService.show(AppMessages.AGUARDE);
 
       let userGoogle: UsuarioModel = await this.googleProvider.login()
         .catch((error) => {
@@ -208,9 +197,11 @@ export class Login {
       
       this.alertService.simpleAlert(this.titleAlert, error);
 
-    }    
+    } finally {
 
-    this.hideLoading();
+      this.loadingService.hide();
+
+    }
 
   }
 

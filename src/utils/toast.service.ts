@@ -8,6 +8,32 @@ export class ToastService {
 
     constructor(private toastCtrl: ToastController){}
 
+    verde(msg: string) {
+
+        let toast = this.toastCtrl.create({
+            message: msg,
+            duration: 3000,
+            position: ToastPosition.BAIXO,
+            cssClass: 'success'
+        });
+        
+        toast.present();             
+
+    }
+
+    vermelho(msg: string) {
+
+        let toast = this.toastCtrl.create({
+            message: msg,
+            duration: 3000,
+            position: ToastPosition.BAIXO,
+            cssClass: 'error'
+        });
+        
+        toast.present();             
+
+    }    
+
     toastOnTop(msg: string, duration?: number){
 
         const time = duration ? duration : 3000;

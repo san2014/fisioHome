@@ -1,24 +1,26 @@
 import { OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-export abstract class FormBase{
+export abstract class FormBase implements OnInit{
   
   formulario: FormGroup;
   
   dependencias: any[] = [];
-  
-  async ionViewDidEnter() {
+
+  constructor() { }
+
+  async ngOnInit() {
 
     this.configurarForm();
-    
+
     await this.inicializar();
-
+  
     this.registrarDependencias();
-
+  
     await this.carregarDependencias();
 
   }
-
+  
   protected abstract inicializar();
 
   protected async registrarDependencias() {};

@@ -4,6 +4,8 @@ export class AppMessages {
 
     static CARREGANDO = 'carregando...';
 
+    static AGUARDE = 'aguarde...';
+
     static FALHA_CEP = 'Ocorreu um erro ao obter informações do CEP informado.'
 
 }

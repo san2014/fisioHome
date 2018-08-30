@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { ToastService } from '../utils/toast.service';
 import { AlertService } from '../utils/alert.service';
+import { LoadingService } from '../utils/loading.service';
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import { AlertService } from '../utils/alert.service';
     declarations: [],
     providers: [
         ToastService,
-        AlertService
+        AlertService,
+        LoadingService
     ],
 })
 export class SharedModule { }

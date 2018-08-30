@@ -38,3 +38,11 @@ body, span, ion-navbar, ion-content, ion-button, ion-title, h1, h2, h3, h4, h5, 
     border-radius: 5px;
     border-bottom: 0px solid !important;        
 }
+
+ion-toast.success .toast-wrapper {
+	background: rgb(35,142,35);
+}
+
+ion-toast.error .toast-wrapper {
+	background: rgb(209, 71, 71);
+}
