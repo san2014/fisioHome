@@ -1,3 +1,4 @@
+import { AppMessages } from './../../app/app-messages';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';         
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -76,13 +77,25 @@ export class PropostaInitPage extends FormBase {
 
   }
 
-  checkFeedback(event) {
+  async checkFeedback(event) {
 
     if(event === true){
 
-      let msg = "Sua solicitação foi encaminhada...";
+      try {
+        
+        const prop = await this.propostaProvider.inserir(this.proposta);
+  
+        let msg = "Sua solicitação foi encaminhada...";
+  
+        this.toastService.toastOnMiddle(msg);
+  
+        this.navCtrl.push('NotificationsViewsPage');
 
-      this.toastService.toastOnMiddle(msg);
+      } catch (error) {
+
+        this.toastService.vermelho(AppMessages.ERRO_OPERACAO);
+        
+      }
 
     }else if (event === false){
 
@@ -111,7 +124,7 @@ export class PropostaInitPage extends FormBase {
       .subscribe((ok)=> {
         if (ok) {
           this.alertService.simpleAlert('NOTIFICA-LO DO ATENDIMENTO...');
-        }else{
+        } else {
           this.listaProfissionais.slice(0, 0);
         }
       });

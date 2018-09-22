@@ -55,8 +55,8 @@ export class MyApp {
   }
 
   initialize(){
-    this.usuario = new UsuarioModel();
-
+    this.usuario = this.loginProvider.getUsuarioLogado();
+    console.info(this.usuario);
   }
 
   presentToast(msg: string) {

@@ -8,7 +8,7 @@ import { NotificacaoProvider } from '../../providers/notificacao/notificacao.pro
 @IonicPage()
 @Component({
   selector: 'page-notifications-views',
-  templateUrl: 'notifications-views.html',
+  templateUrl: 'notifications-views.html'
 })
 export class NotificationsViewsPage {
 

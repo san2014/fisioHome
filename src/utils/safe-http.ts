@@ -60,6 +60,15 @@ export class SafeHttp {
       }
     }    
 
+    delete(url: string, headers?: HttpHeaders) {
+      if (this.networkService.noConnection()) {
+        this.networkService.showNetworkAlert();
+      } else {
+        let urlCall : string = this.basepath + url;
+        return this.http.delete<any>(urlCall) 
+      }
+    }      
+
     notResponse(){
       this.networkService.notResponse();
     }

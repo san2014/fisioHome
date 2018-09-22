@@ -119,7 +119,7 @@ export class Login {
 
   ionViewWillEnter(){
 
-    if (!this.usuarioModel.id){
+    if (this.usuarioModel.id){
       this.redirectPage();
     }
 

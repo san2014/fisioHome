@@ -49,16 +49,17 @@ export class InterceptorHttpService implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse) {
 
                     switch ((<HttpErrorResponse>error).status) {
-                        case 400:
+                        case 401: {
+                            return this.getAccessToken(req, next);
+                        }
+                        case 0: {
+                            return this.getAccessToken(req, next);  
+                        }
+                        default: {
                             this.appCtrl.getRootNavs()[0].setRoot('Login');
                             return next.handle(req);                        
-                        case 401:
-                            return this.getAccessToken(req, next);
-                        case 0:
-                            return this.getAccessToken(req, next);    
+                        }  
                     }
-
-                    Observable.throw(error);
 
                 }else{
 

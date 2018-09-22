@@ -30,8 +30,6 @@ export class UserRegister extends FormBase {
 
   usuarioSessao: UsuarioModel;
 
-  lista: any;
-
   constructor(
     private navCtrl: NavController,
     private fb: FormBuilder,
@@ -110,13 +108,9 @@ export class UserRegister extends FormBase {
       
       this.loadingService.show(AppMessages.CARREGANDO);
       
-      const address = await this.cepProvider.getAddressByCep(cep.value);
+      const endereco = await this.cepProvider.getAddressByCep(cep.value);
       
-      this.formulario.patchValue({
-        logradouro : address.logradouro,
-        bairro : address.bairro,
-        cidade : address.localidade          
-      });
+      this.preencherEndereco(endereco);
       
     } catch (error) {
       
@@ -152,6 +146,16 @@ export class UserRegister extends FormBase {
 
     }
 
+  }
+
+  private preencherEndereco(endereco) {
+
+    this.formulario.patchValue({
+      logradouro : endereco.logradouro,
+      bairro : endereco.bairro,
+      cidade : endereco.localidade          
+    });
+        
   }
 
 }

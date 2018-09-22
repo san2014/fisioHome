@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Notificações</ion-title>
+    <ion-title>Solicitações</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -13,7 +13,7 @@
       <ion-item *ngFor="let row of notificacoes async">
         <button ion-item no-lines>
           <ion-avatar item-start>
-            <img [src]="row.dados.proposta?.cliente?.imgperfil">
+            <img [src]="row.dados.proposta?.cliente?.imgPerfil">
           </ion-avatar>
           <p class="ion-name">{{row.dados.proposta?.cliente?.nome}}</p>
           <p>{{row.dados.msg}}</p>
